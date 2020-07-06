@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.RegisterActivity"
+    android:orientation="vertical"
+    android:background="?attr/colorPrimary"
+    >
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+    android:id="@+id/topbar_register"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/qmui_topbar_height"
+    />
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="24dp"
+        android:background="@color/qmui_btn_blue_bg" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_wihte_frame" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:lines="1"
+                android:padding="1dp"
+                android:text="手机号"
+                android:textSize="11sp" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="1dip"
+                android:layout_height="fill_parent"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@+id/textView1"
+                android:background="#EEEFFF" />
+
+            <EditText
+                android:id="@+id/et_RegisterPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/view1"
+                android:background="@drawable/transparent"
+                android:ems="19"
+                android:hint="请输入手机号"
+                android:inputType="phone"
+                android:padding="1dp"
+                android:textSize="12sp"
+                android:maxLength="11">
+
+                <requestFocus />
+            </EditText>
+
+            <ImageView
+                android:id="@+id/del_phonenumber1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/text_del"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="24dp"
+        android:background="@color/qmui_btn_blue_bg" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_wihte_frame" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:lines="1"
+                android:padding="1dp"
+                android:text="密码"
+                android:textSize="11sp" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="1dip"
+                android:layout_height="fill_parent"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@+id/textView2"
+                android:background="#EEEFFF" />
+
+            <EditText
+                android:id="@+id/et_Password"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/view2"
+                android:background="@drawable/transparent"
+                android:ems="19"
+                android:hint="请输入密码，不少于6位"
+                android:inputType="textPassword"
+                android:padding="1dp"
+                android:textSize="12sp"
+                android:maxLength="11">
+
+                <requestFocus />
+            </EditText>
+
+            <ImageView
+                android:id="@+id/del_phonenumber2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/text_del"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="24dp"
+        android:background="@color/qmui_btn_blue_bg" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_wihte_frame" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:lines="1"
+                android:padding="1dp"
+                android:text="确认密码"
+                android:textSize="11sp" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="1dip"
+                android:layout_height="fill_parent"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@+id/textView3"
+                android:background="#EEEFFF" />
+
+            <EditText
+                android:id="@+id/et_RePassword"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/view3"
+                android:background="@drawable/transparent"
+                android:ems="19"
+                android:hint="请重复输入密码"
+                android:inputType="textPassword"
+                android:padding="1dp"
+                android:textSize="12sp"
+                android:maxLength="11">
+
+                <requestFocus />
+            </EditText>
+
+            <ImageView
+                android:id="@+id/del_phonenumber3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/text_del"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="24dp"
+        android:background="@color/qmui_btn_blue_bg" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_wihte_frame" >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:lines="1"
+                android:padding="1dp"
+                android:text="验证码"
+                android:textSize="11sp" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="1dip"
+                android:layout_height="fill_parent"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@+id/textView4"
+                android:background="#EEEFFF" />
+
+            <EditText
+                android:id="@+id/et_RegisterVCode"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/view4"
+                android:background="@drawable/transparent"
+                android:ems="19"
+                android:hint="请重复输入密码"
+                android:inputType="phone"
+                android:padding="1dp"
+                android:textSize="12sp"
+                android:maxLength="11">
+
+                <requestFocus />
+            </EditText>
+
+            <Button
+                android:id="@+id/btn_getVcode_from_reg"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:background="#00FFFFFF"
+                android:text="发送验证码"
+                android:textSize="14sp"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/checkBox_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我已阅读并同意" />
+
+        <TextView
+            android:id="@+id/tv_register_rule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="《用户使用条款》"
+            android:textColor="@color/qmui_btn_blue_bg"/>
+
+    </LinearLayout>
+
+
+    <!--注册按钮位置-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/qmui_config_color_white"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp">
+
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="注册账号"
+            android:textSize="?attr/qmui_common_list_item_title_h_text_size"
+            app:qmui_isRadiusAdjustBounds="true" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/tv_jumpToLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="已有账号，去登录" />
+
+</LinearLayout>
