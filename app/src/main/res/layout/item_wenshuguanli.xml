@@ -1,6 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_margin="5dp"
+    android:background="@color/qmui_config_color_gray_8">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/icon_grid_bottom_sheet"
+        android:id="@+id/iv_guanli_1"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="145asfasfasf"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/iv_guanli_1"
+        android:id="@+id/tv_guanli_title"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="公正编号"
+        android:layout_below="@+id/tv_guanli_title"
+        android:layout_toRightOf="@+id/iv_guanli_1"
+        android:id="@+id/tv_guanli_1"
+        android:layout_marginTop="5dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="456231698"
+        android:layout_below="@+id/tv_guanli_title"
+        android:layout_toRightOf="@+id/tv_guanli_1"
+        android:id="@+id/tv_guanli_code"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="所属银行："
+        android:layout_below="@+id/iv_guanli_1"
+        android:id="@+id/tv_guanli_2"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="交通银行"
+        android:layout_below="@+id/iv_guanli_1"
+        android:layout_toRightOf="@+id/tv_guanli_2"
+        android:id="@+id/tv_guanli_bank"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_guanli_1"
+        android:layout_alignParentRight="true"
+        android:text="2020-55-55-44"
+        android:id="@+id/tv_guanli_date"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看详情"
+        android:textColor="@color/app_color_blue_2"
+        android:layout_below="@+id/tv_guanli_date"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tv_guanli_jump"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"/>
+
+
+</RelativeLayout>

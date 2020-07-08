@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="60dp"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保证金公正"
+        android:layout_margin="5dp"
+        android:id="@+id/tv_zixun_title"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="业务介绍"
+        android:layout_below="@+id/tv_zixun_title"
+        android:layout_margin="5dp"
+        android:id="@+id/tv_zixun_subtitle"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2020-6-25"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/imageView_next"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tv_zixun_date"/>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/icon_grid_qq_face_view"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:id="@+id/imageView_next"/>
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000"
+        android:layout_alignParentBottom="true"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
