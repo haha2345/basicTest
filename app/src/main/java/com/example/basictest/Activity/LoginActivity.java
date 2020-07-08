@@ -167,11 +167,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         String msg=utils.getJson(response).get("msg").getAsString();
                         utils.showToastInThread(LoginActivity.this,msg);
                         Log.d("LoginActivity",msg);
-
-                        //转到下个页面
-                        /*loginIntent=new Intent(LoginActivity.this,mainPageActivity.class);
-                        loginIntent.putExtra("username",username);
-                        startActivity(loginIntent);*/
+                        jupmToMain();
 
                     }else{
                         utils.showToastInThread(LoginActivity.this,"登陆失败");
@@ -253,5 +249,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     // 校验密码不少于6位
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
+    }
+    //跳转页面
+    private void jupmToMain(){
+        //转到下个页面
+        loginIntent=new Intent(LoginActivity.this,MainActivity.class);
+        loginIntent.putExtra("username",username);
+        startActivity(loginIntent);
     }
 }
