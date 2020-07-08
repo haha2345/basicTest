@@ -1,15 +1,23 @@
 package com.example.basictest.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.example.basictest.Adapter.MyJiluRecyclerViewAdapter;
+import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
 import com.example.basictest.R;
+import com.example.basictest.dummy.DummyContent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,14 +40,6 @@ public class MainFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment MainFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MainFragment newInstance(String param1) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
@@ -61,6 +61,13 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view= inflater.inflate(R.layout.fragment_main, container, false);
+        // Set the adapter
+
+        RecyclerView recyclerView = view.findViewById(R.id.reView_main);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(new MyzixunRecyclerViewAdapter(DummyContent.ITEMS));
+        return view;
     }
 }

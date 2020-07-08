@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.basictest.Fragments.JiluFragment;
 import com.example.basictest.Fragments.MainFragment;
 import com.example.basictest.Fragments.MineFragment;
 import com.example.basictest.R;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity{
 
     private MainFragment mainFragment;
     private MineFragment mineFragment;
+    private JiluFragment jiluFragment;
 
     private EasyNavigationBar navigationBar;
     private String[] tabText={"首页","我的"};
@@ -43,11 +45,13 @@ public class MainActivity extends AppCompatActivity{
 
         mainFragment=new MainFragment();
         mineFragment=new MineFragment();
+        jiluFragment=new JiluFragment();
         //initViews();
         //底部导航栏
         navigationBar=findViewById(R.id.nvBar);
         fragments.add(mainFragment);
-        fragments.add(mineFragment);
+        //fragments.add(mineFragment);
+        fragments.add(jiluFragment);
         navigationBar.titleItems(tabText)
                 .normalIconItems(normalIcon)
                 .selectIconItems(selectIcon)
