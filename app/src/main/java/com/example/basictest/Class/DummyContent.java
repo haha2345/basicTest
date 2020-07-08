@@ -1,4 +1,4 @@
-package com.example.basictest.dummy;
+package com.example.basictest.Class;
 
 import java.util.ArrayList;
 import java.util.HashMap;

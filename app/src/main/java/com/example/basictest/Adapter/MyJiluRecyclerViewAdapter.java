@@ -5,10 +5,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.basictest.R;
-import com.example.basictest.dummy.DummyContent.DummyItem;
+import com.example.basictest.Class.DummyContent.DummyItem;
 
 import java.util.List;
 

@@ -1,23 +1,18 @@
 package com.example.basictest.Fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import com.example.basictest.Adapter.MyJiluRecyclerViewAdapter;
 import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
 import com.example.basictest.R;
-import com.example.basictest.dummy.DummyContent;
+import com.example.basictest.Class.DummyContent;
 
 /**
  * A simple {@link Fragment} subclass.

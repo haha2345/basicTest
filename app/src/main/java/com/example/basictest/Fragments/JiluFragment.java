@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.basictest.Adapter.MyJiluRecyclerViewAdapter;
 import com.example.basictest.R;
-import com.example.basictest.dummy.DummyContent;
+import com.example.basictest.Class.DummyContent;
 
 /**
  * A fragment representing a list of Items.

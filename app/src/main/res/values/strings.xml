@@ -41,8 +41,10 @@
     <string name="emptyView_mode_desc_retry">点击重试</string>
 
     <!-- TabSegmentFragment 选项卡展示界面 -->
-    <string name="tabSegment_item_1_title">Item 1</string>
-    <string name="tabSegment_item_2_title">Item 2</string>
+    <string name="tabSegment_item_1_title">全部</string>
+    <string name="tabSegment_item_2_title">审核中</string>
+    <string name="tabSegment_item_3_title">审核通过</string>
+    <string name="tabSegment_item_4_title">审核失败</string>
 
     <string name="tabSegment_item_1_content">这是第一个 Item 的内容区</string>
     <string name="tabSegment_item_2_content">这是第二个 Item 的内容区</string>
