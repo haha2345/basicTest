@@ -17,7 +17,7 @@
 <resources>
 
     <!-- common -->
-    <string name="app_name">QMUI</string>
+    <string name="app_name">赋强</string>
     <string name="common_example">示例图片</string>
     <string name="app_upgrade_tip_title">Release Notes (%1$s)</string>
     <string name="ok">OK</string>

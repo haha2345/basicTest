@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basictest.Activity.JiluActivity;
+import com.example.basictest.Activity.SettingActivity;
 import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.R;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
@@ -108,6 +109,8 @@ public class MineFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(getActivity(),"系统设置" , Toast.LENGTH_SHORT).show();
+                        intent=new Intent(getActivity(), SettingActivity.class);
+                        startActivity(intent);
 
                     }
                 })
