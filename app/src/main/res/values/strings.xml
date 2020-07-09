@@ -24,6 +24,23 @@
     <string name="cancel">CANCEL</string>
     <string name="logo">aaa</string>
 
+    <!--自定义-->
+    <string-array name="banks">
+        <item>中国银行</item>
+        <item>中国银行</item>
+        <item>中国银行</item>
+        <item>中国银行</item>
+        <item>建设银行</item>
+        <item>中国银行</item>
+        <item>中国银行</item>
+        <item>中国银行</item>
+        <item>中国银行</item>
+        <item>中国银行</item>
+        <item>中国银行</item>
+
+    </string-array>
+
+
     <!-- Components 系列界面 -->
 
     <!-- EmptyViewFragment 空界面展示界面 -->

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.basictest.Activity.Apply1stActivity;
 import com.example.basictest.Activity.JiluActivity;
 import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
@@ -69,6 +70,8 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(),"赋强公正",Toast.LENGTH_SHORT);
+                intent=new Intent(getActivity(), Apply1stActivity.class);
+                startActivity(intent);
             }
         });
         btn_main_gzjl.setOnClickListener(new View.OnClickListener() {

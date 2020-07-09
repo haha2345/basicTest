@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Apply1stActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.percentlayout.widget.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="60dp"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layerType="software"
+                android:background="@drawable/xuxian"
+                android:layout_centerVertical="true"
+                app:layout_marginLeftPercent="8%"
+                app:layout_marginRightPercent="8%"
+                />
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/textviewround"
+                android:id="@+id/a1"
+                android:text="1"
+                android:textSize="12sp"
+                android:gravity="center"
+                app:layout_marginLeftPercent ="8%"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="上传电子合同"
+                android:layout_marginTop="5dp"
+
+                android:textColor="@color/blue"
+                android:layout_below="@+id/a1"
+                app:layout_marginLeftPercent ="3%"/>
+
+
+
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/a2"
+                android:layout_toRightOf="@id/a1"
+                android:background="@drawable/textviewroundgray"
+                android:text="2"
+                android:gravity="center"
+
+                app:layout_marginLeftPercent ="20%"
+                android:textSize="12sp"
+
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="个人信息认证"
+                android:layout_marginTop="5dp"
+
+                android:textColor="@color/gray"
+                android:layout_below="@+id/a1"
+                android:layout_toRightOf="@+id/a1"
+                app:layout_marginLeftPercent ="15%"/>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/a3"
+                android:layout_toLeftOf="@+id/a4"
+                android:background="@drawable/textviewroundgray"
+                android:text="3"
+                android:gravity="center"
+                android:textSize="12sp"
+
+                app:layout_marginRightPercent ="20%"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="签署告知函"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/gray"
+                android:layout_below="@+id/a2"
+                android:layout_toRightOf="@+id/a2"
+                app:layout_marginLeftPercent ="21%"/>
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/a4"
+                android:gravity="center"
+                android:textSize="12sp"
+
+                android:background="@drawable/textviewroundgray"
+                android:text="4"
+                app:layout_marginRightPercent ="8%"
+
+                android:layout_alignParentRight="true"
+
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="提交审核"
+                android:layout_marginTop="5dp"
+
+                android:textColor="@color/gray"
+                android:layout_below="@+id/a1"
+                android:layout_alignParentRight="true"
+                app:layout_marginRightPercent ="5%"/>
+
+
+
+        </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <!--下半部分-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:orientation="vertical"
+                >
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EFF0F4"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请选择合同所属银行"
+                    android:textSize="12sp"
+                    android:textColor="#989BA3"
+                    android:id="@+id/a5"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <Spinner
+                    android:layout_width="345dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/a5"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_horizontal"
+                    android:entries="@array/banks"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:src="@mipmap/additem"
+                    android:id="@+id/ibtn_apply1"
+                    android:clickable="true"
+                    app:qmui_is_circle="true"
+                    app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
+                    app:qmui_selected_border_width="1px"
+                    app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8"
+                    />
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="请上传申请人的合同"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:id="@+id/tv_apply1_name"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="仅支持PDF文档格式"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:textColor="#EE3535"
+                android:layout_gravity="center_horizontal"/>
+
+            <CheckBox
+                android:id="@+id/checkBox_apply1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="102dp"
+                android:text="确定电子合同属于申请人本人"
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                android:layout_width="301dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="21dp"
+                android:text="下一步"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                app:qmui_isRadiusAdjustBounds="true"
+                />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar_apply1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
