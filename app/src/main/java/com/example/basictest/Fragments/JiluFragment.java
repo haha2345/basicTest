@@ -25,18 +25,21 @@ public class JiluFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    private int count =0;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public JiluFragment() {
+    public JiluFragment(int count){
+        this.count=count;
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static JiluFragment newInstance(int columnCount) {
-        JiluFragment fragment = new JiluFragment();
+        JiluFragment fragment = new JiluFragment(3);
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -66,7 +69,7 @@ public class JiluFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyJiluRecyclerViewAdapter(DummyContent.ITEMS));
+            recyclerView.setAdapter(new MyJiluRecyclerViewAdapter(DummyContent.ITEMS,count));
         }
         return view;
     }

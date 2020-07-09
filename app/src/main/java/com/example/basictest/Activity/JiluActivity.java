@@ -3,16 +3,20 @@ package com.example.basictest.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.basictest.Adapter.JiluFragmentPagerAdapter;
+import com.example.basictest.Fragments.JiluFragment;
 import com.example.basictest.R;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -20,7 +24,9 @@ import com.qmuiteam.qmui.widget.tab.QMUITabBuilder;
 import com.qmuiteam.qmui.widget.tab.QMUITabIndicator;
 import com.qmuiteam.qmui.widget.tab.QMUITabSegment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -38,35 +44,37 @@ public class JiluActivity extends AppCompatActivity {
     private Map<ContentPage, View> mPageMap = new HashMap<>();
     private ContentPage mDestPage = ContentPage.Item1;
 
+    private List<Fragment> fragments;
 
 
-    private PagerAdapter mPagerAdapter=new PagerAdapter() {
-        @Override
-        public int getCount() {
-            return ContentPage.SIZE;
-        }
 
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return view==object;
-        }
-
-        @NonNull
-        @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            ContentPage page = ContentPage.getPage(position);
-            View view = getPageView(page);
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            container.addView(view, params);
-            return view;
-        }
-
-        @Override
-        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            container.removeView((View)object);
-        }
-    };
+//    private PagerAdapter mPagerAdapter=new PagerAdapter() {
+//        @Override
+//        public int getCount() {
+//            return ContentPage.SIZE;
+//        }
+//
+//        @Override
+//        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+//            return view==object;
+//        }
+//
+//        @NonNull
+//        @Override
+//        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+//            ContentPage page = ContentPage.getPage(position);
+//            View view = getPageView(page);
+//            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+//                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//            container.addView(view, params);
+//            return view;
+//        }
+//
+//        @Override
+//        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+//            container.removeView((View)object);
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +82,19 @@ public class JiluActivity extends AppCompatActivity {
         setContentView(R.layout.activity_jilu);
         ButterKnife.bind(this);
         initTopBar();
+        initViews();
         initTabAndPager();
     }
 
+
+    private void initViews(){
+
+        fragments=new ArrayList<>();
+        fragments.add(new JiluFragment(3));
+        fragments.add(new JiluFragment(4));
+        fragments.add(new JiluFragment(2));
+        fragments.add(new JiluFragment(8));
+    }
 
     private void initTopBar() {
         mTopBar.setBackgroundColor(R.color.bbl_999999);
@@ -87,7 +105,8 @@ public class JiluActivity extends AppCompatActivity {
             }
         });
 
-        mTopBar.setTitle("aaaa");
+        //设置标题名
+        mTopBar.setTitle("公正记录");
         mTopBar.addRightImageButton(R.mipmap.icon_topbar_overflow, R.id.topbar_right_change_button)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -99,8 +118,9 @@ public class JiluActivity extends AppCompatActivity {
 
 
     private void initTabAndPager() {
+
         int indicatorHeight = QMUIDisplayHelper.dp2px(this, 2);
-        mContentViewPager.setAdapter(mPagerAdapter);
+        mContentViewPager.setAdapter(new JiluFragmentPagerAdapter(getSupportFragmentManager(),fragments));
         mContentViewPager.setCurrentItem(mDestPage.getPosition(), false);
         QMUITabBuilder builder = mTabSegment.tabBuilder();
         mTabSegment.setIndicator(new QMUITabIndicator(

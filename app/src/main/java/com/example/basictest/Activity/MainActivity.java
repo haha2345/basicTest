@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity{
 
         mainFragment=new MainFragment();
         mineFragment=new MineFragment();
-        jiluFragment=new JiluFragment();
+        jiluFragment=new JiluFragment(5);
         //initViews();
         //底部导航栏
         navigationBar=findViewById(R.id.nvBar);

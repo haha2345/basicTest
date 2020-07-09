@@ -18,10 +18,13 @@ import java.util.List;
 public class MyJiluRecyclerViewAdapter extends RecyclerView.Adapter<MyJiluRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
+    private int count=2;
 
-    public MyJiluRecyclerViewAdapter(List<DummyItem> items) {
+    public MyJiluRecyclerViewAdapter(List<DummyItem> items,int num) {
+        count=num;
         mValues = items;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,7 +42,7 @@ public class MyJiluRecyclerViewAdapter extends RecyclerView.Adapter<MyJiluRecycl
 
     @Override
     public int getItemCount() {
-        return 5;
+        return count;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
