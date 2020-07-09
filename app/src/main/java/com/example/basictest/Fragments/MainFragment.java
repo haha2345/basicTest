@@ -1,5 +1,6 @@
 package com.example.basictest.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,47 +10,42 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.basictest.Activity.JiluActivity;
+import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
 import com.example.basictest.R;
 import com.example.basictest.Class.DummyContent;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+
 public class MainFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    @BindView(R.id.btn_main_fqgz)
+    Button btn_main_fqgz;
+    @BindView(R.id.btn_main_gzjl)
+    Button btn_main_gzjl;
+    @BindView(R.id.btn_main_wsgl)
+    Button btn_main_wsgl;
+    @BindView(R.id.btn_main_syzn)
+    Button btn_main_syzn;
 
+
+    Intent intent;
     public MainFragment() {
-        // Required empty public constructor
     }
 
-    public static MainFragment newInstance(String param1) {
-        MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -57,12 +53,46 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this,view);
+        //设置行业资讯列表
         // Set the adapter
-
         RecyclerView recyclerView = view.findViewById(R.id.reView_main);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(new MyzixunRecyclerViewAdapter(DummyContent.ITEMS));
+        setButtons();
         return view;
+    }
+
+    private void setButtons(){
+        btn_main_fqgz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"赋强公正",Toast.LENGTH_SHORT);
+            }
+        });
+        btn_main_gzjl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"公正记录",Toast.LENGTH_SHORT);
+                intent=new Intent(getActivity(), JiluActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        btn_main_wsgl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"文书管理",Toast.LENGTH_SHORT);
+                intent=new Intent(getActivity(), WenshuActivity.class);
+                startActivity(intent);
+            }
+        });
+        btn_main_syzn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
+            }
+        });
     }
 }

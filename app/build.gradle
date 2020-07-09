@@ -36,13 +36,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.qmuiteam:qmui:2.0.0-alpha10'
 
-    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.11.0'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.11.0'
     // Gson
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.kongzue.baseokhttp_v3:baseokhttp_v3:3.1.6'
 
-    compile 'com.hjm:BottomTabBar:1.2.2'
-    compile 'com.github.chaychan:BottomBarLayout:1.2.0' //建议使用最新版本
+    implementation 'com.hjm:BottomTabBar:1.2.2'
+    implementation 'com.github.chaychan:BottomBarLayout:1.2.0' //建议使用最新版本
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
     implementation 'com.github.Vincent7Wong:EasyNavigation:2.0.5'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'

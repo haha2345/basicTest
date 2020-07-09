@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity{
 
     private MainFragment mainFragment;
     private MineFragment mineFragment;
-    private JiluFragment jiluFragment;
+
 
     private EasyNavigationBar navigationBar;
     private String[] tabText={"首页","我的"};
@@ -45,13 +45,12 @@ public class MainActivity extends AppCompatActivity{
 
         mainFragment=new MainFragment();
         mineFragment=new MineFragment();
-        jiluFragment=new JiluFragment(5);
+
         //initViews();
         //底部导航栏
         navigationBar=findViewById(R.id.nvBar);
         fragments.add(mainFragment);
-        //fragments.add(mineFragment);
-        fragments.add(jiluFragment);
+        fragments.add(mineFragment);
         navigationBar.titleItems(tabText)
                 .normalIconItems(normalIcon)
                 .selectIconItems(selectIcon)

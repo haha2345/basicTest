@@ -28,10 +28,7 @@ public class JiluFragment extends Fragment {
     private int count =0;
 
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+
     public JiluFragment(int count){
         this.count=count;
     }
