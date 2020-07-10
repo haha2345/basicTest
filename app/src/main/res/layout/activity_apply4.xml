@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Apply4Activity"
+    android:background="#fff"
+    android:orientation="vertical">
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar_apply4"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"/>
+    <androidx.percentlayout.widget.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layerType="software"
+            android:background="@drawable/xuxian"
+            android:layout_centerVertical="true"
+            app:layout_marginLeftPercent="8%"
+            app:layout_marginRightPercent="8%"
+            />
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/textviewround"
+            android:id="@+id/a1"
+            android:text="1"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            android:gravity="center"
+            app:layout_marginLeftPercent ="8%"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="上传电子合同"
+            android:layout_marginTop="5dp"
+
+            android:textColor="@color/blue"
+            android:layout_below="@+id/a1"
+            app:layout_marginLeftPercent ="3%"/>
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/a2"
+            android:layout_toRightOf="@id/a1"
+            android:background="@drawable/textviewround"
+            android:text="2"
+            android:gravity="center"
+            android:textColor="#fff"
+
+            app:layout_marginLeftPercent ="20%"
+            android:textSize="12sp"
+
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="个人信息认证"
+            android:layout_marginTop="5dp"
+
+            android:textColor="@color/blue"
+            android:layout_below="@+id/a1"
+            android:layout_toRightOf="@+id/a1"
+            app:layout_marginLeftPercent ="15%"/>
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/a3"
+            android:layout_toLeftOf="@+id/a4"
+            android:background="@drawable/textviewround"
+            android:text="3"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#fff"
+
+            app:layout_marginRightPercent ="20%"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="签署告知函"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/blue"
+            android:layout_below="@+id/a2"
+            android:layout_toRightOf="@+id/a2"
+            app:layout_marginLeftPercent ="21%"/>
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/a4"
+            android:gravity="center"
+            android:textSize="12sp"
+
+            android:background="@drawable/textviewround"
+            android:text="4"
+            app:layout_marginRightPercent ="8%"
+            android:textColor="#fff"
+
+            android:layout_alignParentRight="true"
+
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="提交审核"
+            android:layout_marginTop="5dp"
+
+            android:textColor="@color/blue"
+            android:layout_below="@+id/a1"
+            android:layout_alignParentRight="true"
+            app:layout_marginRightPercent ="5%"/>
+
+
+
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#F5F5F5">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/jilu"
+            android:layout_marginTop="30dp"/>
+        <TextView
+            android:layout_width="56dp"
+            android:layout_height="20dp"
+            android:text="审核中…"
+            android:textColor="#ff333333"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:layout_width="272dp"
+            android:layout_height="17dp"
+            android:text="您的申请已提交，工作人员将在1-2个工作日内审核"
+            android:textColor="#ff1dc875"
+            android:textSize="12sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="56dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="基本信息"
+            android:textColor="#ff333333"
+            android:textSize="14sp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/a41"
+                android:textColor="#989BA3"
+                android:text="公证编号"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_apply4_no"
+                android:text="QDGZ28388383818212"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:clickable="true"/>
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EFF0F4"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/a41"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/a42"
+                android:textColor="#989BA3"
+                android:text="申请人"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_apply4_name"
+                android:text="王小利"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:clickable="true"/>
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EFF0F4"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/a42"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/a43"
+                android:textColor="#989BA3"
+                android:text="公证编号"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_apply4_date"
+                android:text="2020-05-24 12:23"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:clickable="true"/>
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EFF0F4"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/a43"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/a44"
+                android:textColor="#989BA3"
+                android:text="公证编号"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_apply4_bank"
+                android:text="交通银行"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="15dp"
+                android:clickable="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F5F5F5"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="56dp"
+            android:layout_height="20dp"
+            android:text="文档信息"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#ff333333"
+            android:textSize="14sp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/pdf_m"
+                android:id="@+id/c1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/a45"
+                android:textColor="#333333"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/c1"
+                android:ems="13"
+                android:text="XXXXXX无抵押贷款合同电子版.PDF"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_apply4_detial1"
+                android:text="查看详情"
+                android:textColor="#4478ED"
+                android:textSize="14sp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_centerVertical="true"
+                android:clickable="true"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EFF0F4"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/c1"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/pdf_m"
+                android:id="@+id/c2"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/a46"
+                android:textColor="#333333"
+                android:layout_toRightOf="@+id/c2"
+                android:ems="13"
+                android:text="赋强公证告知函.PDF"
+                android:layout_centerVertical="true"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_apply4_detial2"
+                android:text="查看详情"
+                android:textColor="#4478ED"
+                android:textSize="14sp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_centerVertical="true"
+                android:clickable="true"/>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5">
+        <top.androidman.SuperButton
+            android:layout_width="301dp"
+            android:layout_height="40dp"
+            app:background_normalColor="@color/blue"
+            app:open_pressed_effect="true"
+            android:layout_centerHorizontal="true"
+            app:corner="5dp"
+            app:text="返回首页"
+            app:textColor="#fff"
+            app:textSize="14sp"
+            android:id="@+id/sbtn_apply4"
+            android:layout_marginTop="15dp"/>
+        <TextView
+            android:layout_width="84dp"
+            android:layout_height="20dp"
+            android:id="@+id/tv_apply4_jump"
+            android:clickable="true"
+            android:text="查看公证记录"
+            android:textColor="#ff245fff"
+            android:textSize="14sp"
+            android:layout_below="@+id/sbtn_apply4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

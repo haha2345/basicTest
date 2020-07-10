@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/QMUI.Compat.NoActionBar">
-        <activity android:name=".Activity.Apply2edActivity"></activity>
+        <activity android:name=".Activity.Apply4Activity"></activity>
+        <activity android:name=".Activity.Apply3Activity" />
+        <activity android:name=".Activity.Apply2NextActivity" />
+        <activity android:name=".Activity.Apply2edActivity" />
         <activity android:name=".Activity.Apply1stActivity" />
         <activity android:name=".Activity.SettingActivity" />
         <activity android:name=".Activity.WenshuActivity" />

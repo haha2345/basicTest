@@ -28,7 +28,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:background="@color/app_color_blue_2"
+        android:background="#FF245FFF"
         >
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:layout_width="60dp"

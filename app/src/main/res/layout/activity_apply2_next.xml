@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Apply2edActivity"
+    tools:context=".Activity.Apply2NextActivity"
     android:orientation="vertical">
+
     <com.qmuiteam.qmui.widget.QMUITopBar
-        android:id="@+id/topbar_apply2"
+        android:id="@+id/topbar_apply2_next"
         android:layout_width="match_parent"
         android:layout_height="?attr/qmui_topbar_height"/>
 
@@ -138,16 +139,98 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:clickable="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/rl_apply2_upload_front">
+
+            <ImageView
+                android:layout_width="165dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/shenfenzhengzhengmian"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/paizhao"
+                android:id="@+id/iv_apply2_front"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="拍摄上传人像面"
+                android:textSize="12sp"
+                android:textColor="@color/blue"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:clickable="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/rl_apply2_upload_back">
+
+            <ImageView
+                android:layout_width="165dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/shenfenzhengbeimian"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/paizhao"
+                android:id="@+id/iv_apply2_back"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="拍摄上传国徽面"
+                android:textSize="12sp"
+                android:textColor="@color/blue"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                />
+
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请确保身份证头像与信息均清晰可见"
+            android:textColor="#EE3535"
+            android:textSize="10sp"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/rl_apply2_upload_front"
+            android:layout_marginTop="5dp"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/a21"
             android:textColor="#333333"
-            android:text="联系方式"
+            android:text="姓名"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:textSize="14sp"/>
@@ -162,8 +245,8 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/et_apply2_phone"
-            android:hint="输入申请人联系方式"
+            android:id="@+id/et_apply2_name"
+            android:hint="输入申请人姓名"
             android:textSize="14sp"
             android:background="@drawable/transparent"
             android:layout_marginTop="5dp"
@@ -181,6 +264,139 @@
 
 
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/a22"
+            android:textColor="#333333"
+            android:text="身份证号"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*"
+            android:textColor="#E31313"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/a22"
+            android:textSize="14sp"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_apply2_id"
+            android:hint="输入申请人身份证号"
+            android:textSize="14sp"
+            android:background="@drawable/transparent"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"/>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EFF0F4"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/a22"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/a23"
+            android:textColor="#333333"
+            android:text="人脸信息采集"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*"
+            android:textColor="#E31313"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/a23"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_apply2_sample"
+            android:text="去采集"
+            android:textColor="#4478ED"
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:clickable="true"/>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EFF0F4"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/a23"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/a24"
+            android:textColor="#333333"
+            android:text="联系方式"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*"
+            android:textColor="#E31313"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/a24"
+            android:textSize="14sp"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_apply2_next_phone"
+            android:hint="输入申请人联系方式"
+            android:textSize="14sp"
+            android:background="@drawable/transparent"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"/>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EFF0F4"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/a24"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -189,7 +405,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/a22"
+            android:id="@+id/a26"
             android:textColor="#333333"
             android:text="验证码"
             android:layout_marginLeft="15dp"
@@ -201,38 +417,40 @@
             android:text="*"
             android:textColor="#E31313"
             android:layout_marginTop="20dp"
-            android:layout_toRightOf="@+id/a22"
+            android:layout_toRightOf="@+id/a26"
             android:textSize="14sp"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/et_apply2_vcode"
+            android:id="@+id/et_apply2_next_vcode"
             android:hint="请输入验证码"
             android:textSize="14sp"
             android:background="@drawable/transparent"
             android:layout_marginTop="10dp"
             android:layout_marginRight="11dp"
-            android:layout_toLeftOf="@+id/tv_apply2_vcode"
-/>
+            android:layout_toLeftOf="@+id/tv_apply2_next_vcode"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="发送验证码"
             android:textColor="#4478ED"
             android:layout_marginTop="20dp"
-            android:id="@+id/tv_apply2_vcode"
+            android:id="@+id/tv_apply2_next_vcode"
             android:layout_marginRight="15dp"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:clickable="true"/>
         <view
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#EFF0F4"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/a22"
+            android:layout_below="@+id/a26"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"/>
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -242,7 +460,7 @@
             android:layout_height="wrap_content"
             android:text="收不到短信？试试"
             android:textSize="10sp"
-            android:layout_toLeftOf="@+id/tv_apply2_voice"
+            android:layout_toLeftOf="@+id/tv_apply2_next_voice"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -250,7 +468,7 @@
             android:text="语音验证"
             android:textSize="10sp"
             android:textColor="@color/blue"
-            android:id="@+id/tv_apply2_voice"
+            android:id="@+id/tv_apply2_next_voice"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"/>
     </RelativeLayout>
@@ -262,17 +480,16 @@
             android:layout_width="301dp"
             android:layout_height="40dp"
             app:background_normalColor="@color/blue"
+            app:open_pressed_effect="true"
             android:layout_centerHorizontal="true"
             app:corner="5dp"
-            app:text="身份信息认证"
+            app:text="下一步"
             app:textColor="#fff"
             app:textSize="14sp"
-            android:id="@+id/sbtn_apply2_verify"
+            android:id="@+id/sbtn_apply2_next"
             android:layout_marginBottom="111dp"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

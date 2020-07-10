@@ -2,25 +2,32 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:layout_margin="10dp"
-    android:background="@color/selector_grey"
+    android:layout_height="124dp"
+    android:layout_margin="15dp"
+    android:background="#fff"
     >
     <TextView
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:background="@color/app_color_blue_2"
+        android:background="#1a4478ed"
         android:text="审核中"
+        android:textColor="#4478ED"
         android:gravity="center"
-        android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:id="@+id/tv_jilu_state"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_jilu_date"
-        android:text="2020-05-12"
+        android:text="2020-05-23 12:23"
+        android:textColor="#989BA3"
+        android:textSize="12sp"
         android:layout_alignParentRight="true"
-        android:layout_margin="5dp" />
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="12dp"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,30 +35,42 @@
         android:maxLines="1"
         android:id="@+id/tv_jilu_title"
         android:layout_below="@+id/tv_jilu_state"
-        android:text="154645464564321"
-        android:layout_margin="6dp"/>
+        android:textSize="14sp"
+        android:textColor="#333333"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="XXXXX无抵押贷款合同》赋强公正"
+/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_jilu_sub"
         android:layout_below="@+id/tv_jilu_title"
         android:text="公正编号"
-        android:layout_margin="5dp" />
+        android:textSize="12sp"
+        android:textColor="#989BA3"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_jilu_number"
         android:layout_below="@+id/tv_jilu_title"
         android:layout_toRightOf="@+id/tv_jilu_sub"
-        android:text="asgfsgagagsda"
-        android:layout_margin="5dp" />
+        android:text="QDGZ28388383818212"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_jilu_sub"
         android:id="@+id/tv_jilu_1"
-        android:text="所属银行:"
-        android:layout_margin="5dp" />
+        android:text="所属银行"
+        android:textSize="12sp"
+        android:textColor="#989BA3"
+        android:layout_margin="10dp"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,7 +78,7 @@
         android:text="交通银行"
         android:layout_below="@+id/tv_jilu_sub"
         android:layout_toRightOf="@+id/tv_jilu_1"
-        android:layout_margin="5dp" />
+        android:layout_marginTop="10dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +87,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tv_jilu_sub"
         android:text="查看详情"
-        android:layout_margin="5dp" />
+        android:layout_margin="10dp" />
 
 
 
