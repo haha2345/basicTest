@@ -12,12 +12,16 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import top.androidman.SuperButton;
 
 public class Apply1stActivity extends AppCompatActivity {
 
     Intent intent;
     @BindView(R.id.topbar_apply1)
     QMUITopBarLayout mTopBar;
+
+    @BindView(R.id.sbtn_apply1)
+    SuperButton sbtn;
 
 
     @Override

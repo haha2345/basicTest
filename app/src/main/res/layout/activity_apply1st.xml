@@ -135,7 +135,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
             <!--下半部分-->
             <LinearLayout
@@ -165,6 +166,7 @@
                     android:layout_width="345dp"
                     android:layout_height="40dp"
                     android:layout_below="@+id/a5"
+                    android:background="@drawable/spinnerstyle"
                     android:layout_alignParentRight="true"
                     android:gravity="center_horizontal"
                     android:entries="@array/banks"
@@ -174,24 +176,23 @@
                     android:layout_gravity="center"/>
 
             </LinearLayout>
-            <androidx.percentlayout.widget.PercentRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:src="@mipmap/additem"
-                    android:id="@+id/ibtn_apply1"
-                    android:clickable="true"
-                    app:qmui_is_circle="true"
-                    app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
-                    app:qmui_selected_border_width="1px"
-                    app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8"
-                    />
-            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <top.androidman.SuperButton
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:id="@+id/sbtn_apply1"
+                android:layout_marginTop="50dp"
+                app:background_normalColor="#1A245FFF"
+                app:corner="20dp"
+                app:icon="@mipmap/shangchuan"
+                app:iconHeight="60dp"
+                app:iconWidth="63dp"
+                app:iconOrientation="right"
+                app:iconPadding="50dp"
+                app:open_pressed_effect="true"
+                app:background_pressedColor="#E6245FFF"
+                 />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -219,14 +220,16 @@
                 android:id="@+id/checkBox_apply1_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="102dp"
-                android:text="确定电子合同属于申请人本人"
                 android:layout_gravity="center"
+                android:layout_marginTop="102dp"
                 android:gravity="center"
-                />
+                android:text="确定电子合同属于申请人本人"
+/>
+
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:layout_width="301dp"
                 android:layout_height="40dp"
+                android:id="@+id/rbtn_apply1_next"
                 android:layout_marginTop="21dp"
                 android:text="下一步"
                 android:gravity="center"

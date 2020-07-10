@@ -6,179 +6,60 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".Activity.ChangePwdActivity">
+    tools:context=".Activity.ChangePwdActivity"
+    android:background="#ffffff">
 
     <com.qmuiteam.qmui.widget.QMUITopBar
-        android:id="@+id/topbar"
+        android:id="@+id/topbar_change"
+
         android:layout_width="match_parent"
+        android:background="#fff"
+
         android:layout_height="?attr/qmui_topbar_height" />
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="24dp"
-        android:background="@color/qmui_btn_blue_bg">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/shape_wihte_frame">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:lines="1"
-                android:padding="1dp"
-                android:text="密码"
-                android:textSize="11sp" />
-
-            <View
-                android:id="@+id/view3"
-                android:layout_width="1dip"
-                android:layout_height="fill_parent"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_toRightOf="@+id/textView3"
-                android:background="#EEEFFF" />
-
-            <EditText
-                android:id="@+id/et_change_pwd"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="2dp"
-                android:layout_toRightOf="@+id/view3"
-                android:background="@drawable/transparent"
-                android:ems="19"
-                android:hint="请输入新密码，不少于6位"
-                android:inputType="textPassword"
-                android:maxLength="11"
-                android:padding="1dp"
-                android:textSize="12sp">
-
-                <requestFocus />
-            </EditText>
-
-            <ImageView
-                android:id="@+id/del_phonenumber3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="3dp"
-                android:src="@drawable/text_del"
-                android:visibility="invisible" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="24dp"
-        android:background="@color/qmui_btn_blue_bg">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/shape_wihte_frame">
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:lines="1"
-                android:padding="1dp"
-                android:text="确认密码"
-                android:textSize="11sp" />
-
-            <View
-                android:id="@+id/view1"
-                android:layout_width="1dip"
-                android:layout_height="fill_parent"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_toRightOf="@+id/textView1"
-                android:background="#EEEFFF" />
-
-            <EditText
-                android:id="@+id/et_change_verfy_pwd"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="2dp"
-                android:layout_toRightOf="@+id/view1"
-                android:background="@drawable/transparent"
-                android:ems="19"
-                android:hint="重复输入密码"
-                android:inputType="textPassword"
-                android:maxLength="11"
-                android:padding="1dp"
-                android:textSize="12sp">
-
-                <requestFocus />
-            </EditText>
-
-            <ImageView
-                android:id="@+id/del_phonenumber1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="3dp"
-                android:src="@drawable/text_del"
-                android:visibility="invisible" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-
-    <!--注册按钮位置-->
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="密码*"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"/>
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/qmui_config_color_white"
-        android:orientation="horizontal">
+        android:layout_margin="15dp"
+        android:inputType="textPassword"
+        android:hint="请输入新密码，不少于6位"
+        android:id="@+id/et_change_pwd"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="再次输入密码*"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:inputType="textPassword"
+        android:hint="请再次输入您的密码"
+        android:id="@+id/et_change_verfy_pwd"
+        android:textSize="14sp"/>
 
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+    <top.androidman.SuperButton
+        android:layout_width="301dp"
+        android:layout_height="40dp"
+        android:id="@+id/btn_change_pwd"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        app:background_normalColor="@color/blue"
+        app:corner="10dp"
+        app:text="下一步"
+        app:textColor="#fff"
+        app:textSize="14sp"/>
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/btn_change_pwd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:clickable="true"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="确认修改"
-            android:textSize="?attr/qmui_common_list_item_title_h_text_size"
-            app:qmui_isRadiusAdjustBounds="true" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_change_test"

@@ -20,6 +20,7 @@ import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.listener.ResponseListener;
 import com.kongzue.baseokhttp.util.JsonMap;
+import com.qmuiteam.qmui.widget.QMUITopBar;
 
 public class ChangePwdActivity extends AppCompatActivity {
 
@@ -35,6 +36,7 @@ public class ChangePwdActivity extends AppCompatActivity {
     private String jsonStr;
     private String TAG="ChangePwdActivity";
 
+    private QMUITopBar topbar;
     private User user=null;
     private Utils utils=null;
 
@@ -45,6 +47,7 @@ public class ChangePwdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pwd);
         initViews();
+        initTopbar();
     }
 
 
@@ -67,6 +70,18 @@ public class ChangePwdActivity extends AppCompatActivity {
                 jsonStr=gson.toJson(user);
                 Log.d(TAG,jsonStr);
                 putToChangePwd(jsonStr);
+            }
+        });
+    }
+
+
+    private void initTopbar(){
+        topbar=findViewById(R.id.topbar_change);
+        topbar.setTitle("修改密码");
+        topbar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
