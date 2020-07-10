@@ -42,21 +42,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
-                android:background="@color/qmui_config_color_gray_8">
+                android:background="@mipmap/main_background">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="山东省青岛市琴岛公证处" />
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/logo"
+                        />
+                    <TextView
+                        android:layout_width="220dp"
+                        android:layout_height="28dp"
+                        android:text="山东省青岛市琴岛公证处"
+                        android:textColor="#ffffffff"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-20dp"
+                android:layout_height="93dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/conner"
+                android:layout_marginTop="-56dp"
+                android:elevation="3dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -88,34 +107,30 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                android:orientation="horizontal">
 
-                <TextView
+                <ImageView
                     android:id="@+id/tv_main_tv1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="公告" />
+                    android:src="@mipmap/laba"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="18dp"
+                    />
 
-                <TextView
-                    android:id="@+id/tv_main_get_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="查看更多" />
 
                 <TextView
                     android:id="@+id/tv_main_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_toLeftOf="@+id/tv_main_get_more"
+                    android:layout_marginTop="15dp"
+                    android:textSize="12sp"
+                    android:textColor="#989BA3"
+                    android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/tv_main_tv1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="safasfasfasfafasfasfasf" />
+                    android:text="公证是公证机构根据自然人、法人或者..." />
 
             </RelativeLayout>
 
@@ -123,25 +138,42 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
                 android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="行业资讯"/>
-
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                >
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#000"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:background="#EFF0F4"
+                    android:layout_marginTop="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="23dp"
+                        android:src="@mipmap/tuoyuanxing" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="行业资讯"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="20dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp">
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/reView_main"
                         android:layout_width="match_parent"
@@ -154,24 +186,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="申办流程"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#000"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="23dp"
+                        android:layout_marginLeft="16dp"
+                        android:src="@mipmap/tuoyuanxing" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="申办流程"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="20dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_main_shenbanliucheng"
-                    android:text="1234567safasfgasga"/>
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:text="这里写申办流程，这里写申办流程这里写申办流程这里写申办流程这里写申办流程这里写申办流程这里写申办流程这里写申办流程这里写申办流程这里写申办流程这里写申办流程这里写申办流程"/>
             </LinearLayout>
 
 

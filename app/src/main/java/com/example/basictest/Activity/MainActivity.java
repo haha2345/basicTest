@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity{
 
     private EasyNavigationBar navigationBar;
     private String[] tabText={"首页","我的"};
-    private int[] normalIcon={R.mipmap.index,R.mipmap.me};
-    private int[] selectIcon={R.mipmap.index1,R.mipmap.me1};
+    private int[] normalIcon={R.mipmap.main_gray,R.mipmap.mine_gray};
+    private int[] selectIcon={R.mipmap.main_bule,R.mipmap.mine_blue};
     private List<Fragment> fragments=new ArrayList<>();
 
 
