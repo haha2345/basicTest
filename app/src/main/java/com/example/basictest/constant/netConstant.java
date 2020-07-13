@@ -8,6 +8,11 @@ public class netConstant {
     private static String registerURL=URL+"mobile/register";
     private static String resetPwdURL=URL+"mobile/resetPwd";
     private static String noticeURL=URL+"system/notice/list";
+    private static String bankURL=URL+"fqgz/coList/partList";
+
+    public static String getBankURL() {
+        return bankURL;
+    }
 
     public static String getGetVcodeURL() {
         return getVcodeURL;

@@ -173,11 +173,11 @@
                     <Spinner
                         android:layout_width="345dp"
                         android:layout_height="40dp"
+                        android:id="@+id/spinner_apply"
                         android:layout_below="@+id/a5"
                         android:background="@drawable/spinnerstyle"
                         android:layout_alignParentRight="true"
                         android:gravity="center_horizontal"
-                        android:entries="@array/banks"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="15dp"
                         android:layout_centerVertical="true"
