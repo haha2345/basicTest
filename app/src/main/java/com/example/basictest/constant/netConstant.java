@@ -7,6 +7,7 @@ public class netConstant {
     private static String loginURL=URL+"mobile/login";
     private static String registerURL=URL+"mobile/register";
     private static String resetPwdURL=URL+"mobile/resetPwd";
+    private static String noticeURL=URL+"system/notice/list";
 
     public static String getGetVcodeURL() {
         return getVcodeURL;
@@ -22,5 +23,9 @@ public class netConstant {
 
     public static String getResetPwdURL() {
         return resetPwdURL;
+    }
+
+    public static String getNoticeURL() {
+        return noticeURL;
     }
 }

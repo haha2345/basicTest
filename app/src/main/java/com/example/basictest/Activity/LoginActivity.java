@@ -3,6 +3,7 @@ package com.example.basictest.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.basictest.Class.SpUtils;
 import com.example.basictest.Class.User;
-import com.example.basictest.Class.UserService;
 import com.example.basictest.Class.Utils;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
@@ -36,7 +37,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText et_vcode;
     private TextView tv_jumpToRegister;
     private TextView tv_forgetPwd;
-    private UserService userService=null;
     private User user=null;
     private Utils utils=null;
 
@@ -44,6 +44,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String pwd;
     private String vcode;
     private String uuid;
+
+    private SharedPreferences preferences;
 
     //定义弹出窗口
     QMUITipDialog qmuiTipDialog;
@@ -67,6 +69,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initViews();
         setOnFocusChangeErrMsg(et_phone,"phone","手机号格式不正确");
         setOnFocusChangeErrMsg(et_pwd,"password","密码不少于6位");
+        username=SpUtils.getInstance(this).getString("username",null);
+        pwd=SpUtils.getInstance(this).getString("pwd",null);
+
+        if (SpUtils.getInstance(this).getString("token",null)!=null){
+            jupmToMain();
+        }
 
     }
 
@@ -79,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         tv_forgetPwd=(TextView)findViewById(R.id.tv_forgetPwd);
         tv_jumpToRegister=(TextView)findViewById(R.id.tv_jumpToRegister);
 
-        userService=new UserService();
         //工具类
         utils=new Utils();
 
@@ -167,8 +174,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         String msg=utils.getJson(response).get("msg").getAsString();
                         utils.showToastInThread(LoginActivity.this,msg);
                         Log.d("LoginActivity",msg);
+                        String token=utils.getJson(response).get("token").getAsString();
+                        Log.d("a",token);
+                        //储存
+                        saveValue(token);
                         jupmToMain();
-
+                        finish();
                     }else{
                         utils.showToastInThread(LoginActivity.this,"登陆失败");
                     }
@@ -256,5 +267,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginIntent=new Intent(LoginActivity.this,MainActivity.class);
         loginIntent.putExtra("username",username);
         startActivity(loginIntent);
+    }
+
+    private void saveValue(String token){
+//        preferences=getSharedPreferences("info",MODE_PRIVATE);
+//        SharedPreferences.Editor editor=preferences.edit();
+//        editor.putString("username",username);
+//        editor.putString("pwd",pwd);
+//        editor.putString("token",token);
+//        editor.commit();
+        SpUtils.getInstance(this).setString("username",username,1800);
+        SpUtils.getInstance(this).setString("pwd",pwd,1800);
+        SpUtils.getInstance(this).setString("token",token,1800);
     }
 }

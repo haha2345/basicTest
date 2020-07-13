@@ -46,7 +46,6 @@ public class WenshuActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
-        mTopBar.setBackgroundColor(R.color.qmui_config_color_gray_8);
         mTopBar.setBackgroundAlpha(255);
         mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +60,7 @@ public class WenshuActivity extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        finish();
                     }
                 });
     }

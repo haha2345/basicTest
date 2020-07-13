@@ -2,57 +2,74 @@ package com.example.basictest.Adapter;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.basictest.Class.NoticeEntity;
 import com.example.basictest.R;
-import com.example.basictest.Class.DummyContent.DummyItem;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
+
 public class MyzixunRecyclerViewAdapter extends RecyclerView.Adapter<MyzixunRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private List<NoticeEntity> datas;
+    private Context context;
 
-    public MyzixunRecyclerViewAdapter(List<DummyItem> items) {
-        mValues = items;
+    public MyzixunRecyclerViewAdapter(Context context) {
+        this.context=context;
+    }
+    public MyzixunRecyclerViewAdapter(Context context,List<NoticeEntity> datas){
+        this.context=context;
+        this.datas=datas;
+    }
+
+    public void setDatas(List<NoticeEntity> datas) {
+        this.datas = datas;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_zixun, parent, false);
-        return new ViewHolder(view);
+        ViewHolder viewHolder=new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        //holder.mIdView.setText(mValues.get(position).id);
-        //holder.mContentView.setText(mValues.get(position).content);
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        ViewHolder vh=(ViewHolder)holder;
+        NoticeEntity noticeEntity=datas.get(position);
+        vh.tv_zixun_title.setText(noticeEntity.getNoticeTitle());
+        vh.tv_zixun_date.setText(noticeEntity.getUpdateTime());
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "我被点击了"+position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 4;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        //public final TextView mIdView;
-        //public final TextView mContentView;
-        public DummyItem mItem;
+        private TextView tv_zixun_title;
+        private TextView tv_zixun_date;
+
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
-            //mIdView = (TextView) view.findViewById(R.id.item_number);
-            //mContentView = (TextView) view.findViewById(R.id.content);
+            tv_zixun_date=view.findViewById(R.id.tv_zixun_date);
+            tv_zixun_title=view.findViewById(R.id.tv_zixun_title);
+
         }
 
         @Override

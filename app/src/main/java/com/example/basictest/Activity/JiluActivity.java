@@ -97,11 +97,11 @@ public class JiluActivity extends AppCompatActivity {
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundColor(R.color.bbl_999999);
+        mTopBar.setBackgroundAlpha(255);
         mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finish();
             }
         });
 
