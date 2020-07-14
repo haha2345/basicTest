@@ -10,6 +10,12 @@ public class netConstant {
     private static String noticeURL=URL+"system/notice/list";
     private static String bankURL=URL+"fqgz/coList/partList";
 
+    public static String getUploadEContractURL() {
+        return uploadEContractURL;
+    }
+
+    private static String uploadEContractURL=URL+"fqgz/userFile/uploadEContract";
+
     public static String getBankURL() {
         return bankURL;
     }

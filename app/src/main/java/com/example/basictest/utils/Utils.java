@@ -1,4 +1,4 @@
-package com.example.basictest.Class;
+package com.example.basictest.utils;
 
 import android.content.Context;
 import android.widget.Toast;

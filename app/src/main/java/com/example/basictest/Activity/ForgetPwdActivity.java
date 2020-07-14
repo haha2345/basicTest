@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basictest.Class.User;
-import com.example.basictest.Class.Utils;
+import com.example.basictest.utils.Utils;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
 import com.google.gson.JsonObject;

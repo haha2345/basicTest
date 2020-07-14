@@ -7,70 +7,9 @@
     tools:context=".Activity.TestActivity"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/textviewround"
-        android:text="1"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:layout_marginLeft="50dp"
-/>
-    <ImageView
-        android:layout_width="44dp"
-        android:layout_height="4dp"
-        android:src="@mipmap/xuxian"
-        android:layout_weight="1"
-
-        android:layout_margin="14dp"
-        />
-    <TextView
-    android:layout_width="20dp"
-    android:layout_height="20dp"
-    android:background="@drawable/textviewround"
-    android:text="1"
-    android:textSize="12sp"
-    android:gravity="center"
-        android:layout_weight="1"
-
-        />
-    <ImageView
-        android:layout_width="44dp"
-        android:layout_height="4dp"
-        android:src="@mipmap/xuxian"
-        android:layout_weight="1"
-        android:layout_margin="14dp"
-
-        />
-    <TextView
-    android:layout_width="20dp"
-    android:layout_height="20dp"
-    android:background="@drawable/textviewround"
-    android:text="1"
-    android:textSize="12sp"
-    android:gravity="center"
-        android:layout_weight="1"
-
-        />
-    <ImageView
-        android:layout_width="44dp"
-        android:layout_height="4dp"
-        android:src="@mipmap/xuxian"
-        android:layout_weight="1"
-        android:layout_margin="14dp"
-
-        />
-    <TextView
-    android:layout_width="20dp"
-    android:layout_height="20dp"
-    android:background="@drawable/textviewround"
-    android:text="1"
-    android:textSize="12sp"
-    android:gravity="center"
-        android:layout_weight="1"
-        android:layout_marginRight="50dp"
-
-        />
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

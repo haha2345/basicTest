@@ -10,16 +10,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.basictest.Class.User;
-import com.example.basictest.Class.Utils;
+import com.example.basictest.utils.Utils;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.kongzue.baseokhttp.HttpRequest;
-import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.listener.ResponseListener;
-import com.kongzue.baseokhttp.util.JsonMap;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 public class ChangePwdActivity extends AppCompatActivity {

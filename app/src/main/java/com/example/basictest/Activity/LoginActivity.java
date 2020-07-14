@@ -2,6 +2,7 @@ package com.example.basictest.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,9 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.basictest.Class.SpUtils;
+import com.example.basictest.utils.SpUtils;
 import com.example.basictest.Class.User;
-import com.example.basictest.Class.Utils;
+import com.example.basictest.utils.Utils;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
 import com.google.gson.Gson;
@@ -26,7 +27,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends Activity implements View.OnClickListener{
 
 
     //定义控件

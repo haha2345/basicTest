@@ -199,7 +199,7 @@
                     app:iconOrientation="right"
                     app:iconPadding="50dp"
                     app:open_pressed_effect="true"
-                    app:background_pressedColor="#E6245FFF"
+                    app:background_pressedColor="#2E245FFF"
                     />
 
                 <TextView
@@ -234,21 +234,26 @@
                     android:text="确定电子合同属于申请人本人"
                     />
 
-                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                <top.androidman.SuperButton
                     android:layout_width="301dp"
                     android:layout_height="40dp"
-                    android:id="@+id/rbtn_apply1_next"
-                    android:layout_marginTop="21dp"
-                    android:text="下一步"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    app:qmui_isRadiusAdjustBounds="true"
-                    />
+                    app:background_normalColor="@color/blue"
+                    app:open_pressed_effect="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    app:corner="5dp"
+                    app:text="下一步"
+                    app:textColor="#fff"
+                    app:textSize="14sp"
+                    android:id="@+id/sbtn_apply1_next"
+                    android:layout_marginBottom="100dp"
+                    android:layout_alignParentBottom="true"/>
 
 
             </LinearLayout>
 
         </LinearLayout>
+
 
 
 
@@ -260,4 +265,5 @@
             android:fitsSystemWindows="true" />
 
     </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
+
 </ScrollView>
