@@ -8,9 +8,12 @@ import com.example.basictest.R;
 
 public class Apply2edActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply2ed);
+
     }
 }

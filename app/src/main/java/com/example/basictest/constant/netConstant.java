@@ -9,6 +9,17 @@ public class netConstant {
     private static String resetPwdURL=URL+"mobile/resetPwd";
     private static String noticeURL=URL+"system/notice/list";
     private static String bankURL=URL+"fqgz/coList/partList";
+    private static String applyURL=URL+"fqgz/ca/apply";
+
+    public static String getModel0x12URL() {
+        return model0x12URL;
+    }
+
+    private static String model0x12URL=URL+"fqgz/ca/mode0x12";
+
+    public static String getApplyURL() {
+        return applyURL;
+    }
 
     public static String getUploadEContractURL() {
         return uploadEContractURL;

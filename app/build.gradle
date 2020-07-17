@@ -18,6 +18,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    repositories {
+        flatDir(){
+            dirs 'libs'
+        }
+    }
 
 }
 
@@ -57,6 +62,9 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.26'
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
-
+    implementation(name: 'framework-release', ext: 'aar')
+    implementation(name: 'IDSPSDK', ext: 'aar')
+    implementation(name: 'livecheckcomponent-release', ext: 'aar')
+    implementation(name: 'ocrcomponent-release', ext: 'aar')
 
 }

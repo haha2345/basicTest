@@ -7,8 +7,11 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +19,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -30,7 +37,9 @@ import com.example.basictest.constant.netConstant;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.google.gson.Gson;
 import com.kongzue.baseokhttp.HttpRequest;
+import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.listener.ResponseListener;
+import com.kongzue.baseokhttp.util.JsonMap;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.io.File;
@@ -54,6 +63,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import top.androidman.SuperButton;
 
+import static com.example.basictest.R.drawable.pdf;
 import static com.example.basictest.utils.FileUtils.getPath;
 import static com.example.basictest.utils.FileUtils.getRealPathFromURI;
 
@@ -66,6 +76,8 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    private Context mContext=Apply1stActivity.this;
+
     Intent intent;
     @BindView(R.id.topbar_apply1)
     QMUITopBarLayout mTopBar;
@@ -76,7 +88,11 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     @BindView(R.id.sbtn_apply1)
     SuperButton sbtn_apply1;
     @BindView(R.id.sbtn_apply1_next)
-    SuperButton sbtn_apply1_next;
+    Button sbtn_apply1_next;
+    @BindView(R.id.checkBox_apply1_1)
+    CheckBox checkbox_apply1;
+    @BindView(R.id.tv_apply1_name)
+    TextView tv_apply1_name;
 
 
     private String token;
@@ -90,9 +106,12 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     private int REQUEST_CODE=1;
 
     String TAG="aa";
+    private String caseId,caseCode,userId;
     private String path,filename;
     private File file;
     Uri uri;
+    //判断是否获取到文件路径
+    private int flag=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +124,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
         initSpinner();
         spinner.setOnItemSelectedListener(this);
         initBtn();
+        initCheckBox();
 
     }
 
@@ -188,6 +208,8 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                 file = new File(path);
                 filename = file.getName();
                 Log.w(TAG,"getName==="+filename);
+                //取到文件名改textview
+                afterGetFile();
                 Toast.makeText(this,path+"11111",Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -202,10 +224,13 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                 // 这里是为了选中文件后，编辑框内容变成我选中的文件名
                 // 直接 mc_annex.setText(file.getName()); 也行
                 Log.w(TAG,"getName==="+filename);
+                afterGetFile();
+
                 Toast.makeText(this,path,Toast.LENGTH_SHORT).show();
             } else {//4.4以下下系统调用方法
                 path = getRealPathFromURI(this,uri);
                 Log.w(TAG,path);
+                afterGetFile();
                 Toast.makeText(Apply1stActivity.this, path+"222222", Toast.LENGTH_SHORT).show();
             }
         }
@@ -214,6 +239,23 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
+
+    private void initCheckBox(){
+        checkbox_apply1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    if (flag==1){
+                        Log.d("检查框","已获取到文件名");
+                        sbtn_apply1_next.setEnabled(true);
+                    }
+                }else{
+                    sbtn_apply1_next.setEnabled(false);
+                }
+
+            }
+        });
+    }
 
 
     private void initBtn(){
@@ -231,13 +273,13 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
         sbtn_apply1_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //upload1();
                 upload();
             }
         });
     }
 
 
+    //Spinner的重载
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String bankStr=(String)spinner.getItemAtPosition(i);
@@ -250,41 +292,6 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
-    private void upload1(){
-        if (file.exists()){
-            OkManager okManager=OkManager.getInstance();
-            RequestBody requestBody=new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("eContractFile",filename,RequestBody.create(MediaType.parse("multipart/form-data"),file))
-                    .addFormDataPart("coId",coId+"")
-                    .build();
-            okManager.postFile(Apply1stActivity.this,netConstant.getUploadEContractURL(),requestBody,new okhttp3.Callback(){
-
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.e(TAG, "onFailure: ",e);
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final String responseBody = response.body().string();
-                    final JSONObject obj = JSON.parseObject(responseBody);
-                    Log.e(TAG,obj.toString());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 对返回结果进行操作
-                        }
-                    });
-                }
-            });
-        }else {
-            Log.d(TAG, "文件不存在");
-
-        }
-    }
-
 
     private void upload(){
         HttpRequest.build(Apply1stActivity.this,netConstant.getUploadEContractURL())
@@ -293,11 +300,26 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                 .addHeaders("Content-Type","multipart/form-data")
                 .addParameter("eContractFile",file)
                 .addParameter("coId",coId)
-                .setResponseListener(new ResponseListener() {
+                .setJsonResponseListener(new JsonResponseListener() {
                     @Override
-                    public void onResponse(String main, Exception error) {
+                    public void onResponse(JsonMap main, Exception error) {
                         if (error == null) {
-                            Log.e(TAG,main);
+                            Log.d(TAG,main.getString("data"));
+                            if (main.getString("code").equals("200")){
+                                //获取保存caseid userid case码
+                                JsonMap result=main.getJsonMap("data");
+                                caseId=result.getString("id");
+                                userId=result.getString("userId");
+                                caseCode=result.getString("caseCode");
+                                SpUtils.getInstance(mContext).setString("caseId",caseId,1800);
+                                SpUtils.getInstance(mContext).setString("userId",userId,1800);
+                                SpUtils.getInstance(mContext).setString("caseCode",caseCode,1800);
+                                Log.d("获取到的上传信息",caseId+"  "+caseCode+"  "+userId);
+                                jumpToApply2();
+                            }else {
+                                Toast.makeText(mContext,"上传失败",Toast.LENGTH_SHORT);
+                            }
+
                         } else {
                             Log.e(TAG,"错误",error);
                         }
@@ -315,4 +337,21 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
             ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         }
     }
+
+    private void afterGetFile(){
+        tv_apply1_name.setText(filename);
+        sbtn_apply1.setClickable(false);
+        Resources resources = Apply1stActivity.this.getResources();
+        Drawable drawable = resources.getDrawable(pdf);
+        sbtn_apply1.setIcon(drawable);
+        sbtn_apply1.setPressed(false);
+        sbtn_apply1.setEnabled(false);
+        flag=1;
+    }
+    private void jumpToApply2(){
+        intent=new Intent(mContext,Apply2edActivity.class);
+        startActivity(intent);
+
+    }
+
 }
