@@ -34,6 +34,7 @@ import com.example.basictest.Class.bankEntity;
 import com.example.basictest.Class.bankListResponse;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
+import com.example.basictest.utils.Utils;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.google.gson.Gson;
 import com.kongzue.baseokhttp.HttpRequest;
@@ -94,6 +95,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     @BindView(R.id.tv_apply1_name)
     TextView tv_apply1_name;
 
+    Utils utils=new Utils();
 
     private String token;
 
@@ -142,7 +144,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
         });
 
         //设置标题名
-        mTopBar.setTitle("系统设置");
+        mTopBar.setTitle("赋强公证申请");
         mTopBar.addRightImageButton(R.mipmap.icon_topbar_overflow, R.id.topbar_right_change_button)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -317,7 +319,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                                 Log.d("获取到的上传信息",caseId+"  "+caseCode+"  "+userId);
                                 jumpToApply2();
                             }else {
-                                Toast.makeText(mContext,"上传失败",Toast.LENGTH_SHORT);
+                                utils.showToastInThread(mContext,"上传失败");
                             }
 
                         } else {

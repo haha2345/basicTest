@@ -10,43 +10,40 @@ public class netConstant {
     private static String noticeURL=URL+"system/notice/list";
     private static String bankURL=URL+"fqgz/coList/partList";
     private static String applyURL=URL+"fqgz/ca/apply";
+    private static String uploadEContractURL=URL+"fqgz/userFile/uploadEContract";
+    private static String checkSMSCodeURL=URL+"checkSMSCode";
+    private static String model0x12URL=URL+"fqgz/ca/mode0x12";
 
+
+
+
+    public static String getCheckSMSCodeURL() {
+        return checkSMSCodeURL;
+    }
     public static String getModel0x12URL() {
         return model0x12URL;
     }
-
-    private static String model0x12URL=URL+"fqgz/ca/mode0x12";
-
     public static String getApplyURL() {
         return applyURL;
     }
-
     public static String getUploadEContractURL() {
         return uploadEContractURL;
     }
-
-    private static String uploadEContractURL=URL+"fqgz/userFile/uploadEContract";
-
     public static String getBankURL() {
         return bankURL;
     }
-
     public static String getGetVcodeURL() {
         return getVcodeURL;
     }
-
     public static String getLoginURL() {
         return loginURL;
     }
-
     public static String getRegisterURL() {
         return registerURL;
     }
-
     public static String getResetPwdURL() {
         return resetPwdURL;
     }
-
     public static String getNoticeURL() {
         return noticeURL;
     }

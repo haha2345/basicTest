@@ -71,9 +71,7 @@ public class MainFragment extends Fragment {
     //线程通信
     private static final int COMPLETED = 0;
 
-    //TEST
-    private CtidReturnParams ctidReturnParams;
-    private String authinfo;
+
 
     Intent intent;
     public MainFragment() {
@@ -147,8 +145,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
-                test2nd();
-                postAuthinfo(authinfo);
+
             }
         });
     }
@@ -188,76 +185,5 @@ public class MainFragment extends Fragment {
         }).start();
     }
 
-    private void test2nd(){
-        ctidReturnParams= BJCAIdentifyAPI.initialCtidIdentify(getActivity(), CtidModelEnum.MODEL_0X12, CtidActionType.AUTH_ACTION);
-        authinfo=ctidReturnParams.getValue();
-        Log.d("status",ctidReturnParams.getStatus());
-        Log.d("msg",ctidReturnParams.getMessage());
-        Log.d("auth",authinfo);
-    }
-    private void postAuthinfo(final String authinfo){
-        HttpRequest.build(getActivity(),netConstant.getApplyURL())
-                .addHeaders("Authorization","Bearer "+token)
-                .addHeaders("Content-Type","application/json")
-                .setJsonParameter("{\"authInfo\":\""+authinfo+"\"}")
-                .setJsonResponseListener(new JsonResponseListener() {
 
-                    @Override
-                    public void onResponse(JsonMap main, Exception error) {
-                        if (error == null) {
-                            JsonMap result=main.getJsonMap("data");
-                            Log.d("没错",result.getString("authResultInfo"));
-
-                            testIdentify(result.getString("authResultInfo"));
-                        } else {
-                            Log.e("有错",error.toString());
-                        }
-                    }
-                })
-                .doPost();
-
-    }
-
-    //测试识人接口
-    private void testIdentify(final String value){
-        BJCAIdentifyAPI.actionCtidIdentify(getActivity(), value, CtidModelEnum.MODEL_0X12, CtidActionType.AUTH_ACTION
-                , new BJCAAuthModel(), true, new IdentifyCallBack(getActivity()) {
-                    @Override
-                    public void onIdentifyCallBack(CtidReturnParams ctidReturnParams) {
-                        String val=ctidReturnParams.getValue();
-                        Log.d("status",ctidReturnParams.getStatus());
-                        Log.d("msg",ctidReturnParams.getMessage());
-                        Log.d("value",val);
-                        model0x12(val);
-                    }
-
-                    @Override
-                    public void onPreExecute() {
-
-                    }
-                });
-    }
-
-    private void model0x12(String value){
-        String jsonStr="{\n" +
-                "    \"caseId\":\"164\",\n" +
-                "    \"authInfo\":\""+value+"\",\n" +
-                "    \"personMobile\":\"13205401086\"\n" +
-                "}";
-        HttpRequest.build(getActivity(),netConstant.getModel0x12URL())
-                .addHeaders("Authorization","Bearer "+token)
-                .addHeaders("Content-Type","application/json")
-                .setJsonParameter(jsonStr)
-                .setResponseListener(new ResponseListener() {
-                    @Override
-                    public void onResponse(String main, Exception error) {
-                        if (error == null) {
-                            Log.d("没错",main);
-                        } else {
-                            Log.e("有错",error.toString());
-                        }
-                    }
-                })
-                .doPost();
-    }
 }

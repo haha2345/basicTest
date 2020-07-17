@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Activity.Apply2edActivity"
     android:orientation="vertical">
-    <com.qmuiteam.qmui.widget.QMUITopBar
-    android:id="@+id/topbar_apply2"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/qmui_topbar_height"/>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar_apply2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
 
 
     <androidx.percentlayout.widget.PercentRelativeLayout
@@ -131,7 +133,12 @@
 
 
     </androidx.percentlayout.widget.PercentRelativeLayout>
-    <view
+
+
+
+
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#EFF0F4"
@@ -165,11 +172,12 @@
             android:id="@+id/et_apply2_phone"
             android:hint="输入申请人联系方式"
             android:textSize="14sp"
+            android:inputType="phone"
             android:background="@drawable/transparent"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"/>
-        <view
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#EFF0F4"
@@ -177,9 +185,6 @@
             android:layout_below="@+id/a21"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"/>
-
-
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -211,6 +216,7 @@
             android:textSize="14sp"
             android:background="@drawable/transparent"
             android:layout_marginTop="10dp"
+            android:inputType="phone"
             android:layout_marginRight="11dp"
             android:layout_toLeftOf="@+id/tv_apply2_vcode"
 />
@@ -223,7 +229,7 @@
             android:id="@+id/tv_apply2_vcode"
             android:layout_marginRight="15dp"
             android:layout_alignParentRight="true"/>
-        <view
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#EFF0F4"
@@ -258,18 +264,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <top.androidman.SuperButton
+        <Button
             android:layout_width="301dp"
             android:layout_height="40dp"
-            app:background_normalColor="@color/blue"
-            android:layout_centerHorizontal="true"
-            app:corner="5dp"
-            app:text="身份信息认证"
-            app:textColor="#fff"
-            app:textSize="14sp"
             android:id="@+id/sbtn_apply2_verify"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="111dp"
-            android:layout_alignParentBottom="true"/>
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:text="身份信息认证"
+            android:background="@drawable/buttonclick"/>
+
     </RelativeLayout>
 
 

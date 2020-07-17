@@ -32,7 +32,7 @@
                 android:hint="请输入手机号"
                 android:inputType="phone"
                 android:padding="1dp"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:maxLength="11">
             </EditText>
 
