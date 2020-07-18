@@ -281,10 +281,11 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     }
 
 
-    //Spinner的重载
+    //Spinner的重载 获取合作银行id 储存银行名
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String bankStr=(String)spinner.getItemAtPosition(i);
+        SpUtils.getInstance(this).setString("bank",bankStr);
         coId=map.get(bankStr);
         Log.d("a",coId+"");
     }

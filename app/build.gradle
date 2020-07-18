@@ -18,6 +18,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets{
+
+        main{
+
+            jniLibs.srcDirs=['libs']
+
+        }
+
+    }
     repositories {
         flatDir(){
             dirs 'libs'
@@ -50,7 +59,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.kongzue.baseokhttp_v3:baseokhttp_v3:3.1.6'
 
-    implementation 'com.hjm:BottomTabBar:1.2.2'
     implementation 'com.github.chaychan:BottomBarLayout:1.2.0' //建议使用最新版本
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
     implementation 'com.github.Vincent7Wong:EasyNavigation:2.0.5'
@@ -62,9 +70,12 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.26'
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
+    implementation 'com.github.MasayukiSuda:CameraRecorder-android:v0.1.5'
+
+
     implementation(name: 'framework-release', ext: 'aar')
     implementation(name: 'IDSPSDK', ext: 'aar')
     implementation(name: 'livecheckcomponent-release', ext: 'aar')
-    implementation(name: 'ocrcomponent-release', ext: 'aar')
+    implementation(name: 'ocrcomponentV1.0.2', ext: 'aar')
 
 }

@@ -20,16 +20,13 @@ import com.example.basictest.Activity.Apply1stActivity;
 import com.example.basictest.Activity.JiluActivity;
 import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
+import com.example.basictest.Activity.CameraActivity;
 import com.example.basictest.Class.NoticeEntity;
 import com.example.basictest.Class.NoticeListResponse;
 import com.example.basictest.utils.SpUtils;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
 import com.google.gson.Gson;
-import com.kongzue.baseokhttp.HttpRequest;
-import com.kongzue.baseokhttp.listener.JsonResponseListener;
-import com.kongzue.baseokhttp.listener.ResponseListener;
-import com.kongzue.baseokhttp.util.JsonMap;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,12 +34,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.org.bjca.identifycore.callback.IdentifyCallBack;
-import cn.org.bjca.identifycore.enums.CtidActionType;
-import cn.org.bjca.identifycore.enums.CtidModelEnum;
-import cn.org.bjca.identifycore.impl.BJCAIdentifyAPI;
-import cn.org.bjca.identifycore.params.BJCAAuthModel;
-import cn.org.bjca.identifycore.params.CtidReturnParams;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -144,6 +135,8 @@ public class MainFragment extends Fragment {
         btn_main_syzn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                intent=new Intent(getActivity(), CameraActivity.class);
+                startActivity(intent);
                 Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
 
             }

@@ -31,7 +31,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 
 
     //定义控件
-    private Button btn_getVcode;
+    private TextView btn_getVcode;
     private Button btn_login;
     private EditText et_phone;
     private EditText et_pwd;
@@ -80,7 +80,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     }
 
     private void initViews(){
-        btn_getVcode=(Button)findViewById(R.id.btn_getVcode);
+        btn_getVcode=(TextView) findViewById(R.id.btn_getVcode);
         btn_login=(Button)findViewById(R.id.btn_login);
         et_phone=(EditText)findViewById(R.id.et_phone);
         et_pwd=(EditText)findViewById(R.id.et_pwd);

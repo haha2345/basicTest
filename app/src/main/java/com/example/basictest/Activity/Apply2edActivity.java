@@ -50,7 +50,7 @@ public class Apply2edActivity extends AppCompatActivity {
     @BindView(R.id.topbar_apply2)
     QMUITopBarLayout mTopBar;
 
-    String caseId,userId,username,vcode,uuid,token;
+    String caseId,userId,username,vcode,uuid,token,name;
     String TAG="Apply2";
     //TEST
     private CtidReturnParams ctidReturnParams;
@@ -212,9 +212,15 @@ public class Apply2edActivity extends AppCompatActivity {
     }
 
     private void model0x12(String value){
+//        String jsonStr="{\n" +
+//                "    \"caseId\":\""+caseId+"\",\n" +
+//                "    \"authInfo\":\""+value+"\",\n" +
+//                "    \"personMobile\":\""+username+"\"\n" +
+//                "}";
+        //test
         String jsonStr="{\n" +
                 "    \"caseId\":\""+caseId+"\",\n" +
-                "    \"authInfo\":\""+value+"\",\n" +
+                "    \"authInfo\":\""+getResources().getString(R.string.authinfo)+"\",\n" +
                 "    \"personMobile\":\""+username+"\"\n" +
                 "}";
         HttpRequest.build(mContext,netConstant.getModel0x12URL())
@@ -229,6 +235,7 @@ public class Apply2edActivity extends AppCompatActivity {
                             if (main.getString("code").equals("200")){
                                 JsonMap result=main.getJsonMap("data");
                                 Log.d(TAG,result.getString("name"));
+                                name=result.getString("name");
                                 intent=new Intent(mContext,Apply3Activity.class);
                                 startActivity(intent);
                             }else {
@@ -241,5 +248,6 @@ public class Apply2edActivity extends AppCompatActivity {
 
                 })
                 .doPost();
+        SpUtils.getInstance(this).setString("name",name);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.basictest.constant;
 
 public class netConstant {
-    private static String URL="http://172.16.10.11:8080/notarize/";
+    private static String URL="http://i305k85088.qicp.vip:36422/notarize/";
 
     private static String getVcodeURL=URL+"getSMSCode";
     private static String loginURL=URL+"mobile/login";
