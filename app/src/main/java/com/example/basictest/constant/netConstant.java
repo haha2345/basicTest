@@ -13,10 +13,14 @@ public class netConstant {
     private static String uploadEContractURL=URL+"fqgz/userFile/uploadEContract";
     private static String checkSMSCodeURL=URL+"checkSMSCode";
     private static String model0x12URL=URL+"fqgz/ca/mode0x12";
+    private static String personalListURL=URL+"fqgz/caseList/personalList";
 
 
 
 
+    public static String getPersonalListURL() {
+        return personalListURL;
+    }
     public static String getCheckSMSCodeURL() {
         return checkSMSCodeURL;
     }

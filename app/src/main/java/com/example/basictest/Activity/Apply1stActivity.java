@@ -317,6 +317,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                                 SpUtils.getInstance(mContext).setString("caseId",caseId,1800);
                                 SpUtils.getInstance(mContext).setString("userId",userId,1800);
                                 SpUtils.getInstance(mContext).setString("caseCode",caseCode,1800);
+                                SpUtils.getInstance(mContext).setString("uploadfilename",filename,1800);
                                 Log.d("获取到的上传信息",caseId+"  "+caseCode+"  "+userId);
                                 jumpToApply2();
                             }else {

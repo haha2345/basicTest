@@ -1,11 +1,13 @@
 package com.example.basictest.base;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -23,6 +25,9 @@ public class BaseApply3Activity extends AppCompatActivity {
     private PdfDocument doc;
     private PdfDocument.PageInfo pageInfo;
     private PdfDocument.Page page;
+
+    //加载框
+    private ProgressDialog progressDialog;
     //生成pdf
     public void setupPdf(LinearLayout lv_apply3,LinearLayout layout){
         doc=new PdfDocument();
@@ -71,5 +76,36 @@ public class BaseApply3Activity extends AppCompatActivity {
         }
     }
 
+
+//显示加载框
+    public void showProgressDialog(Context mContext, String text) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(mContext);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        }
+        progressDialog.setMessage(text);	//设置内容
+        progressDialog.setCancelable(false);//点击屏幕和按返回键都不能取消加载框
+        progressDialog.show();
+
+        //设置超时自动消失
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (dismissProgressDialog()){
+
+                }
+            }
+        }, 60000);//超时时间60秒
+    }
+    //取消加载框
+    public Boolean dismissProgressDialog() {
+        if (progressDialog != null){
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+                return true;//取消成功
+            }
+        }
+        return false;//已经取消过了，不需要取消
+    }
 
 }

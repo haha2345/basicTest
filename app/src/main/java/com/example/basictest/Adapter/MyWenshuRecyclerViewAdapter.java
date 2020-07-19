@@ -1,58 +1,73 @@
 package com.example.basictest.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.basictest.Class.DummyContent.DummyItem;
+import com.example.basictest.Class.JiluEntity;
 import com.example.basictest.R;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
+
 public class MyWenshuRecyclerViewAdapter extends RecyclerView.Adapter<MyWenshuRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private List<JiluEntity> datas;
+    private Context context;
 
-    public MyWenshuRecyclerViewAdapter(List<DummyItem> items) {
-        mValues = items;
+
+    public MyWenshuRecyclerViewAdapter(Context context,List<JiluEntity> datas){
+        this.context=context;
+        this.datas=datas;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_wenshuguanli, parent, false);
-        return new ViewHolder(view);
+        MyWenshuRecyclerViewAdapter.ViewHolder viewHolder=new MyWenshuRecyclerViewAdapter.ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        //holder.mIdView.setText(mValues.get(position).id);
-        //holder.mContentView.setText(mValues.get(position).content);
+        MyWenshuRecyclerViewAdapter.ViewHolder vh=(MyWenshuRecyclerViewAdapter.ViewHolder)holder;
+        JiluEntity jiluEntity=datas.get(position);
+        vh.tv_guanli_bank.setText(jiluEntity.getCoName());
+        vh.tv_guanli_title.setText(jiluEntity.getLoanName());
+        vh.tv_guanli_code.setText(jiluEntity.getCaseCode());
+        vh.tv_guanli_date.setText(jiluEntity.getApplyTime());
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 2;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        //public final TextView mIdView;
-        //public final TextView mContentView;
-        public DummyItem mItem;
+        TextView tv_guanli_title;
+        TextView tv_guanli_code;
+        TextView tv_guanli_bank;
+        TextView tv_guanli_date;
+        TextView tv_guanli_jump;
+
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
-            //mIdView = (TextView) view.findViewById(R.id.item_number);
-            //mContentView = (TextView) view.findViewById(R.id.content);
+            tv_guanli_title=view.findViewById(R.id.tv_guanli_title);
+            tv_guanli_code=view.findViewById(R.id.tv_guanli_code);
+            tv_guanli_bank=view.findViewById(R.id.tv_guanli_bank);
+            tv_guanli_date=view.findViewById(R.id.tv_guanli_date);
+            tv_guanli_jump=view.findViewById(R.id.tv_guanli_jump);
+
         }
 
         @Override

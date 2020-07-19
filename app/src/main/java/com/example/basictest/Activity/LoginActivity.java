@@ -66,16 +66,16 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        if (SpUtils.getInstance(this).getString("token",null)!=null){
+            jupmToMain();
+        }
         initViews();
         setOnFocusChangeErrMsg(et_phone,"phone","手机号格式不正确");
         setOnFocusChangeErrMsg(et_pwd,"password","密码不少于6位");
         username=SpUtils.getInstance(this).getString("username",null);
         pwd=SpUtils.getInstance(this).getString("pwd",null);
 
-        if (SpUtils.getInstance(this).getString("token",null)!=null){
-            jupmToMain();
-        }
+
 
     }
 

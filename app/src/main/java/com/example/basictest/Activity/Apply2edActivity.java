@@ -235,6 +235,7 @@ public class Apply2edActivity extends AppCompatActivity {
                             if (main.getString("code").equals("200")){
                                 JsonMap result=main.getJsonMap("data");
                                 Log.d(TAG,result.getString("name"));
+                                //姓名
                                 name=result.getString("name");
                                 intent=new Intent(mContext,Apply3Activity.class);
                                 startActivity(intent);

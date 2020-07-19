@@ -3,12 +3,14 @@ package com.example.basictest.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.basictest.R;
+import com.example.basictest.utils.DataCleanManager;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
@@ -25,6 +27,7 @@ public class SettingActivity extends AppCompatActivity {
     Intent intent;
     @BindView(R.id.topbar_setting)
     QMUITopBarLayout mTopBar;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,7 @@ public class SettingActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(SettingActivity.this,"使用帮助" , Toast.LENGTH_SHORT).show();
+                        DataCleanManager.clearAllCache(mContext);
 
                     }
                 })
@@ -90,7 +94,6 @@ public class SettingActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
-        mTopBar.setBackgroundColor(R.color.qmui_config_color_gray_8);
         mTopBar.setBackgroundAlpha(255);
         mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
             @Override
