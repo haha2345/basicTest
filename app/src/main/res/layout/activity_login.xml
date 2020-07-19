@@ -28,7 +28,7 @@
 
 
     <TextView
-        android:layout_width="36dp"
+        android:layout_width="wrap_content"
         android:layout_height="17dp"
         android:text="手机号"
         android:textColor="#ff333333"
@@ -55,7 +55,7 @@
         android:layout_marginTop="10dp"/>
 
     <TextView
-        android:layout_width="24dp"
+        android:layout_width="wrap_content"
         android:layout_height="17dp"
         android:text="密码"
         android:textColor="#ff333333"
@@ -86,7 +86,7 @@
 
         <TextView
             android:layout_marginTop="20dp"
-            android:layout_width="36dp"
+            android:layout_width="wrap_content"
             android:layout_height="17dp"
             android:text="验证码"
             android:id="@+id/view3"

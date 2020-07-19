@@ -27,6 +27,7 @@ import com.daasuu.camerarecorder.CameraRecordListener;
 import com.daasuu.camerarecorder.CameraRecorder;
 import com.daasuu.camerarecorder.CameraRecorderBuilder;
 import com.daasuu.camerarecorder.LensFacing;
+import com.example.basictest.Activity.Apply3Activity;
 import com.example.basictest.R;
 import com.example.basictest.utils.SpUtils;
 import com.example.basictest.utils.Timeutils;
@@ -62,6 +63,8 @@ public class BaseCameraActivity extends AppCompatActivity {
     private boolean toggleClick = false;
     //检测是否录像
     private boolean flag=true;
+
+    private String imagePath;
 
     //调用计时器
     Timeutils timer;
@@ -99,7 +102,7 @@ public class BaseCameraActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     //保存图片路径
-                                    String imagePath = getImageFilePath();
+                                    imagePath = getImageFilePath();
                                     Log.d("图片路径",imagePath);
                                     SpUtils.getInstance(getParent()).setString("imagepath",imagePath);
                                     saveAsPngImage(bitmap, imagePath);
@@ -141,6 +144,11 @@ public class BaseCameraActivity extends AppCompatActivity {
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent=new Intent(getBaseContext(), Apply3Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("imagepath",imagePath);
+                startActivity(intent);
+                finish();
                 Log.d("测试","aaa");
             }
         });

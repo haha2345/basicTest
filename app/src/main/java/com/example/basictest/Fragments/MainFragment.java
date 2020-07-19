@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.basictest.Activity.Apply1stActivity;
+import com.example.basictest.Activity.Apply3Activity;
 import com.example.basictest.Activity.JiluActivity;
 import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
@@ -135,7 +136,7 @@ public class MainFragment extends Fragment {
         btn_main_syzn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent=new Intent(getActivity(), CameraActivity.class);
+                intent=new Intent(getActivity(), Apply3Activity.class);
                 startActivity(intent);
                 Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
 
