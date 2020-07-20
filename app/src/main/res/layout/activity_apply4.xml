@@ -7,10 +7,11 @@
     tools:context=".Activity.Apply4Activity"
     android:background="#fff"
     android:orientation="vertical">
-    <com.qmuiteam.qmui.widget.QMUITopBar
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar_apply4"
         android:layout_width="match_parent"
-        android:layout_height="?attr/qmui_topbar_height"/>
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
     <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"

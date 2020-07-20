@@ -68,6 +68,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_login);
         if (SpUtils.getInstance(this).getString("token",null)!=null){
             jupmToMain();
+            finish();
         }
         initViews();
         setOnFocusChangeErrMsg(et_phone,"phone","手机号格式不正确");

@@ -19,8 +19,8 @@
 
             <androidx.percentlayout.widget.PercentRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="60dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="50dp"
                 >
                 <View
                     android:layout_width="match_parent"
@@ -156,7 +156,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#EFF0F4"
-                        android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -232,6 +231,7 @@
                     android:layout_marginTop="102dp"
                     android:gravity="center"
                     android:text="确定电子合同属于申请人本人"
+                    android:theme="@style/My_CheckBox"
                     android:layout_marginLeft="80dp"
                     android:layout_marginRight="80dp"
                     />

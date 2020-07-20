@@ -65,22 +65,15 @@ public class WenshuActivity extends BaseApply3Activity {
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
         mTopBar.setBackgroundAlpha(255);
-        mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        //设置标题名
-        mTopBar.setTitle("文书管理");
-        mTopBar.addRightImageButton(R.mipmap.icon_topbar_overflow, R.id.topbar_right_change_button)
+        mTopBar.addLeftImageButton(R.drawable.back, R.id.topbar_right_change_button)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
                         finish();
                     }
                 });
+        //设置标题名
+        mTopBar.setTitle("文书管理");
     }
 
     private void getWenshuList(){
@@ -97,7 +90,7 @@ public class WenshuActivity extends BaseApply3Activity {
                             if (list.getCode()==200){
                                 List<JiluEntity> data=list.getRows();
                                 initAdapter();
-                                adapter=new MyWenshuRecyclerViewAdapter(mContext,data);
+                                adapter=new MyWenshuRecyclerViewAdapter(mContext,data,list.getTotal());
                                 recyclerView.setAdapter(adapter);
                             }else {
 

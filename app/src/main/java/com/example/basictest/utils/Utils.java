@@ -12,6 +12,8 @@ import com.google.gson.JsonParser;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.ResponseListener;
 
+import java.util.Map;
+
 public class Utils extends AppCompatActivity {
 
     //解析json
@@ -56,8 +58,6 @@ public class Utils extends AppCompatActivity {
 
         return uuid[0];
     }
-
-
 
 
 

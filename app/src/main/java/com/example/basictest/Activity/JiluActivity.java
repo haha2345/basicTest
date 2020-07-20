@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -96,26 +97,19 @@ public class JiluActivity extends AppCompatActivity {
         fragments.add(new JiluFragment(8));
     }
 
+    @SuppressLint("ResourceAsColor")
     private void initTopBar() {
         mTopBar.setBackgroundAlpha(255);
-        mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        //设置标题名
-        mTopBar.setTitle("公正记录");
-        mTopBar.addRightImageButton(R.mipmap.icon_topbar_overflow, R.id.topbar_right_change_button)
+        mTopBar.addLeftImageButton(R.drawable.back, R.id.topbar_right_change_button)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-
+                    public void onClick(View view) {
+                        finish();
                     }
                 });
+        //设置标题名
+        mTopBar.setTitle("公正记录");
     }
-
 
     private void initTabAndPager() {
 

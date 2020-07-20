@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -136,22 +137,16 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
         mTopBar.setBackgroundAlpha(255);
-        mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
+        mTopBar.addLeftImageButton(R.drawable.back,R.id.topbar_right_change_button)
+        .setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 finish();
             }
         });
-
         //设置标题名
         mTopBar.setTitle("赋强公证申请");
-        mTopBar.addRightImageButton(R.mipmap.icon_topbar_overflow, R.id.topbar_right_change_button)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                    }
-                });
     }
 
 

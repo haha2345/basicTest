@@ -2,6 +2,7 @@ package com.example.basictest.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.basictest.R;
 import com.example.basictest.utils.SpUtils;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +37,9 @@ public class Apply4Activity extends AppCompatActivity {
     SuperButton sbtn_apply4;
     @BindView(R.id.tv_apply4_jump)
     TextView tv_apply4_jump;
+
+    @BindView(R.id.topbar_apply4)
+    QMUITopBarLayout mTopBar;
     private String caseCode,name,date,bank,uploadfilename;
     private Intent intent;
     private Context mContext=Apply4Activity.this;
@@ -44,8 +49,23 @@ public class Apply4Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply4);
         ButterKnife.bind(this);
+        initTopBar();
         initView();
         initBtn();
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private void initTopBar() {
+        mTopBar.setBackgroundAlpha(255);
+        mTopBar.addLeftImageButton(R.drawable.back, R.id.topbar_right_change_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+        //设置标题名
+        mTopBar.setTitle("赋强公证申请");
     }
 
     private void initView(){

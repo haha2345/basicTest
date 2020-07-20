@@ -19,11 +19,13 @@ public class MyWenshuRecyclerViewAdapter extends RecyclerView.Adapter<MyWenshuRe
 
     private List<JiluEntity> datas;
     private Context context;
+    private int num;
 
 
-    public MyWenshuRecyclerViewAdapter(Context context,List<JiluEntity> datas){
+    public MyWenshuRecyclerViewAdapter(Context context,List<JiluEntity> datas,int count){
         this.context=context;
         this.datas=datas;
+        this.num=count;
     }
 
     @Override
@@ -37,11 +39,17 @@ public class MyWenshuRecyclerViewAdapter extends RecyclerView.Adapter<MyWenshuRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         MyWenshuRecyclerViewAdapter.ViewHolder vh=(MyWenshuRecyclerViewAdapter.ViewHolder)holder;
-        JiluEntity jiluEntity=datas.get(position);
-        vh.tv_guanli_bank.setText(jiluEntity.getCoName());
-        vh.tv_guanli_title.setText(jiluEntity.getLoanName());
-        vh.tv_guanli_code.setText(jiluEntity.getCaseCode());
-        vh.tv_guanli_date.setText(jiluEntity.getApplyTime());
+        if (position==0){
+            //数据为空
+
+        }else {
+            JiluEntity jiluEntity=datas.get(position);
+            vh.tv_guanli_bank.setText(jiluEntity.getCoName());
+            vh.tv_guanli_title.setText(jiluEntity.getLoanName());
+            vh.tv_guanli_code.setText(jiluEntity.getCaseCode());
+            vh.tv_guanli_date.setText(jiluEntity.getApplyTime());
+
+        }
 
 
 
@@ -49,7 +57,7 @@ public class MyWenshuRecyclerViewAdapter extends RecyclerView.Adapter<MyWenshuRe
 
     @Override
     public int getItemCount() {
-        return 2;
+        return num;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

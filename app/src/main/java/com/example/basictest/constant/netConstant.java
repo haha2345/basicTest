@@ -1,7 +1,7 @@
 package com.example.basictest.constant;
 
 public class netConstant {
-    private static String URL="http://i305k85088.qicp.vip:36422/notarize/";
+    private static String URL="http://172.16.10.11:8080/notarize/";
 
     private static String getVcodeURL=URL+"getSMSCode";
     private static String loginURL=URL+"mobile/login";
@@ -14,10 +14,25 @@ public class netConstant {
     private static String checkSMSCodeURL=URL+"checkSMSCode";
     private static String model0x12URL=URL+"fqgz/ca/mode0x12";
     private static String personalListURL=URL+"fqgz/caseList/personalList";
+    private static String userInfoandStateURL=URL+"fqgz/ca/getUserInfoAndState";
+    private static String addTrustUserV2URL=URL+"fqgz/ca/addTrustUserV2";
+    private static String cloudSealUploadDocWithKeyIDURL=URL+"fqgz/ca/cloudSealUploadDocWithKeyID";
+
+    public static String getCloudSealUploadDocWithKeyIDURL() {
+        return cloudSealUploadDocWithKeyIDURL;
+    }
 
 
 
 
+
+
+    public static String getUserInfoandStateURL() {
+        return userInfoandStateURL;
+    }
+    public static String getAddTrustUserV2URL() {
+        return addTrustUserV2URL;
+    }
     public static String getPersonalListURL() {
         return personalListURL;
     }

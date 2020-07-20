@@ -13,10 +13,11 @@
         android:orientation="vertical"
         tools:context=".Activity.Apply3Activity">
 
-        <com.qmuiteam.qmui.widget.QMUITopBar
+        <com.qmuiteam.qmui.widget.QMUITopBarLayout
             android:id="@+id/topbar_apply3"
             android:layout_width="match_parent"
-            android:layout_height="?attr/qmui_topbar_height" />
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true" />
 
         <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
@@ -404,7 +405,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp" />
+                android:layout_margin="15dp"
+                android:text="@string/gaozhishu"/>
         </LinearLayout>
 
 

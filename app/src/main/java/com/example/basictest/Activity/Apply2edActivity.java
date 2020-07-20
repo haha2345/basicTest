@@ -73,22 +73,15 @@ public class Apply2edActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
         mTopBar.setBackgroundAlpha(255);
-        mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        //设置标题名
-        mTopBar.setTitle("赋强公证申请");
-        mTopBar.addRightImageButton(R.mipmap.icon_topbar_overflow, R.id.topbar_right_change_button)
+        mTopBar.addLeftImageButton(R.drawable.back, R.id.topbar_right_change_button)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-
+                    public void onClick(View view) {
+                        finish();
                     }
                 });
+        //设置标题名
+        mTopBar.setTitle("赋强公证申请");
     }
 
     private void initData(){
@@ -162,6 +155,7 @@ public class Apply2edActivity extends AppCompatActivity {
                 .doGet();
     }
 
+    //初始化 获取authinfo
     private void test2nd(){
         ctidReturnParams= BJCAIdentifyAPI.initialCtidIdentify(mContext, CtidModelEnum.MODEL_0X12, CtidActionType.AUTH_ACTION);
         authinfo=ctidReturnParams.getValue();
@@ -169,6 +163,7 @@ public class Apply2edActivity extends AppCompatActivity {
         Log.d("msg",ctidReturnParams.getMessage());
         Log.d("auth",authinfo);
     }
+    //提交authorinfo
     private void postAuthinfo(final String authinfo){
         HttpRequest.build(mContext,netConstant.getApplyURL())
                 .addHeaders("Authorization","Bearer "+token)
@@ -201,6 +196,7 @@ public class Apply2edActivity extends AppCompatActivity {
                         Log.d("status",ctidReturnParams.getStatus());
                         Log.d("msg",ctidReturnParams.getMessage());
                         Log.d("value",val);
+                        //传值
                         model0x12(val);
                     }
 
@@ -220,7 +216,7 @@ public class Apply2edActivity extends AppCompatActivity {
         //test
         String jsonStr="{\n" +
                 "    \"caseId\":\""+caseId+"\",\n" +
-                "    \"authInfo\":\""+getResources().getString(R.string.authinfo)+"\",\n" +
+                "    \"authInfo\":\""+value+"\",\n" +
                 "    \"personMobile\":\""+username+"\"\n" +
                 "}";
         HttpRequest.build(mContext,netConstant.getModel0x12URL())
@@ -240,7 +236,13 @@ public class Apply2edActivity extends AppCompatActivity {
                                 intent=new Intent(mContext,Apply3Activity.class);
                                 startActivity(intent);
                             }else {
-                                Toast.makeText(mContext,main.getString("msg"),Toast.LENGTH_SHORT);
+                                final String msg=main.getString("msg");
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mContext,msg,Toast.LENGTH_SHORT);
+                                    }
+                                });
                             }
                         } else {
                             Log.e("有错",error.toString());

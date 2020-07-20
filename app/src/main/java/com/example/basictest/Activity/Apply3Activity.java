@@ -2,6 +2,7 @@ package com.example.basictest.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.pdf.PdfDocument;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 import com.example.basictest.R;
 import com.example.basictest.base.BaseApply3Activity;
 import com.example.basictest.utils.SpUtils;
-
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 
 import java.io.File;
@@ -29,6 +30,16 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.org.bjca.signet.component.core.activity.SignetCoreApi;
+import cn.org.bjca.signet.component.core.bean.results.FindBackUserResult;
+import cn.org.bjca.signet.component.core.bean.results.RegisterResult;
+import cn.org.bjca.signet.component.core.bean.results.SignetBaseResult;
+import cn.org.bjca.signet.component.core.callback.FindBackUserCallBack;
+import cn.org.bjca.signet.component.core.callback.RegisterCallBack;
+import cn.org.bjca.signet.component.core.callback.SetFingerCallBack;
+import cn.org.bjca.signet.component.core.enums.IdCardType;
+import cn.org.bjca.signet.component.core.enums.RegisterType;
+import cn.org.bjca.signet.component.core.enums.SetFingerOperType;
 
 public class Apply3Activity extends BaseApply3Activity {
 
@@ -72,9 +83,17 @@ public class Apply3Activity extends BaseApply3Activity {
     @BindView(R.id.sbtn_apply3_next)
     Button sbtn_apply3_next;
 
+    @BindView(R.id.topbar_apply3)
+    QMUITopBarLayout mTopBar;
+
 
     private Intent intent;
-    private String name,bank,videoPath,imagePath;
+    private String name="王文哲",
+            bank,
+            videoPath,
+            imagePath,
+            phone="13205401086",
+            idcard="370284199803310014";
     private Context mContext=Apply3Activity.this;
 
 
@@ -83,8 +102,15 @@ public class Apply3Activity extends BaseApply3Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply3);
         ButterKnife.bind(this);
-        initView();
+        //initView();
+        initTopBar();
         initBtn();
+        //第一步，检测是否有证
+        showProgressDialog(mContext,"请稍后。。。");
+        getNativeUserList(mContext,name,idcard,phone);
+        //第二步，添加证书
+
+
         //从别的页面跳转回来不会调用onCreate，只会调用onRestart、onStart、onResume
     }
 
@@ -102,17 +128,33 @@ public class Apply3Activity extends BaseApply3Activity {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
+    private void initTopBar() {
+        mTopBar.setBackgroundAlpha(255);
+        mTopBar.addLeftImageButton(R.drawable.back, R.id.topbar_right_change_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+        //设置标题名
+        mTopBar.setTitle("赋强公证申请");
+    }
     private void initBtn(){
         sbtn_apply3_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showProgressDialog(mContext,"加载中");
                 setupPdf(lv_apply3,lv_apply3_auto);
+                uploadPdf(mContext);
+                signPdf(mContext);
             }
         });
         lv_apply3_auto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                handWriting(mContext);
             }
         });
         //点击录像
@@ -162,5 +204,6 @@ public class Apply3Activity extends BaseApply3Activity {
         intent=new Intent(mContext,ShipingongzhenActivity.class);
         startActivity(intent);
     }
+
 
 }

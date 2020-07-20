@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText et_RegisterVCode;
     private CheckBox checkBox_register;
     private Button btn_Register;
-    private Button btn_getVCode;
+    private TextView btn_getVCode;
     private TextView tv_JumpToLogin;
     private User user=null;
     private Utils utils=null;
@@ -51,7 +51,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String vcode;
 
     private QMUITipDialog qmuiTipDialog;
-    private QMUITopBar topbar;
 
 
     @Override
@@ -60,6 +59,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
 
         initViews();
+        tv_JumpToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent=new Intent(RegisterActivity.this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         //失去焦点报错 此处为重复密码检测
         et_RePassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -75,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
         setOnFocusChangeErrMsg(et_RegisterPhone,"phone","手机号输入不正确");
         setOnFocusChangeErrMsg(et_Password,"password","密码不少于6位");
+
     }
 
     private void initViews(){
@@ -84,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         et_RegisterVCode=(EditText)findViewById(R.id.et_RegisterVCode);
         btn_Register=(Button)findViewById(R.id.btn_register);
         tv_JumpToLogin=(TextView) findViewById(R.id.tv_jumpToLogin);
-        btn_getVCode=(Button)findViewById(R.id.btn_getVcode_from_reg);
+        btn_getVCode=(TextView)findViewById(R.id.btn_getVcode_from_reg);
         checkBox_register=(CheckBox)findViewById(R.id.checkBox_register);
 
         btn_Register.setOnClickListener(this);
@@ -99,14 +107,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 .setTipWord("注册成功，请返回登录")
                 .create();
 
-        topbar=findViewById(R.id.topbar_register);
-        topbar.setTitle("注册");
-        topbar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast toast=Toast.makeText(RegisterActivity.this,"返回成功",Toast.LENGTH_LONG);
-            }
-        });
     }
 
 
@@ -143,6 +143,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Log.d(TAG,username);
                 getuuid();
                 break;
+
         }
     }
 
@@ -181,6 +182,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         String msg=utils.getJson(main).get("msg").getAsString();
                         Toast.makeText(RegisterActivity.this,msg,Toast.LENGTH_LONG).show();
                         Log.d(TAG,"注册成功");
+                        //成功跳转
+                        intent=new Intent(RegisterActivity.this,LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+
                         qmuiTipDialog.show();
                     }
                 }else {
