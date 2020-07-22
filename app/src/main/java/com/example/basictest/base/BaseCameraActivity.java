@@ -3,6 +3,7 @@ package com.example.basictest.base;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -29,8 +30,12 @@ import com.daasuu.camerarecorder.CameraRecorderBuilder;
 import com.daasuu.camerarecorder.LensFacing;
 import com.example.basictest.Activity.Apply3Activity;
 import com.example.basictest.R;
+import com.example.basictest.constant.netConstant;
 import com.example.basictest.utils.SpUtils;
 import com.example.basictest.utils.Timeutils;
+import com.kongzue.baseokhttp.HttpRequest;
+import com.kongzue.baseokhttp.listener.JsonResponseListener;
+import com.kongzue.baseokhttp.util.JsonMap;
 
 
 import java.io.File;
@@ -55,6 +60,7 @@ public class BaseCameraActivity extends AppCompatActivity {
     private ImageButton recordBtn,cancelBtn,uploadBtn;
     private TextView tv_camera_timer;
     protected LensFacing lensFacing = LensFacing.FRONT;
+    private  String token,caseId;
     protected int cameraWidth = 1280;
     protected int cameraHeight = 720;
     protected int videoWidth = 720;
@@ -64,7 +70,9 @@ public class BaseCameraActivity extends AppCompatActivity {
     //检测是否录像
     private boolean flag=true;
 
-    private String imagePath;
+    private String imagePath,src;
+
+    private File videoFile;
 
     //调用计时器
     Timeutils timer;
@@ -73,7 +81,7 @@ public class BaseCameraActivity extends AppCompatActivity {
         tv_camera_timer=findViewById(R.id.tv_recorder_time);
         //初始化计时器
         timer=new Timeutils(tv_camera_timer);
-
+        src=getIntent().getStringExtra("basesrc");
 
         cancelBtn=findViewById(R.id.ibtn_cancle);
         uploadBtn=findViewById(R.id.ibtn_upload);
@@ -116,7 +124,7 @@ public class BaseCameraActivity extends AppCompatActivity {
                     //结束录像
                     cameraRecorder.stop();
                     //暂停计时
-                    timer.puseTimer();
+                    timer.stopTimer();
                     recordBtn.setImageResource(R.drawable.record);
                     cancelBtn.setImageResource(R.drawable.chongxinrecord);
                     cancelBtn.setVisibility(View.VISIBLE);
@@ -144,12 +152,14 @@ public class BaseCameraActivity extends AppCompatActivity {
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent=new Intent(getBaseContext(), Apply3Activity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("imagepath",imagePath);
+                intent.putExtra("base64str",src);
                 startActivity(intent);
-                finish();
                 Log.d("测试","aaa");
+
             }
         });
 
@@ -166,6 +176,7 @@ public class BaseCameraActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        finish();
         releaseCamera();
     }
 
@@ -356,6 +367,55 @@ public class BaseCameraActivity extends AppCompatActivity {
 
     public static File getAndroidImageFolder() {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+    }
+
+    private void uploadVideo(){
+        token= SpUtils.getInstance(this).getString("token",null);
+        caseId=SpUtils.getInstance(this).getString("caseId",null);
+        videoFile=new File(filepath);
+        HttpRequest.build(getBaseContext(), netConstant.getUploadNotarizeVideo())
+                .setMediaType(baseokhttp3.MediaType.parse("video/mpeg4"))
+                .addHeaders("Authorization","Bearer "+token)
+                .addHeaders("Content-Type","multipart/form-data")
+                .addParameter("notarizeVideoFile",videoFile)
+                .addParameter("caseId",caseId)
+                .setJsonResponseListener(new JsonResponseListener() {
+                    @Override
+                    public void onResponse(JsonMap main, Exception error) {
+                        if (error!=null){
+                            Log.e("上传","连接失败",error);
+                        }else {
+                            if (main.getString("code").equals("200")){
+                                //上传成功
+                                showExitDialog();
+                                Log.d("上传","成功");
+
+                            }else {
+                                Log.e("上传",main.getString("msg"));
+                                Log.e("上传",main.getString("code"));
+
+
+                            }
+                        }
+                    }
+                })
+                .doPost();
+
+    }
+    private void showExitDialog(){
+        new AlertDialog.Builder(getBaseContext())
+                .setTitle("成功")
+                .setMessage("视频已上传成功，点击确认返回上一页")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent=new Intent(getBaseContext(), Apply3Activity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("imagepath",imagePath);
+                        startActivity(intent);
+                    }
+                })
+                .show();
     }
 
 }

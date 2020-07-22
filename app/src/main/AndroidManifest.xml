@@ -32,7 +32,9 @@
         android:supportsRtl="true"
         android:theme="@style/QMUI.Compat.NoActionBar"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activity.VideoActivity"></activity>
+        <activity android:name=".Activity.HtmlActivity"></activity>
+        <activity android:name=".Activity.PdfViewerActivity" />
+        <activity android:name=".Activity.VideoActivity" />
         <activity android:name=".Activity.ShipingongzhenActivity" />
         <activity android:name=".Activity.CameraActivity" />
         <activity

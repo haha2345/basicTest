@@ -3,14 +3,21 @@ package com.example.basictest.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.basictest.R;
+import com.example.basictest.constant.netConstant;
+import com.example.basictest.utils.IntentUtil;
 import com.example.basictest.utils.SpUtils;
+import com.kongzue.baseokhttp.HttpRequest;
+import com.kongzue.baseokhttp.listener.JsonResponseListener;
+import com.kongzue.baseokhttp.util.JsonMap;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
@@ -28,7 +35,9 @@ public class Apply4Activity extends AppCompatActivity {
     @BindView(R.id.tv_apply4_bank)
     TextView tv_apply4_bank;
     @BindView(R.id.a45)
-    TextView tv_filename;
+    TextView tv_filename1;
+    @BindView(R.id.a46)
+    TextView tv_filename2;
     @BindView(R.id.tv_apply4_detial1)
     TextView tv_apply4_detial1;
     @BindView(R.id.tv_apply4_detial2)
@@ -40,9 +49,10 @@ public class Apply4Activity extends AppCompatActivity {
 
     @BindView(R.id.topbar_apply4)
     QMUITopBarLayout mTopBar;
-    private String caseCode,name,date,bank,uploadfilename;
+    private String caseCode,name,date,bank,uploadfilename,signedFileName,url,hetongurl,gaozhishuurl,token,userid,caseid;
     private Intent intent;
     private Context mContext=Apply4Activity.this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +79,8 @@ public class Apply4Activity extends AppCompatActivity {
     }
 
     private void initView(){
+        date=getIntent().getStringExtra("date");
+        signedFileName=getIntent().getStringExtra("filename");
         caseCode= SpUtils.getInstance(this).getString("caseCode",null);
         name= SpUtils.getInstance(this).getString("name",null);
         bank= SpUtils.getInstance(this).getString("bank",null);
@@ -76,7 +88,9 @@ public class Apply4Activity extends AppCompatActivity {
         tv_apply4_no.setText(caseCode);
         tv_apply4_name.setText(name);
         tv_apply4_bank.setText(bank);
-        tv_filename.setText(uploadfilename);
+        tv_apply4_date.setText(date);
+        tv_filename1.setText(uploadfilename);
+        tv_filename2.setText(signedFileName);
     }
 
     private void initBtn(){
@@ -98,15 +112,47 @@ public class Apply4Activity extends AppCompatActivity {
         tv_apply4_detial1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //获取电子合同路径
+                getPath("100010");
             }
         });
 
         tv_apply4_detial2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getPath("300010");
             }
         });
     }
+
+    private void getPath(String fileType){
+        token = SpUtils.getInstance(this).getString("token", null);
+        caseid = SpUtils.getInstance(this).getString("caseId", null);
+        userid = SpUtils.getInstance(this).getString("userid", null);
+
+        HttpRequest.build(mContext, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType)
+                .addHeaders("Authorization", "Bearer " + token)
+                .setJsonResponseListener(new JsonResponseListener() {
+                    @Override
+                    public void onResponse(JsonMap main, Exception error) {
+                        if (error != null) {
+                            Log.d("获取路径", "连接失败", error);
+                        } else {
+                            if (main.getString("code").equals("200")) {
+                                url=main.getString("filePath");
+                                //直接跳转
+                                intent=new Intent(mContext,PdfViewerActivity.class);
+                                intent.putExtra("url",netConstant.getURL()+url);
+                                startActivity(intent);
+                            } else {
+                                Log.e("获取路径", main.getString("msg"));
+                                Log.e("获取路径", main.getString("code"));
+                            }
+                        }
+                    }
+                })
+                .doGet();
+
+    }
+
 }

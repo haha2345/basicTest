@@ -50,6 +50,7 @@ public class MyzixunRecyclerViewAdapter extends RecyclerView.Adapter<MyzixunRecy
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "我被点击了"+position, Toast.LENGTH_SHORT).show();
+
             }
         });
 

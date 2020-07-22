@@ -1,13 +1,14 @@
 package com.example.basictest.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.pdf.PdfDocument;
+import android.graphics.Bitmap;
+
 import android.os.Bundle;
-import android.os.Environment;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,23 +24,16 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.org.bjca.signet.component.core.activity.SignetCoreApi;
-import cn.org.bjca.signet.component.core.bean.results.FindBackUserResult;
-import cn.org.bjca.signet.component.core.bean.results.RegisterResult;
-import cn.org.bjca.signet.component.core.bean.results.SignetBaseResult;
-import cn.org.bjca.signet.component.core.callback.FindBackUserCallBack;
-import cn.org.bjca.signet.component.core.callback.RegisterCallBack;
-import cn.org.bjca.signet.component.core.callback.SetFingerCallBack;
-import cn.org.bjca.signet.component.core.enums.IdCardType;
-import cn.org.bjca.signet.component.core.enums.RegisterType;
-import cn.org.bjca.signet.component.core.enums.SetFingerOperType;
+
+import cn.org.bjca.signet.component.core.bean.results.SignImageResult;
+
+import cn.org.bjca.signet.component.core.callback.SetSignImageCallBack;
+
+import cn.org.bjca.signet.component.core.enums.SetSignImgType;
 
 public class Apply3Activity extends BaseApply3Activity {
 
@@ -95,21 +89,21 @@ public class Apply3Activity extends BaseApply3Activity {
             phone="13205401086",
             idcard="370284199803310014";
     private Context mContext=Apply3Activity.this;
-
+    private Bitmap handWritingBitmap;
+    private String src;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply3);
         ButterKnife.bind(this);
-        //initView();
         initTopBar();
         initBtn();
         //第一步，检测是否有证
         showProgressDialog(mContext,"请稍后。。。");
         getNativeUserList(mContext,name,idcard,phone);
         //第二步，添加证书
-
+        initView();
 
         //从别的页面跳转回来不会调用onCreate，只会调用onRestart、onStart、onResume
     }
@@ -122,10 +116,16 @@ public class Apply3Activity extends BaseApply3Activity {
         tv_apply3_name2.setText(name);
         tv_apply3_bank.setText(bank);
         //取录像信息
+        src=getIntent().getStringExtra("base64str");
         imagePath=getIntent().getStringExtra("imagepath");
         if (imagePath!=null){
             getRecord();
         }
+        if (src!=null){
+            handWritingBitmap=base64ToBitmap(src);
+            getAuto();
+        }
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -141,14 +141,32 @@ public class Apply3Activity extends BaseApply3Activity {
         //设置标题名
         mTopBar.setTitle("赋强公证申请");
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //若二者都有即可进行下一步
+//        if (imagePath!=null&&src!=null){
+//            sbtn_apply3_next.setEnabled(true);
+//        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
     private void initBtn(){
+
         sbtn_apply3_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showProgressDialog(mContext,"加载中");
-                setupPdf(lv_apply3,lv_apply3_auto);
+                setupPdf(lv_apply3,rv_apply3_auto);
                 uploadPdf(mContext);
-                signPdf(mContext);
+
             }
         });
         lv_apply3_auto.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +180,7 @@ public class Apply3Activity extends BaseApply3Activity {
             @Override
             public void onClick(View view) {
                 intent=new Intent(mContext,ShipingongzhenActivity.class);
+                intent.putExtra("basestr",src);
                 startActivity(intent);
             }
         });
@@ -169,7 +188,7 @@ public class Apply3Activity extends BaseApply3Activity {
         tv_apply3_reauto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                reAuto();
             }
         });
 
@@ -205,5 +224,37 @@ public class Apply3Activity extends BaseApply3Activity {
         startActivity(intent);
     }
 
+    //手写签名
+    public void handWriting(Context con) {
+        SignetCoreApi.useCoreFunc(
+                new SetSignImageCallBack(con, msspId, SetSignImgType.SET_HANDWRITING) {
 
+                    @Override
+                    public void onSetSignImageResult(SignImageResult setSignImageResult) {
+                        src = setSignImageResult.getSignImageSrc();
+                        Log.d("shouxie", src);
+                        Log.d("手写", setSignImageResult.getErrMsg());
+                        Log.d("手写", setSignImageResult.getErrCode());
+                        handWritingBitmap=base64ToBitmap(src);
+                        if(setSignImageResult.getErrCode()!="0x11000001"){
+                            getAuto();
+                        }
+                    }
+
+                });
+    }
+
+    private void getAuto(){
+        iv_apply3_yes.setVisibility(View.VISIBLE);
+        rv_apply3_auto.setVisibility(View.VISIBLE);
+        lv_apply3_auto.setVisibility(View.INVISIBLE);
+        im_apply_auto.setImageBitmap(handWritingBitmap);
+    }
+
+    private void reAuto(){
+        iv_apply3_yes.setVisibility(View.INVISIBLE);
+        rv_apply3_auto.setVisibility(View.INVISIBLE);
+        lv_apply3_auto.setVisibility(View.VISIBLE);
+        handWriting(mContext);
+    }
 }

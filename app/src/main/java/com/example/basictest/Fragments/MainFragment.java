@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.basictest.Activity.Apply1stActivity;
 import com.example.basictest.Activity.Apply3Activity;
 import com.example.basictest.Activity.JiluActivity;
+import com.example.basictest.Activity.PdfViewerActivity;
 import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
 import com.example.basictest.Activity.CameraActivity;
