@@ -40,6 +40,7 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import top.androidman.SuperButton;
 
 
 public class MainFragment extends Fragment {
@@ -49,13 +50,13 @@ public class MainFragment extends Fragment {
 
 
     @BindView(R.id.btn_main_fqgz)
-    Button btn_main_fqgz;
+    SuperButton btn_main_fqgz;
     @BindView(R.id.btn_main_gzjl)
-    Button btn_main_gzjl;
+    SuperButton btn_main_gzjl;
     @BindView(R.id.btn_main_wsgl)
-    Button btn_main_wsgl;
+    SuperButton btn_main_wsgl;
     @BindView(R.id.btn_main_syzn)
-    Button btn_main_syzn;
+    SuperButton btn_main_syzn;
 
     private List<NoticeEntity> datas=new ArrayList<>();
     private MyzixunRecyclerViewAdapter adapter;

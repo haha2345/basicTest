@@ -192,7 +192,7 @@
                     android:layout_marginTop="50dp"
                     app:background_normalColor="#1A245FFF"
                     app:corner="20dp"
-                    app:icon="@mipmap/shangchuan"
+                    app:icon="@drawable/shangchuan"
                     app:iconHeight="60dp"
                     app:iconWidth="63dp"
                     app:iconOrientation="right"

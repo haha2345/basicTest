@@ -73,6 +73,9 @@ dependencies {
     implementation 'com.github.MasayukiSuda:CameraRecorder-android:v0.1.5'
 
 
+
+
+
     implementation(name: 'framework-release', ext: 'aar')
     implementation(name: 'IDSPSDK', ext: 'aar')
     implementation(name: 'livecheckcomponent-release', ext: 'aar')

@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.basictest.base.BaseActivity;
+import com.example.basictest.base.BaseApply3Activity;
 import com.example.basictest.utils.SpUtils;
 import com.example.basictest.Class.User;
 import com.example.basictest.utils.Utils;
@@ -27,7 +29,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends Activity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
 
     //定义控件

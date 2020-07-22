@@ -114,7 +114,10 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     private File file;
     Uri uri;
     //判断是否获取到文件路径
+    //获取pdf标志位
     private int flag=0;
+    //checkbox标志位
+    private int flag1=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,11 +245,14 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked){
+                    flag1=1;
                     if (flag==1){
                         Log.d("检查框","已获取到文件名");
                         sbtn_apply1_next.setEnabled(true);
                     }
+
                 }else{
+                    flag1=0;
                     sbtn_apply1_next.setEnabled(false);
                 }
 
@@ -346,6 +352,9 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
         sbtn_apply1.setPressed(false);
         sbtn_apply1.setEnabled(false);
         flag=1;
+        if (flag1==1){
+            sbtn_apply1_next.setEnabled(true);
+        }
     }
     private void jumpToApply2(){
         intent=new Intent(mContext,Apply2edActivity.class);

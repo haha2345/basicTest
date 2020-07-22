@@ -142,13 +142,14 @@ public class Apply3Activity extends BaseApply3Activity {
         mTopBar.setTitle("赋强公证申请");
     }
 
+    //按钮判断
     @Override
     protected void onResume() {
         super.onResume();
         //若二者都有即可进行下一步
-//        if (imagePath!=null&&src!=null){
-//            sbtn_apply3_next.setEnabled(true);
-//        }
+        if (imagePath!=null&&src!=null){
+            sbtn_apply3_next.setEnabled(true);
+        }
 
     }
 

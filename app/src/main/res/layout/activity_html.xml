@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.HtmlActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Activity.HtmlActivity">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar_html"
@@ -13,10 +13,12 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         tools:ignore="MissingConstraints" />
-    <WebView
-        android:layout_marginTop="10dp"
-        android:id="@+id/html_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </WebView>
+
+
+<WebView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/webview_html"/>
+
+
 </LinearLayout>

@@ -79,29 +79,64 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <top.androidman.SuperButton
+                    android:layout_width="48dp"
+                    android:layout_height="60dp"
+                    app:icon="@mipmap/gognzheng"
+                    app:background_normalColor="@color/white"
+                    app:text="赋强公正"
                     android:id="@+id/btn_main_fqgz"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="赋强公正" />
-
-                <Button
+                    app:iconPadding="10dp"
+                    app:iconHeight="26dp"
+                    app:iconOrientation="top"
+                    app:iconWidth="26dp"
+                    app:textSize="12sp"
+                    />
+                <top.androidman.SuperButton
+                    android:layout_width="48dp"
+                    android:layout_height="60dp"
+                    app:icon="@mipmap/gognzhengjilu"
+                    app:background_normalColor="@color/white"
+                    app:text="公正记录"
                     android:id="@+id/btn_main_gzjl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="公正记录" />
+                    app:iconPadding="10dp"
+                    app:iconHeight="26dp"
+                    app:iconOrientation="top"
+                    app:iconWidth="26dp"
+                    app:textSize="12sp"
+                    android:layout_marginLeft="30dp"
+                    />
 
-                <Button
+                <top.androidman.SuperButton
+                    android:layout_width="48dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="30dp"
+                    app:icon="@mipmap/wenshuguanli"
+                    app:background_normalColor="@color/white"
+                    app:text="文书管理"
                     android:id="@+id/btn_main_wsgl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="文书管理" />
+                    app:iconPadding="10dp"
+                    app:iconHeight="26dp"
+                    app:iconOrientation="top"
+                    app:iconWidth="26dp"
+                    app:textSize="12sp"
+                    />
 
-                <Button
+
+                <top.androidman.SuperButton
+                    android:layout_width="48dp"
+                    android:layout_height="60dp"
+                    app:icon="@mipmap/shiyongzhinan"
+                    android:layout_marginLeft="30dp"
+                    app:text="使用指南"
                     android:id="@+id/btn_main_syzn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="使用指南" />
+                    app:iconPadding="10dp"
+                    app:iconHeight="26dp"
+                    app:iconOrientation="top"
+                    app:iconWidth="26dp"
+                    app:textSize="12sp"
+                    />
+
             </LinearLayout>
 
             <RelativeLayout
@@ -113,7 +148,7 @@
                     android:id="@+id/tv_main_tv1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/laba"
+                    android:src="@drawable/laba"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="18dp"
                     />
@@ -156,7 +191,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="23dp"
-                        android:src="@mipmap/tuoyuanxing" />
+                        android:src="@drawable/tuoyuanxing" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -197,7 +232,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="23dp"
                         android:layout_marginLeft="16dp"
-                        android:src="@mipmap/tuoyuanxing" />
+                        android:src="@drawable/tuoyuanxing" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

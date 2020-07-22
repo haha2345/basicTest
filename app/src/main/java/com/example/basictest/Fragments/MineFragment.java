@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class MineFragment extends Fragment {
 
     QMUICommonListItemView item_1,item_2,item_3,item_4,item_5;
     Intent intent;
+    private int flag=0;
 
 
 
@@ -49,27 +51,51 @@ public class MineFragment extends Fragment {
         //Bundle bundle=getArguments();
         //username=bundle.getString("username");
         //tv_mine_test.setText(username);
-        initList();
+        if (flag==0){
+            initList();
+        }
+
     }
 
 
-
     private void initList(){
+        flag=1;
+
         groupListView=getActivity().findViewById(R.id.groupListView);
 
-        item_1 = groupListView.createItemView("公正记录");
+        item_1 = groupListView.createItemView(ContextCompat.getDrawable(getContext(), R.drawable.gognzhengjilu),
+                "公正记录",
+                null,
+                QMUICommonListItemView.HORIZONTAL,
+                QMUICommonListItemView.ACCESSORY_TYPE_NONE);
         item_1.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
-        item_2 = groupListView.createItemView("文书管理");
+        item_2 = groupListView.createItemView(ContextCompat.getDrawable(getContext(), R.drawable.wenshuguanli),
+                "文书管理",
+                null,
+                QMUICommonListItemView.HORIZONTAL,
+                QMUICommonListItemView.ACCESSORY_TYPE_NONE);
         item_2.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
-        item_3 = groupListView.createItemView("使用帮助");
+        item_3 = groupListView.createItemView(ContextCompat.getDrawable(getContext(), R.drawable.shiyongzhinan),
+                "使用帮助",
+                null,
+                QMUICommonListItemView.HORIZONTAL,
+                QMUICommonListItemView.ACCESSORY_TYPE_NONE);
         item_3.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
-        item_4 = groupListView.createItemView("公证处简介");
+        item_4 = groupListView.createItemView(ContextCompat.getDrawable(getContext(), R.drawable.jianjie),
+                "公证处简介",
+                null,
+                QMUICommonListItemView.HORIZONTAL,
+                QMUICommonListItemView.ACCESSORY_TYPE_NONE);
         item_4.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
-        item_5 = groupListView.createItemView("系统设置");
+        item_5 = groupListView.createItemView(ContextCompat.getDrawable(getContext(), R.drawable.shezhi),
+                "系统设置",
+                null,
+                QMUICommonListItemView.HORIZONTAL,
+                QMUICommonListItemView.ACCESSORY_TYPE_NONE);
         item_5.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
         QMUIGroupListView.newSection(getContext())
@@ -123,6 +149,7 @@ public class MineFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_mine, container, false);
+
 
         return view;
 

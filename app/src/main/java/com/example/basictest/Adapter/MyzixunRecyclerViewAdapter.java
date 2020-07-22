@@ -3,12 +3,15 @@ package com.example.basictest.Adapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.basictest.Activity.HtmlActivity;
 import com.example.basictest.Class.NoticeEntity;
 import com.example.basictest.R;
 
@@ -43,14 +46,17 @@ public class MyzixunRecyclerViewAdapter extends RecyclerView.Adapter<MyzixunRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         ViewHolder vh=(ViewHolder)holder;
-        NoticeEntity noticeEntity=datas.get(position);
+        final NoticeEntity noticeEntity=datas.get(position);
         vh.tv_zixun_title.setText(noticeEntity.getNoticeTitle());
         vh.tv_zixun_date.setText(noticeEntity.getUpdateTime());
+
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "我被点击了"+position, Toast.LENGTH_SHORT).show();
-
+                Intent intent=new Intent(context, HtmlActivity.class);
+                intent.putExtra("html",noticeEntity.getNoticeContent());
+                context.startActivity(intent);
             }
         });
 
