@@ -6,11 +6,15 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.internal.$Gson$Types;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+
 import java.util.HashMap;
 
 public class BaseActivity extends AppCompatActivity {
     //加载框
     private ProgressDialog progressDialog;
+
 
     //获取map中的key
     public String getKey(HashMap<String, String> map, String value) {
@@ -55,4 +59,6 @@ public class BaseActivity extends AppCompatActivity {
         }
         return false;//已经取消过了，不需要取消
     }
+
+
 }

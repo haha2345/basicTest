@@ -3,9 +3,11 @@ package com.example.basictest.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,10 +28,12 @@ import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.ResponseListener;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
 
     //定义控件
@@ -40,15 +44,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private EditText et_vcode;
     private TextView tv_jumpToRegister;
     private TextView tv_forgetPwd;
-    private User user=null;
-    private Utils utils=null;
+    private User user = null;
+    private Utils utils = null;
 
     private String username;
     private String pwd;
     private String vcode;
     private String uuid;
 
-    private SharedPreferences preferences;
+    private Context mContext = LoginActivity.this;
 
     //定义弹出窗口
     QMUITipDialog qmuiTipDialog;
@@ -56,43 +60,46 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     //定义json串
     private String jsonStr;
 
-    private int flag =0;
+    private int flag = 0;
 
-    public String TAG="LoginActivity";
+    public String TAG = "LoginActivity";
 
     Intent registerIntent;
     Intent forgetPwdIntent;
     Intent loginIntent;
+    MyCountDownTimer myCountDownTimer;
+    //提示框
+    private QMUITipDialog tipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if (SpUtils.getInstance(this).getString("token",null)!=null){
+        if (SpUtils.getInstance(this).getString("token", null) != null) {
             jupmToMain();
             finish();
         }
+        myCountDownTimer = new MyCountDownTimer(60000, 1000);
         initViews();
-        setOnFocusChangeErrMsg(et_phone,"phone","手机号格式不正确");
-        setOnFocusChangeErrMsg(et_pwd,"password","密码不少于6位");
-        username=SpUtils.getInstance(this).getString("username",null);
-        pwd=SpUtils.getInstance(this).getString("pwd",null);
-
+        setOnFocusChangeErrMsg(et_phone, "phone", "手机号格式不正确");
+        setOnFocusChangeErrMsg(et_pwd, "password", "密码不少于6位");
+        username = SpUtils.getInstance(this).getString("username", null);
+        pwd = SpUtils.getInstance(this).getString("pwd", null);
 
 
     }
 
-    private void initViews(){
-        btn_getVcode=(TextView) findViewById(R.id.btn_getVcode);
-        btn_login=(Button)findViewById(R.id.btn_login);
-        et_phone=(EditText)findViewById(R.id.et_phone);
-        et_pwd=(EditText)findViewById(R.id.et_pwd);
-        et_vcode=(EditText)findViewById(R.id.et_vcode);
-        tv_forgetPwd=(TextView)findViewById(R.id.tv_forgetPwd);
-        tv_jumpToRegister=(TextView)findViewById(R.id.tv_jumpToRegister);
+    private void initViews() {
+        btn_getVcode = (TextView) findViewById(R.id.btn_getVcode);
+        btn_login = (Button) findViewById(R.id.btn_login);
+        et_phone = (EditText) findViewById(R.id.et_phone);
+        et_pwd = (EditText) findViewById(R.id.et_pwd);
+        et_vcode = (EditText) findViewById(R.id.et_vcode);
+        tv_forgetPwd = (TextView) findViewById(R.id.tv_forgetPwd);
+        tv_jumpToRegister = (TextView) findViewById(R.id.tv_jumpToRegister);
 
         //工具类
-        utils=new Utils();
+        utils = new Utils();
 
         btn_login.setOnClickListener(this);
         btn_getVcode.setOnClickListener(this);
@@ -101,7 +108,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
 
         //提示框
-        qmuiTipDialog=new QMUITipDialog.Builder(LoginActivity.this)
+        qmuiTipDialog = new QMUITipDialog.Builder(LoginActivity.this)
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                 .setTipWord("请稍后")
                 .create();
@@ -111,54 +118,69 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void onClick(View view) {
 
-        username=et_phone.getText().toString();
-        pwd=et_pwd.getText().toString();
-        vcode=et_vcode.getText().toString();
+        username = et_phone.getText().toString();
+        pwd = et_pwd.getText().toString();
+        vcode = et_vcode.getText().toString();
 
-        switch (view.getId()){
+        switch (view.getId()) {
             //获取验证码
             case R.id.btn_getVcode:
-                username=et_phone.getText().toString();
-                //测试qmui的提示框
-                qmuiTipDialog.show();
-                //获取uuid和用户名
-                getuuid();
-                qmuiTipDialog.dismiss();
+                username = et_phone.getText().toString().trim();
+                if (username.isEmpty()) {
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO, "请输入用户名").show();
+                    delayCloseTip();
+                    break;
+                }
+                if (isTelphoneValid(username)) {
+                    //测试qmui的提示框
+                    //获取uuid和用户名
+                    qmuiTipDialog.show();
+                    getuuid();
+                    myCountDownTimer.start();
+                    btn_login.setEnabled(true);
+                } else {
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO, "请输入正确的手机号").show();
+                    delayCloseTip();
+                }
+
+
                 //test
                 //Toast toast = Toast.makeText(LoginActivity.this, "验证码已发送"+uuid, Toast.LENGTH_SHORT);
                 //toast.show();
                 break;
 
-                //登录
+            //登录
             case R.id.btn_login:
                 //获取文本框内对象
-                username=et_phone.getText().toString();
-                pwd=et_pwd.getText().toString();
-                vcode=et_vcode.getText().toString();
+                username = et_phone.getText().toString();
+                pwd = et_pwd.getText().toString();
+                vcode = et_vcode.getText().toString();
                 // 让密码输入框失去焦点,触发setOnFocusChangeErrMsg方法
                 et_pwd.clearFocus();
+
                 // 发送URL请求之前,先进行校验
-                if (!(isTelphoneValid(username) && isPasswordValid(pwd))) {
-                    Toast.makeText(this, "账号或密码错误", Toast.LENGTH_SHORT).show();
+                if (!(isTelphoneValid(username) && isPasswordValid(pwd)&&(!vcode.isEmpty()))) {
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_NOTHING,"账号或密码错误").show();
+                    delayCloseTip();
                     break;
-                }
-                else {//初始化user对象，生成json
+                } else {//初始化user对象，生成json
                     user = new User(uuid, username, pwd, vcode);
                     Gson gson = new Gson();
                     jsonStr = gson.toJson(user);
                     Log.d(TAG, jsonStr);
+                    qmuiTipDialog.show();
                     loginValidate();
                 }
                 break;
             case R.id.tv_jumpToRegister:
-                registerIntent=new Intent(LoginActivity.this,RegisterActivity.class);
-                registerIntent.putExtra("username",username);
+                registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                registerIntent.putExtra("username", username);
                 startActivity(registerIntent);
                 break;
 
             case R.id.tv_forgetPwd:
-                forgetPwdIntent=new Intent(LoginActivity.this, ForgetPwdActivity.class);
-                forgetPwdIntent.putExtra("username",username);
+                forgetPwdIntent = new Intent(LoginActivity.this, ForgetPwdActivity.class);
+                forgetPwdIntent.putExtra("username", username);
                 startActivity(forgetPwdIntent);
 
                 break;
@@ -169,27 +191,32 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
 
     //post json
-    private void loginValidate(){
-        HttpRequest.JSONPOST(LoginActivity.this,netConstant.getLoginURL(), jsonStr, new ResponseListener() {
+    private void loginValidate() {
+        HttpRequest.JSONPOST(LoginActivity.this, netConstant.getLoginURL(), jsonStr, new ResponseListener() {
             @Override
             public void onResponse(String response, Exception error) {
                 if (error == null) {
-                    if (response.contains("200")){
-                        String msg=utils.getJson(response).get("msg").getAsString();
-                        utils.showToastInThread(LoginActivity.this,msg);
-                        Log.d("LoginActivity",msg);
-                        String token=utils.getJson(response).get("token").getAsString();
-                        Log.d("a",token);
+                    if (response.contains("200")) {
+                        String msg = utils.getJson(response).get("msg").getAsString();
+                        utils.showToastInThread(LoginActivity.this, msg);
+                        Log.d("LoginActivity", msg);
+                        String token = utils.getJson(response).get("token").getAsString();
+                        Log.d("a", token);
                         //储存
+                        qmuiTipDialog.dismiss();
                         saveValue(token);
                         jupmToMain();
                         finish();
-                    }else{
-                        utils.showToastInThread(LoginActivity.this,"登陆失败");
+                    } else {
+                        qmuiTipDialog.dismiss();
+                        getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO,"登陆失败，请检查输入是否有误").show();
+                        delayCloseTip();
                     }
 
                 } else {
-                    Toast.makeText(LoginActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_FAIL,"连接服务器失败").show();
+                    delayCloseTip();
+
                 }
             }
         });
@@ -197,21 +224,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
 
     //get uuid
-    private void getuuid(){
-        HttpRequest.GET(LoginActivity.this,netConstant.getGetVcodeURL()+"?mobile="+username,null,new ResponseListener(){
+    private void getuuid() {
+        HttpRequest.GET(LoginActivity.this, netConstant.getGetVcodeURL() + "?mobile=" + username, null, new ResponseListener() {
             @Override
             public void onResponse(String response, Exception error) {
 
                 if (error == null) {
                     //先判断是否正常
-                    if(response.contains("200")){
+                    qmuiTipDialog.dismiss();
+                    if (response.contains("200")) {
                         //解析json
-                        JsonObject resultJson=utils.getJson(response);
+                        JsonObject resultJson = utils.getJson(response);
                         //提取uuid
-                        uuid=resultJson.get("uuid").getAsString();
+                        uuid = resultJson.get("uuid").getAsString();
                         //线程中无法直接使用toast
                         //测试用
-                        utils.showToastInThread(LoginActivity.this,"已发送验证码，注意查收"+uuid);
+                        utils.showToastInThread(LoginActivity.this, "已发送验证码，注意查收" + uuid);
+
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
@@ -219,7 +248,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
         });
     }
-
 
 
     private void setOnFocusChangeErrMsg(final EditText editText, final String inputType, final String errMsg) {
@@ -265,23 +293,71 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
     }
+
     //跳转页面
-    private void jupmToMain(){
+    private void jupmToMain() {
         //转到下个页面
-        loginIntent=new Intent(LoginActivity.this,MainActivity.class);
-        loginIntent.putExtra("username",username);
+        loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+        loginIntent.putExtra("username", username);
         startActivity(loginIntent);
     }
 
-    private void saveValue(String token){
+    private void saveValue(String token) {
 //        preferences=getSharedPreferences("info",MODE_PRIVATE);
 //        SharedPreferences.Editor editor=preferences.edit();
 //        editor.putString("username",username);
 //        editor.putString("pwd",pwd);
 //        editor.putString("token",token);
 //        editor.commit();
-        SpUtils.getInstance(this).setString("username",username,1800);
-        SpUtils.getInstance(this).setString("pwd",pwd,1800);
-        SpUtils.getInstance(this).setString("token",token,1800);
+        SpUtils.getInstance(this).setString("username", username, 1800);
+        SpUtils.getInstance(this).setString("pwd", pwd, 1800);
+        SpUtils.getInstance(this).setString("token", token, 1800);
+    }
+
+
+    //倒计时函数
+    private class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        //计时过程
+        @Override
+        public void onTick(long l) {
+            //防止计时过程中重复点击
+            btn_getVcode.setClickable(false);
+            btn_getVcode.setText(l / 1000 + "秒后可再发送");
+
+        }
+
+        //计时完毕的方法
+        @Override
+        public void onFinish() {
+            //重新给Button设置文字
+            btn_getVcode.setText("重新获取");
+            //设置可点击
+            btn_getVcode.setClickable(true);
+        }
+    }
+
+    public QMUITipDialog getTipDialog(int type, String str) {
+        tipDialog = new QMUITipDialog.Builder(mContext)
+                .setIconType(type)
+                .setTipWord(str)
+                .create();
+        return tipDialog;
+    }
+    //1.5s后关闭tipDIalog
+    public void delayCloseTip(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //要延时的程序
+                tipDialog.dismiss();
+            }
+        },1500);
     }
 }
+

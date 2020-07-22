@@ -2,17 +2,21 @@ package com.example.basictest.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basictest.Class.User;
+import com.example.basictest.base.BaseActivity;
 import com.example.basictest.utils.Utils;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
@@ -20,13 +24,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.ResponseListener;
+import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends BaseActivity implements View.OnClickListener{
 
     private EditText et_RegisterPhone;
     private EditText et_Password;
@@ -49,16 +58,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String rePwd;
     private String uuid;
     private String vcode;
-
+    MyCountDownTimer1 myCountDownTimer;
+    private QMUITipDialog tipDialog;
     private QMUITipDialog qmuiTipDialog;
+    private Context mContext = RegisterActivity.this;
+    private int flag1=0,flag2=0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        myCountDownTimer = new MyCountDownTimer1(60000, 1000);
 
         initViews();
+        initCheckBox();
         tv_JumpToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,8 +117,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         et_RegisterPhone.setText(intent.getStringExtra("username"));
 
         qmuiTipDialog=new QMUITipDialog.Builder(RegisterActivity.this)
-                .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                .setTipWord("注册成功，请返回登录")
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("请稍后")
                 .create();
 
     }
@@ -121,32 +135,72 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 // 让密码输入框失去焦点,触发setOnFocusChangeErrMsg方法
                 et_RePassword.clearFocus();
                 // 发送URL请求之前,先进行校验
-                if (!(isTelphoneValid(username) && isPasswordValid(pwd))&&isPwdCorrect(pwd,rePwd)) {
-                    Toast.makeText(this, "请检查输入是否有误！", Toast.LENGTH_SHORT).show();
+                if (!(isTelphoneValid(username) && isPasswordValid(pwd)&&isPwdCorrect(pwd,rePwd)&&(!vcode.isEmpty()))){
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_NOTHING,"请检查输入是否有误").show();
+                    delayCloseTip();
+                    break;
+                }else{
+                    user=new User(uuid,username,pwd,vcode);
+                    Gson gson=new Gson();
+                    jsonStr=gson.toJson(user);
+                    //Toast.makeText(RegisterActivity.this, jsonStr, Toast.LENGTH_SHORT).show();
+
+                    Log.d(TAG,jsonStr);
+                    //注册
+                    qmuiTipDialog.show();
+                    registerRequest();
                 }
-                user=new User(uuid,username,pwd,vcode);
-                Gson gson=new Gson();
-                jsonStr=gson.toJson(user);
-                //Toast.makeText(RegisterActivity.this, jsonStr, Toast.LENGTH_SHORT).show();
-
-                Log.d(TAG,jsonStr);
-                //注册
-                registerRequest();
-
-
                 break;
 
             case R.id.btn_getVcode_from_reg:
                 username=et_RegisterPhone.getText().toString();
                 //Toast.makeText(RegisterActivity.this, username, Toast.LENGTH_SHORT).show();
-
+                if (username.isEmpty()) {
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO, "请输入用户名").show();
+                    delayCloseTip();
+                    break;
+                }
+                if (isTelphoneValid(username)) {
+                    //测试qmui的提示框
+                    //获取uuid和用户名
+                    qmuiTipDialog.show();
+                    getuuid();
+                    myCountDownTimer.start();
+                    flag1=1;
+                    if (flag2==1){
+                        btn_Register.setEnabled(true);
+                    }else {
+                        btn_Register.setEnabled(false);
+                    }
+                } else {
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO, "请输入正确的手机号").show();
+                    delayCloseTip();
+                }
                 Log.d(TAG,username);
                 getuuid();
                 break;
 
         }
     }
+    private void initCheckBox(){
+        checkBox_register.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    flag2=1;
+                    if (flag1==1){
 
+                        btn_Register.setEnabled(true);
+                    }
+
+                }else{
+                    flag2=0;
+                    btn_Register.setEnabled(false);
+                }
+
+            }
+        });
+    }
 
     //get uuid
     private void getuuid(){
@@ -156,6 +210,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 if (error == null) {
                     //先判断是否正常
+                    qmuiTipDialog.dismiss();
                     if(response.contains("200")){
                         //解析json
                         JsonObject resultJson=utils.getJson(response);
@@ -166,6 +221,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         utils.showToastInThread(RegisterActivity.this,"已发送验证码，注意查收"+uuid);
                     }
                 } else {
+                    qmuiTipDialog.dismiss();
                     Toast.makeText(RegisterActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -182,15 +238,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         String msg=utils.getJson(main).get("msg").getAsString();
                         Toast.makeText(RegisterActivity.this,msg,Toast.LENGTH_LONG).show();
                         Log.d(TAG,"注册成功");
-                        //成功跳转
-                        intent=new Intent(RegisterActivity.this,LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-
-                        qmuiTipDialog.show();
+                        qmuiTipDialog.dismiss();
+                        showMessagePositiveDialog();
+                    }else {
+                        String msg=utils.getJson(main).get("msg").getAsString();
+                        qmuiTipDialog.dismiss();
+                        getTipDialog(QMUITipDialog.Builder.ICON_TYPE_FAIL,msg).show();
+                        delayCloseTip();
                     }
                 }else {
-
+                    qmuiTipDialog.dismiss();
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_FAIL,"无法连接服务器").show();
+                    delayCloseTip();
                 }
             }
         });
@@ -240,10 +299,71 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
     }
+
     private  boolean isPwdCorrect(String pwd,String rePwd){
-        if (pwd.equals(rePwd))
-            return true;
-        else
-            return false;
+        return pwd.equals(rePwd);
+    }
+
+
+    //倒计时函数
+    private class MyCountDownTimer1 extends CountDownTimer {
+
+        public MyCountDownTimer1(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        //计时过程
+        @Override
+        public void onTick(long l) {
+            //防止计时过程中重复点击
+            btn_getVCode.setClickable(false);
+            btn_getVCode.setText(l / 1000 + "秒后可再发送");
+
+        }
+
+        //计时完毕的方法
+        @Override
+        public void onFinish() {
+            //重新给Button设置文字
+            btn_getVCode.setText("重新获取");
+            //设置可点击
+            btn_getVCode.setClickable(true);
+        }
+    }
+
+    public QMUITipDialog getTipDialog(int type, String str) {
+        tipDialog = new QMUITipDialog.Builder(mContext)
+                .setIconType(type)
+                .setTipWord(str)
+                .create();
+        return tipDialog;
+    }
+    //1.5s后关闭tipDIalog
+    public void delayCloseTip(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //要延时的程序
+                tipDialog.dismiss();
+            }
+        },1500);
+    }
+    private void showMessagePositiveDialog() {
+        new QMUIDialog.MessageDialogBuilder(mContext)
+                .setMessage("注册成功，去登录")
+                .setSkinManager(QMUISkinManager.defaultInstance(mContext))
+                .addAction(0, "确定", QMUIDialogAction.ACTION_PROP_POSITIVE, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                        Toast.makeText(mContext, "发送成功", Toast.LENGTH_SHORT).show();
+//成功跳转
+                        intent=new Intent(RegisterActivity.this,LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                })
+                .create(com.qmuiteam.qmui.R.style.QMUI_Dialog).show();
     }
 }
