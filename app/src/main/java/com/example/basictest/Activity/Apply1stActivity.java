@@ -199,7 +199,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.w(TAG,"返回的数据："+data);
+        Log.w(TAG,"返回的数据："+data.getScheme());
         if (resultCode == Activity.RESULT_OK) {
             uri = data.getData();
             //使用第三方应用打开
@@ -230,7 +230,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
             } else {//4.4以下下系统调用方法
                 path = getRealPathFromURI(this,uri);
                 Log.w(TAG,path);
-                afterGetFile();
+
                 Toast.makeText(Apply1stActivity.this, path+"222222", Toast.LENGTH_SHORT).show();
             }
         }

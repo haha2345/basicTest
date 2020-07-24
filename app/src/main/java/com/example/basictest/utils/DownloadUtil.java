@@ -28,9 +28,9 @@ public class DownloadUtil {
  
     /**
      * @param url          下载连接
-     * @param destFileDir  下载的文件储存目录
-     * @param destFileName 下载文件名称
-     * @param listener     下载监听
+     *      * @param destFileDir  下载的文件储存目录
+     *      * @param destFileName 下载文件名称
+     *      * @param listener     下载监听
      */
     public void download(final String url, final String destFileDir, final String destFileName, final OnDownloadListener listener) {
         Request request = new Request.Builder().url(url).build();

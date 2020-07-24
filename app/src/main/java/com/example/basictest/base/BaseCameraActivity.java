@@ -1,6 +1,7 @@
 package com.example.basictest.base;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,8 @@ import android.opengl.GLException;
 import android.opengl.GLSurfaceView;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.MediaStore;
 
 import android.util.Log;
@@ -36,6 +39,10 @@ import com.example.basictest.utils.Timeutils;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.util.JsonMap;
+import com.qmuiteam.qmui.skin.QMUISkinManager;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 
 import java.io.File;
@@ -45,6 +52,8 @@ import java.io.IOException;
 import java.nio.IntBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLContext;
@@ -53,14 +62,31 @@ import javax.microedition.khronos.opengles.GL10;
 
 
 public class BaseCameraActivity extends AppCompatActivity {
+    public Handler handler=new Handler();
+    public Runnable runnable=new Runnable() {
+        @Override
+        public void run() {
+            cameraRecorder.stop();
+
+            //暂停计时
+            timer.stopTimer();
+            recordBtn.setImageResource(R.drawable.record);
+            recordBtn.setEnabled(false);
+            cancelBtn.setImageResource(R.drawable.chongxinrecord);
+            cancelBtn.setVisibility(View.VISIBLE);
+            uploadBtn.setVisibility(View.VISIBLE);
+            flag=true;
+            handler.postDelayed(this,40000);
+        }
+    };
 
     private SampleGLView sampleGLView;
-    protected CameraRecorder cameraRecorder;
-    private String filepath;
-    private ImageButton recordBtn,cancelBtn,uploadBtn;
-    private TextView tv_camera_timer;
+    public static CameraRecorder cameraRecorder=null;
+    public String filepath;
+    public ImageButton recordBtn,cancelBtn,uploadBtn;
+    public TextView tv_camera_timer;
     protected LensFacing lensFacing = LensFacing.FRONT;
-    private  String token,caseId;
+    public String token,caseId;
     protected int cameraWidth = 1280;
     protected int cameraHeight = 720;
     protected int videoWidth = 720;
@@ -68,14 +94,39 @@ public class BaseCameraActivity extends AppCompatActivity {
     private AlertDialog filterDialog;
     private boolean toggleClick = false;
     //检测是否录像
-    private boolean flag=true;
+    public boolean flag=true;
+    public QMUITipDialog tipDialog;
 
-    private String imagePath,src;
+    public String imagePath,src;
 
-    private File videoFile;
+    public File videoFile;
 
     //调用计时器
-    Timeutils timer;
+    public Timeutils timer;
+    public ProgressDialog progressDialog;
+    Timer time = new Timer();
+
+//    //检测时间 定时关闭
+//    private Handler handler= new Handler();
+//    private Runnable runnable = new Runnable(){
+//        public void run(){
+//            String time=tv_camera_timer.getText().toString();
+//            if (time.equals("00:20")){
+//                //结束录像
+//                cameraRecorder.stop();
+//                //暂停计时
+//                timer.stopTimer();
+//                recordBtn.setImageResource(R.drawable.record);
+//                recordBtn.setEnabled(false);
+//                cancelBtn.setImageResource(R.drawable.chongxinrecord);
+//                cancelBtn.setVisibility(View.VISIBLE);
+//                uploadBtn.setVisibility(View.VISIBLE);
+//                flag=true;
+//                handler.removeCallbacks(runnable);
+//            }
+//            handler.postDelayed(this,1000);//定时时间
+//        }
+//    };
 
     protected void onCreateActivity() {
         tv_camera_timer=findViewById(R.id.tv_recorder_time);
@@ -87,6 +138,8 @@ public class BaseCameraActivity extends AppCompatActivity {
         uploadBtn=findViewById(R.id.ibtn_upload);
         recordBtn = findViewById(R.id.ibtn_record);
 
+
+
         //点击录像
         recordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +150,7 @@ public class BaseCameraActivity extends AppCompatActivity {
                     Log.d("视频路径",filepath);
                     //开始计时
                     timer.startTimer();
+
                     SpUtils.getInstance(getParent()).setString("videopath",filepath);
                     cameraRecorder.start(filepath);
                     recordBtn.setImageResource(R.drawable.luwan);
@@ -117,15 +171,54 @@ public class BaseCameraActivity extends AppCompatActivity {
                                     exportPngToGallery(getApplicationContext(), imagePath);
                                 }
                             });
+
                         }
                     });
+                    //延时执行操作，在主线程中工作
+
+
+                    handler.postDelayed(runnable,40000);
+//                    handler.postDelayed(new Runnable(){
+//                        public void run() {
+//                            //execute the task
+//
+//                        }
+//                    }, 40500);
+//                    time.schedule(new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            //要延时的程序
+//                            Looper.prepare();
+//                            cameraRecorder.stop();
+//
+//                            //暂停计时
+//                            timer.stopTimer();
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    recordBtn.setImageResource(R.drawable.record);
+//                                    recordBtn.setEnabled(false);
+//                                    cancelBtn.setImageResource(R.drawable.chongxinrecord);
+//                                    cancelBtn.setVisibility(View.VISIBLE);
+//                                    uploadBtn.setVisibility(View.VISIBLE);
+//                                    flag=true;
+//                                }
+//                            });
+//
+//                        }
+//                    },10000);
+
+//                    handler.removeCallbacks(runnable);
+//                    handler.postDelayed(runnable,1000);
                     flag=false;
                 } else {
+                    handler.removeCallbacks(runnable);
                     //结束录像
                     cameraRecorder.stop();
                     //暂停计时
                     timer.stopTimer();
                     recordBtn.setImageResource(R.drawable.record);
+                    recordBtn.setEnabled(false);
                     cancelBtn.setImageResource(R.drawable.chongxinrecord);
                     cancelBtn.setVisibility(View.VISIBLE);
                     uploadBtn.setVisibility(View.VISIBLE);
@@ -144,24 +237,13 @@ public class BaseCameraActivity extends AppCompatActivity {
                     tv_camera_timer.setText("00:00");
                     uploadBtn.setVisibility(View.INVISIBLE);
                     cancelBtn.setImageResource(R.drawable.error);
+                    recordBtn.setEnabled(true);
                 }
             }
         });
 
 
-        uploadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent intent=new Intent(getBaseContext(), Apply3Activity.class);
-                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("imagepath",imagePath);
-                intent.putExtra("base64str",src);
-                startActivity(intent);
-                Log.d("测试","aaa");
-
-            }
-        });
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -171,6 +253,7 @@ public class BaseCameraActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setUpCamera();
+
     }
 
     @Override
@@ -220,7 +303,7 @@ public class BaseCameraActivity extends AppCompatActivity {
     }
 
 
-    private void setUpCamera() {
+    public void setUpCamera() {
         setUpCameraView();
 
         cameraRecorder = new CameraRecorderBuilder(this, sampleGLView)
@@ -369,53 +452,55 @@ public class BaseCameraActivity extends AppCompatActivity {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
     }
 
-    private void uploadVideo(){
-        token= SpUtils.getInstance(this).getString("token",null);
-        caseId=SpUtils.getInstance(this).getString("caseId",null);
-        videoFile=new File(filepath);
-        HttpRequest.build(getBaseContext(), netConstant.getUploadNotarizeVideo())
-                .setMediaType(baseokhttp3.MediaType.parse("video/mpeg4"))
-                .addHeaders("Authorization","Bearer "+token)
-                .addHeaders("Content-Type","multipart/form-data")
-                .addParameter("notarizeVideoFile",videoFile)
-                .addParameter("caseId",caseId)
-                .setJsonResponseListener(new JsonResponseListener() {
-                    @Override
-                    public void onResponse(JsonMap main, Exception error) {
-                        if (error!=null){
-                            Log.e("上传","连接失败",error);
-                        }else {
-                            if (main.getString("code").equals("200")){
-                                //上传成功
-                                showExitDialog();
-                                Log.d("上传","成功");
 
-                            }else {
-                                Log.e("上传",main.getString("msg"));
-                                Log.e("上传",main.getString("code"));
+    //显示加载框
+    public void showProgressDialog(Context mContext, String text) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(mContext);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        }
+        progressDialog.setMessage(text);    //设置内容
+        progressDialog.setCancelable(false);//点击屏幕和按返回键都不能取消加载框
+        progressDialog.show();
 
+        //设置超时自动消失
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (dismissProgressDialog()) {
 
-                            }
-                        }
-                    }
-                })
-                .doPost();
-
-    }
-    private void showExitDialog(){
-        new AlertDialog.Builder(getBaseContext())
-                .setTitle("成功")
-                .setMessage("视频已上传成功，点击确认返回上一页")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent=new Intent(getBaseContext(), Apply3Activity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("imagepath",imagePath);
-                        startActivity(intent);
-                    }
-                })
-                .show();
+                }
+            }
+        }, 60000);//超时时间60秒
     }
 
+    //取消加载框
+    public Boolean dismissProgressDialog() {
+        if (progressDialog != null) {
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+                return true;//取消成功
+            }
+        }
+        return false;//已经取消过了，不需要取消
+    }
+
+    public QMUITipDialog getTipDialog(Context con, int type, String str) {
+        tipDialog = new QMUITipDialog.Builder(con)
+                .setIconType(type)
+                .setTipWord(str)
+                .create();
+        return tipDialog;
+    }
+    //1.5s后关闭tipDIalog
+    public void delayCloseTip(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //要延时的程序
+                tipDialog.dismiss();
+            }
+        },1500);
+    }
 }

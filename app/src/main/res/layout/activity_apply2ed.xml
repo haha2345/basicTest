@@ -265,6 +265,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Button
+            android:enabled="false"
             android:layout_width="301dp"
             android:layout_height="40dp"
             android:id="@+id/sbtn_apply2_verify"

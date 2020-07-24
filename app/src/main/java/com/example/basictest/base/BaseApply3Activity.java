@@ -33,6 +33,10 @@ import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.listener.ResponseListener;
 import com.kongzue.baseokhttp.util.JsonMap;
+import com.qmuiteam.qmui.skin.QMUISkinManager;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -43,6 +47,8 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.org.bjca.signet.component.core.activity.SignetCoreApi;
 import cn.org.bjca.signet.component.core.activity.SignetToolApi;
@@ -73,7 +79,7 @@ public class BaseApply3Activity extends AppCompatActivity {
     private String token, caseId, userId;
     private File uploadFile;
     private String caseCode, date, bank;
-
+    public QMUITipDialog tipDialog;
     //加载框
     private ProgressDialog progressDialog;
 
@@ -100,6 +106,7 @@ public class BaseApply3Activity extends AppCompatActivity {
             doc.writeTo(new FileOutputStream(uploadFile));
             //应该弹一个对话框
             Log.d("生成pdf", "成功");
+
         } catch (IOException e) {
             Log.d("生成pdf", "失败");
             e.printStackTrace();
@@ -196,7 +203,6 @@ public class BaseApply3Activity extends AppCompatActivity {
                             JsonMap data = main.getJsonMap("data");
                             if (data.getString("keyID").equals("null")) {
                                 //如果keyid不存在，说明该用户没有注册，调用注册sdk
-                                dismissProgressDialog();
                                 Log.d("getUserState", "sda");
                                 getNewRegiterInfo(con, name, idcard, phone);
                             } else {
@@ -207,7 +213,10 @@ public class BaseApply3Activity extends AppCompatActivity {
 
                             }
                         } else {
+                            getTipDialog(con,3,main.getString("msg")).show();
+                            delayCloseTip();
                             Log.d("获取用户状态", "失败");
+
                         }
                     }
                 })
@@ -216,21 +225,38 @@ public class BaseApply3Activity extends AppCompatActivity {
 
 
     //调用注册SDK
-    private void newRegister(Context con, String code) {
+    private void newRegister(final Context con, final String code) {
         SignetCoreApi.useCoreFunc(new RegisterCallBack(con, code, RegisterType.COORDINATE) {
             @Override
             public void onRegisterResult(RegisterResult registerResult) {
-                Log.d("msspID", registerResult.getMsspID());
+
+                if (registerResult.getErrCode().equals("0x00000000")){
+                    msspId=registerResult.getMsspID();
+                    Log.d("msspID", registerResult.getMsspID());
+                }else {
+                    getTipDialog(con,3,registerResult.getErrCode()+registerResult.getErrMsg()).show();
+                    delayCloseTip();
+                    newRegister(con,code);
+                }
+
             }
         });
     }
 
     //找回证书SDK
-    private void findRegister(Context con, String name, String idCard) {
+    private void findRegister(final Context con, final String name, final String idCard) {
         SignetCoreApi.useCoreFunc(new FindBackUserCallBack(con, name, idCard, IdCardType.SF) {
             @Override
             public void onFindBackResult(FindBackUserResult findBackUserResult) {
-                Log.d("msspID", findBackUserResult.toString());
+
+                if (findBackUserResult.getErrCode().equals("0x00000000")){
+                    msspId=findBackUserResult.getMsspID();
+                    Log.d("msspID", findBackUserResult.toString());
+                }else {
+                    getTipDialog(con,3,findBackUserResult.getErrCode()+findBackUserResult.getErrMsg()).show();
+                    delayCloseTip();
+                    findRegister(con,name,idCard);
+                }
             }
         });
     }
@@ -257,11 +283,15 @@ public class BaseApply3Activity extends AppCompatActivity {
                             msspId = data.getString("msspId");
                             activeCode = data.getString("userQrCode");
 
+                            dismissProgressDialog();
                             //调用注册
                             newRegister(con, activeCode);
 
                             Log.d("activeCode", activeCode);
                         } else {
+                            dismissProgressDialog();
+                            getTipDialog(con,3,main.getString("msg")).show();
+                            delayCloseTip();
                             Log.d("添加用户接口调用", "失败");
                         }
                     }
@@ -307,20 +337,23 @@ public class BaseApply3Activity extends AppCompatActivity {
                         if (error != null) {
                             dismissProgressDialog();
                             Log.d("上传", "连接失败", error);
+                            getTipDialog(con,3,"连接失败").show();
+                            delayCloseTip();
                         } else {
                             if (main.getString("code").equals("200")) {
                                 //上传成功
                                 JsonMap jsonMap = main.getJsonMap("data");
                                 signId = jsonMap.getString("signId");
                                 Log.d("上传", signId);
+                                dismissProgressDialog();
                                 //签署pdf
                                 signPdf(con);
-                                dismissProgressDialog();
                             } else {
                                 Log.e("上传", main.getString("msg"));
                                 Log.e("上传", main.getString("code"));
+                                getTipDialog(con,3,main.getString("msg")).show();
+                                delayCloseTip();
                                 dismissProgressDialog();
-
                             }
                         }
                     }
@@ -334,12 +367,20 @@ public class BaseApply3Activity extends AppCompatActivity {
         SignetCoreApi.useCoreFunc(new SignDataCallBack(con, msspId, signId) {
             @Override
             public void onSignDataResult(SignDataResult result) {
-                Log.d("sign", result.getSignDataJobId());
-                Log.d("sign", result.getErrMsg());
-                Log.d("sign", result.getErrCode());
+                if (result.getErrCode().equals("0x00000000")){
+                    Log.d("sign", result.getSignDataJobId());
+                    Log.d("sign", result.getErrMsg());
+                    Log.d("sign", result.getErrCode());
 
-                //Log.d("sign",result.getSignDataInfos().toString());
-                getSeal(con);
+                    //Log.d("sign",result.getSignDataInfos().toString());
+                    showProgressDialog(con,"请稍后");
+                    getSeal(con);
+                }else {
+                    getTipDialog(con,3,result.getErrMsg()).show();
+                    delayCloseTip();
+
+                }
+
             }
         });
 
@@ -347,7 +388,7 @@ public class BaseApply3Activity extends AppCompatActivity {
 
     //获取数字签名结果
     public void getSeal(final Context con) {
-        showProgressDialog(con, "请稍后");
+
         String json = "{\n" +
                 "    \"signId\":\"" + signId + "\"\n" +
                 "}";
@@ -362,10 +403,11 @@ public class BaseApply3Activity extends AppCompatActivity {
                         public void onResponse(JsonMap main, Exception error) {
                             if (error != null) {
                                 dismissProgressDialog();
+                                getTipDialog(con,3,"连接失败").show();
+                                delayCloseTip();
                                 Log.d("请求结果", "连接失败", error);
                             } else {
                                 if (main.getString("code").equals("200")) {
-                                    showProgressDialog(con, "加载中");
                                     //上传成功
                                     JsonMap jsonMap = main.getJsonMap("data");
                                     fileHashSha1 = jsonMap.getString("fileHashSha1");
@@ -381,6 +423,9 @@ public class BaseApply3Activity extends AppCompatActivity {
                                     uploadNotifyLetter(con);
 
                                 } else {
+                                    dismissProgressDialog();
+                                    getTipDialog(con,3,main.getString("msg")).show();
+                                    delayCloseTip();
                                     Log.e("请求结果", main.getString("msg"));
                                     Log.e("请求结果", main.getString("code"));
 
@@ -411,6 +456,8 @@ public class BaseApply3Activity extends AppCompatActivity {
                     public void onResponse(JsonMap main, Exception error) {
                         if (error != null) {
                             Log.d("上传告知函", "连接失败", error);
+                            getTipDialog(con,3,"连接失败").show();
+                            delayCloseTip();
                             dismissProgressDialog();
 
                         } else {
@@ -427,16 +474,13 @@ public class BaseApply3Activity extends AppCompatActivity {
                                 intent.putExtra("date", date);
                                 intent.putExtra("bank", bank);
                                 startActivity(intent);
-
                                 Log.d("上传告知函", jsonMap.toString());
-
-
                             } else {
+                                getTipDialog(con,3,main.getString("msg")).show();
+                                delayCloseTip();
                                 Log.e("上传告知函", main.getString("msg"));
                                 Log.e("上传告知函", main.getString("code"));
                                 dismissProgressDialog();
-
-
                             }
                         }
                     }
@@ -530,5 +574,41 @@ public class BaseApply3Activity extends AppCompatActivity {
                 .show();
     }
 
+    public QMUITipDialog getTipDialog(Context con,int type, String str) {
+        tipDialog = new QMUITipDialog.Builder(con)
+                .setIconType(type)
+                .setTipWord(str)
+                .create();
+        return tipDialog;
+    }
+    //1.5s后关闭tipDIalog
+    public void delayCloseTip(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //要延时的程序
+                tipDialog.dismiss();
+            }
+        },1500);
+    }
+    private void showMessagePositiveDialog(final Context con) {
+        new QMUIDialog.MessageDialogBuilder(con)
+                .setMessage("签章成功，点击确定跳转到下一页")
+                .setSkinManager(QMUISkinManager.defaultInstance(con))
+                .addAction(0, "确定", QMUIDialogAction.ACTION_PROP_POSITIVE, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+//成功跳转
+                        Intent intent = new Intent(con, Apply4Activity.class);
+                        intent.putExtra("filename", fileName);
+                        intent.putExtra("date", date);
+                        intent.putExtra("bank", bank);
+                        startActivity(intent);
 
+                    }
+                })
+                .create(com.qmuiteam.qmui.R.style.QMUI_Dialog).show();
+    }
 }

@@ -466,6 +466,7 @@
                 android:clickable="true"
                 android:text="查看公证记录"
                 android:textColor="#ff245fff"
+                android:layout_marginBottom="80dp"
                 android:textSize="14sp" />
         </RelativeLayout>
 

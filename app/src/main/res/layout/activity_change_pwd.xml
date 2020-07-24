@@ -9,56 +9,78 @@
     tools:context=".Activity.ChangePwdActivity"
     android:background="#ffffff">
 
-    <com.qmuiteam.qmui.widget.QMUITopBar
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar_change"
-
         android:layout_width="match_parent"
-        android:background="#fff"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
 
-        android:layout_height="?attr/qmui_topbar_height" />
     <TextView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="密码*"
+        android:text="密码"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"/>
     <EditText
         android:layout_width="match_parent"
+        android:background="@drawable/transparent"
         android:layout_height="wrap_content"
+        android:padding="1dp"
         android:layout_margin="15dp"
         android:inputType="textPassword"
         android:hint="请输入新密码，不少于6位"
         android:id="@+id/et_change_pwd"
         android:textSize="14sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="再次输入密码*"
+        android:text="再次输入密码"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:background="@drawable/transparent"
         android:inputType="textPassword"
+        android:padding="1dp"
         android:hint="请再次输入您的密码"
         android:id="@+id/et_change_verfy_pwd"
         android:textSize="14sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
 
-
-    <top.androidman.SuperButton
+    <LinearLayout
         android:layout_width="301dp"
-        android:layout_height="40dp"
-        android:id="@+id/btn_change_pwd"
-        android:layout_marginTop="50dp"
         android:layout_gravity="center"
-        app:background_normalColor="@color/blue"
-        app:corner="10dp"
-        app:text="下一步"
-        app:textColor="#fff"
-        app:textSize="14sp"/>
-
+        android:layout_marginTop="50dp"
+        android:layout_height="40dp">
+        <Button
+            android:id="@+id/btn_change_pwd"
+            android:layout_width="301dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:background="@drawable/buttonclick"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+    </LinearLayout>
 
 
     <TextView

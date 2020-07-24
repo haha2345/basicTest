@@ -98,6 +98,7 @@ public class Apply4Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent=new Intent(mContext,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -128,7 +129,7 @@ public class Apply4Activity extends AppCompatActivity {
     private void getPath(String fileType){
         token = SpUtils.getInstance(this).getString("token", null);
         caseid = SpUtils.getInstance(this).getString("caseId", null);
-        userid = SpUtils.getInstance(this).getString("userid", null);
+        userid = SpUtils.getInstance(this).getString("userId", null);
 
         HttpRequest.build(mContext, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType)
                 .addHeaders("Authorization", "Bearer " + token)
@@ -143,6 +144,8 @@ public class Apply4Activity extends AppCompatActivity {
                                 //直接跳转
                                 intent=new Intent(mContext,PdfViewerActivity.class);
                                 intent.putExtra("url",netConstant.getURL()+url);
+
+
                                 startActivity(intent);
                             } else {
                                 Log.e("获取路径", main.getString("msg"));

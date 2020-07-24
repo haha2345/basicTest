@@ -21,9 +21,14 @@ import com.example.basictest.R;
 import com.example.basictest.base.BaseApply3Activity;
 import com.example.basictest.utils.SpUtils;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +41,7 @@ import cn.org.bjca.signet.component.core.callback.SetSignImageCallBack;
 import cn.org.bjca.signet.component.core.enums.SetSignImgType;
 
 public class Apply3Activity extends BaseApply3Activity {
-
+    private QMUITipDialog tipDialog;
     @BindView(R.id.tv_apply3_name)
     TextView tv_apply3_name;
     @BindView(R.id.tv_apply3_name1)
@@ -62,6 +67,14 @@ public class Apply3Activity extends BaseApply3Activity {
     TextView tv_apply3_reauto;
     @BindView(R.id.iv_apply3_yes1)
     ImageView iv_apply3_yes1;
+    //生成pdf的组件
+    @BindView(R.id.sign_image)
+    ImageView sign_image;
+    @BindView(R.id.sign_date)
+    TextView sign_date;
+    @BindView(R.id.re_sign)
+    RelativeLayout re_sign;
+
     @BindView(R.id.lv_apply3_record)
     LinearLayout lv_apply3_record;
     //这是录像成功后的界面
@@ -83,14 +96,14 @@ public class Apply3Activity extends BaseApply3Activity {
 
     private Intent intent;
     private String name="王文哲",
-            bank,
-            videoPath,
-            imagePath,
+            bank=null,
+            videoPath=null,
+            imagePath=null,
             phone="13205401086",
             idcard="370284199803310014";
     private Context mContext=Apply3Activity.this;
-    private Bitmap handWritingBitmap;
-    private String src;
+    private Bitmap handWritingBitmap=null;
+    private String src=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,19 +111,29 @@ public class Apply3Activity extends BaseApply3Activity {
         setContentView(R.layout.activity_apply3);
         ButterKnife.bind(this);
         initTopBar();
+//        initView();
         initBtn();
         //第一步，检测是否有证
-        showProgressDialog(mContext,"请稍后。。。");
-        getNativeUserList(mContext,name,idcard,phone);
-        //第二步，添加证书
+//        if (!idcard.isEmpty()){
+            showProgressDialog(mContext,"请稍后。。。");
+            getNativeUserList(mContext,name,idcard,phone);
+//            //第二步，添加证书
+//        }else {
+//            getTipDialog(3,"请检查上一步是否有问题");
+//            delayCloseTip();
+//            finish();
+//        }
+
         initView();
 
         //从别的页面跳转回来不会调用onCreate，只会调用onRestart、onStart、onResume
     }
 
     private void initView(){
-        name= SpUtils.getInstance(this).getString("name",null);
+        name= getIntent().getStringExtra("name");
         bank=SpUtils.getInstance(this).getString("bank",null);
+        idcard=getIntent().getStringExtra("idcard");
+        phone=getIntent().getStringExtra("phone");
         tv_apply3_name.setText(name);
         tv_apply3_name1.setText(name);
         tv_apply3_name2.setText(name);
@@ -149,6 +172,8 @@ public class Apply3Activity extends BaseApply3Activity {
         //若二者都有即可进行下一步
         if (imagePath!=null&&src!=null){
             sbtn_apply3_next.setEnabled(true);
+        }else {
+            sbtn_apply3_next.setEnabled(false);
         }
 
     }
@@ -165,8 +190,17 @@ public class Apply3Activity extends BaseApply3Activity {
             @Override
             public void onClick(View view) {
                 showProgressDialog(mContext,"加载中");
-                setupPdf(lv_apply3,rv_apply3_auto);
-                uploadPdf(mContext);
+                setupPdf(lv_apply3,re_sign);
+                //延时
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        //要延时的程序
+                        uploadPdf(mContext);
+                    }
+                }, 2000);
+
 
             }
         });
@@ -211,9 +245,15 @@ public class Apply3Activity extends BaseApply3Activity {
 
     //如果正常录像调用此方法
     private void getRecord(){
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
+//获取当前时间
+        Date date = new Date(System.currentTimeMillis());
+
         iv_apply3_yes1.setVisibility(View.VISIBLE);
         rv_apply3_record.setVisibility(View.VISIBLE);
         lv_apply3_record.setVisibility(View.INVISIBLE);
+        tv_apply3_record_date.setText(simpleDateFormat.format(date));
         im_apply_record.setImageURI(getImageContentUri(mContext,new File(imagePath)));
     }
     //重新录像
@@ -233,9 +273,9 @@ public class Apply3Activity extends BaseApply3Activity {
                     @Override
                     public void onSetSignImageResult(SignImageResult setSignImageResult) {
                         src = setSignImageResult.getSignImageSrc();
-                        Log.d("shouxie", src);
-                        Log.d("手写", setSignImageResult.getErrMsg());
-                        Log.d("手写", setSignImageResult.getErrCode());
+//                        Log.d("shouxie", src);
+//                        Log.d("手写", setSignImageResult.getErrMsg());
+//                        Log.d("手写", setSignImageResult.getErrCode());
                         handWritingBitmap=base64ToBitmap(src);
                         if(setSignImageResult.getErrCode()!="0x11000001"){
                             getAuto();
@@ -246,10 +286,17 @@ public class Apply3Activity extends BaseApply3Activity {
     }
 
     private void getAuto(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
+//获取当前时间
+        Date date = new Date(System.currentTimeMillis());
+        tv_apply3_auto_date.setText(simpleDateFormat.format(date));
         iv_apply3_yes.setVisibility(View.VISIBLE);
         rv_apply3_auto.setVisibility(View.VISIBLE);
         lv_apply3_auto.setVisibility(View.INVISIBLE);
         im_apply_auto.setImageBitmap(handWritingBitmap);
+        sign_image.setImageBitmap(handWritingBitmap);
+        //暂时这么写
+        sign_date.setText(simpleDateFormat.format(date));
     }
 
     private void reAuto(){
@@ -257,5 +304,24 @@ public class Apply3Activity extends BaseApply3Activity {
         rv_apply3_auto.setVisibility(View.INVISIBLE);
         lv_apply3_auto.setVisibility(View.VISIBLE);
         handWriting(mContext);
+    }
+
+    public QMUITipDialog getTipDialog(int type, String str) {
+        tipDialog = new QMUITipDialog.Builder(mContext)
+                .setIconType(type)
+                .setTipWord(str)
+                .create();
+        return tipDialog;
+    }
+    //1.5s后关闭tipDIalog
+    public void delayCloseTip(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //要延时的程序
+                tipDialog.dismiss();
+            }
+        },1500);
     }
 }
