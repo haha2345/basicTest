@@ -5,26 +5,38 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5"
     xmlns:tools="http://schemas.android.com/tools">
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar_wenshu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-    <LinearLayout
+        android:fitsSystemWindows="true"
+        />
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/reView_wenshu"
+
             tools:listitem="@layout/item_wenshuguanli"
             />
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/tv_wenshu"
+            android:visibility="invisible"
+            android:text="暂时没有文书，请到“赋强公正”提交申请"
+            />
 
-    <com.qmuiteam.qmui.widget.QMUITopBarLayout
-        android:id="@+id/topbar_wenshu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        />
+    </RelativeLayout>
+
+
 
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

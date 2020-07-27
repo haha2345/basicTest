@@ -138,7 +138,7 @@ public class MainFragment extends Fragment {
         btn_main_syzn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent=new Intent(getActivity(), Apply3Activity.class);
+                intent=new Intent(getActivity(), CameraActivity.class);
                 startActivity(intent);
                 Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
 
@@ -163,16 +163,21 @@ public class MainFragment extends Fragment {
                     String res=response.body().string();
                     Log.d("a", "onResponse: " + res);
                     NoticeListResponse list=new Gson().fromJson(res,NoticeListResponse.class);
-                    List<NoticeEntity> data=list.getRows();
-                    adapter=new MyzixunRecyclerViewAdapter(getActivity(),data);
-                    //分线程
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            recyclerView.setAdapter(adapter);
+                    if (list.getCode()==200){
+                        List<NoticeEntity> data=list.getRows();
+                        adapter=new MyzixunRecyclerViewAdapter(getActivity(),data);
+                        //分线程
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                recyclerView.setAdapter(adapter);
 
-                        }
-                    });
+                            }
+                        });
+                    }else if (list.getCode()==401){
+
+                    }
+
                 }
                 catch (IOException e){
 

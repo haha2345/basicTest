@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="124dp"
     android:layout_margin="15dp"
-    android:background="#fff"
+    android:background="@drawable/recycler_item_selector"
+    android:clickable="true"
     >
     <TextView
         android:layout_width="60dp"

@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -67,7 +69,7 @@ import top.androidman.SuperButton;
 
 import static com.example.basictest.R.drawable.pdf;
 import static com.example.basictest.utils.FileUtils.getPath;
-import static com.example.basictest.utils.FileUtils.getRealPathFromURI;
+
 
 public class Apply1stActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -77,7 +79,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-
+    public ProgressDialog progressDialog;
     private Context mContext=Apply1stActivity.this;
 
     Intent intent;
@@ -199,8 +201,9 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.w(TAG,"返回的数据："+data.getScheme());
+
         if (resultCode == Activity.RESULT_OK) {
+            Log.w(TAG,"返回的数据："+data.getScheme());
             uri = data.getData();
             //使用第三方应用打开
             if ("file".equalsIgnoreCase(uri.getScheme())){
@@ -228,9 +231,6 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
 
                 Toast.makeText(this,path,Toast.LENGTH_SHORT).show();
             } else {//4.4以下下系统调用方法
-                path = getRealPathFromURI(this,uri);
-                Log.w(TAG,path);
-
                 Toast.makeText(Apply1stActivity.this, path+"222222", Toast.LENGTH_SHORT).show();
             }
         }
@@ -276,6 +276,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
         sbtn_apply1_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showProgressDialog(mContext,"请稍后");
                 upload();
             }
         });
@@ -310,6 +311,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                         if (error == null) {
                             Log.d(TAG,main.getString("data"));
                             if (main.getString("code").equals("200")){
+                                dismissProgressDialog();
                                 //获取保存caseid userid case码
                                 JsonMap result=main.getJsonMap("data");
                                 caseId=result.getString("id");
@@ -322,10 +324,13 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                                 Log.d("获取到的上传信息",caseId+"  "+caseCode+"  "+userId);
                                 jumpToApply2();
                             }else {
+                                dismissProgressDialog();
                                 utils.showToastInThread(mContext,"上传失败");
                             }
 
                         } else {
+                            dismissProgressDialog();
+                            utils.showToastInThread(mContext,"连接错误");
                             Log.e(TAG,"错误",error);
                         }
                     }
@@ -360,6 +365,37 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
         intent=new Intent(mContext,Apply2edActivity.class);
         startActivity(intent);
 
+    }
+    //显示加载框
+    public void showProgressDialog(Context mContext, String text) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(mContext);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        }
+        progressDialog.setMessage(text);    //设置内容
+        progressDialog.setCancelable(false);//点击屏幕和按返回键都不能取消加载框
+        progressDialog.show();
+
+        //设置超时自动消失
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (dismissProgressDialog()) {
+
+                }
+            }
+        }, 60000);//超时时间60秒
+    }
+
+    //取消加载框
+    public Boolean dismissProgressDialog() {
+        if (progressDialog != null) {
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+                return true;//取消成功
+            }
+        }
+        return false;//已经取消过了，不需要取消
     }
 
 }

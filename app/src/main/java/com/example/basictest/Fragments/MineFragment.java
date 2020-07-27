@@ -17,6 +17,7 @@ import com.example.basictest.Activity.JiluActivity;
 import com.example.basictest.Activity.SettingActivity;
 import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.R;
+import com.example.basictest.utils.SpUtils;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
@@ -149,8 +150,10 @@ public class MineFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_mine, container, false);
+        tv_mine_phone=view.findViewById(R.id.tv_mine_phone);
+        String phone= SpUtils.getInstance(getActivity()).getString("username",null);
 
-
+        tv_mine_phone.setText(phone);
         return view;
 
     }

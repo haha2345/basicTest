@@ -10,6 +10,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basictest.Adapter.MyWenshuRecyclerViewAdapter;
@@ -38,6 +39,8 @@ public class WenshuActivity extends BaseApply3Activity {
 
     @BindView(R.id.topbar_wenshu)
     QMUITopBarLayout mTopBar;
+    @BindView(R.id.tv_wenshu)
+    TextView tv_wenshu;
 
     private Context mContext=WenshuActivity.this;
     private String token;
@@ -58,8 +61,6 @@ public class WenshuActivity extends BaseApply3Activity {
         recyclerView=findViewById(R.id.reView_wenshu);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-
     }
 
     @SuppressLint("ResourceAsColor")
@@ -77,23 +78,26 @@ public class WenshuActivity extends BaseApply3Activity {
     }
 
     private void getWenshuList(){
-        showProgressDialog(mContext,"加载中");
         HttpRequest.build(mContext, netConstant.getPersonalListURL())
                 .addHeaders("Authorization","Bearer "+token)
-                //.addParameter("fStatus", "21")
+                .addParameter("fStatus", "21")
                 .setResponseListener(new ResponseListener() {
                     @Override
                     public void onResponse(String response, Exception error) {
-                        dismissProgressDialog();
                         if (error == null) {
                             JiluListResponse list=new Gson().fromJson(response,JiluListResponse.class);
                             if (list.getCode()==200){
-                                List<JiluEntity> data=list.getRows();
-                                initAdapter();
-                                adapter=new MyWenshuRecyclerViewAdapter(mContext,data,list.getTotal());
-                                recyclerView.setAdapter(adapter);
-                            }else {
+                                if (list.getTotal()<1){
+                                    tv_wenshu.setVisibility(View.VISIBLE);
+                                }else {
+                                    List<JiluEntity> data=list.getRows();
+                                    initAdapter();
+                                    adapter=new MyWenshuRecyclerViewAdapter(mContext,data,list.getTotal());
+                                    recyclerView.setAdapter(adapter);
+                                }
 
+                            }else {
+                                tv_wenshu.setVisibility(View.VISIBLE);
                             }
 
                         } else {

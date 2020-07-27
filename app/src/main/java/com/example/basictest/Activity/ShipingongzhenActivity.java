@@ -20,13 +20,16 @@ import com.example.basictest.R;
 public class ShipingongzhenActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 88888;
     Button btn;
-    String src;
+    String src,name,phone,idcard;
     ImageView iv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipingongzhen);
         src=getIntent().getStringExtra("basestr");
+        name=getIntent().getStringExtra("name");
+        idcard=getIntent().getStringExtra("idcard");
+        phone=getIntent().getStringExtra("phone");
         btn=findViewById(R.id.btn_shipingongzheng);
         iv=findViewById(R.id.iv_aa);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +37,9 @@ public class ShipingongzhenActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(ShipingongzhenActivity.this,CameraActivity.class);
                 intent.putExtra("basesrc",src);
+                intent.putExtra("name",name);
+                intent.putExtra("idcard",idcard);
+                intent.putExtra("phone",phone);
                 startActivity(intent);
             }
         });

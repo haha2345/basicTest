@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.basictest.Adapter.JiluFragmentPagerAdapter;
 import com.example.basictest.Fragments.JiluFragment;
+import com.example.basictest.Fragments.JiluFragment_all;
 import com.example.basictest.R;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -91,10 +92,10 @@ public class JiluActivity extends AppCompatActivity {
     private void initViews(){
 
         fragments=new ArrayList<>();
-        fragments.add(new JiluFragment(3));
-        fragments.add(new JiluFragment(4));
-        fragments.add(new JiluFragment(2));
-        fragments.add(new JiluFragment(8));
+        fragments.add(new JiluFragment_all());
+        fragments.add(new JiluFragment("1"));
+        fragments.add(new JiluFragment("21"));
+        fragments.add(new JiluFragment("22"));
     }
 
     @SuppressLint("ResourceAsColor")
@@ -149,29 +150,29 @@ public class JiluActivity extends AppCompatActivity {
     }
 
 
-    private View getPageView(ContentPage page) {
-        View view = mPageMap.get(page);
-        if (view == null) {
-            TextView textView = new TextView(this);
-            textView.setGravity(Gravity.CENTER);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            textView.setTextColor(ContextCompat.getColor(this, R.color.app_color_description));
-
-            if (page == ContentPage.Item1) {
-                textView.setText(R.string.tabSegment_item_1_content);
-            } else if (page == ContentPage.Item2) {
-                textView.setText(R.string.tabSegment_item_2_content);
-            }else if (page == ContentPage.Item3) {
-                textView.setText(R.string.tabSegment_item_1_content);
-            }else if (page == ContentPage.Item4) {
-                textView.setText(R.string.tabSegment_item_2_content);
-            }
-
-            view = textView;
-            mPageMap.put(page, view);
-        }
-        return view;
-    }
+//    private View getPageView(ContentPage page) {
+//        View view = mPageMap.get(page);
+//        if (view == null) {
+//            TextView textView = new TextView(this);
+//            textView.setGravity(Gravity.CENTER);
+//            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+//            textView.setTextColor(ContextCompat.getColor(this, R.color.app_color_description));
+//
+//            if (page == ContentPage.Item1) {
+//                textView.setText(R.string.tabSegment_item_1_content);
+//            } else if (page == ContentPage.Item2) {
+//                textView.setText(R.string.tabSegment_item_2_content);
+//            }else if (page == ContentPage.Item3) {
+//                textView.setText(R.string.tabSegment_item_1_content);
+//            }else if (page == ContentPage.Item4) {
+//                textView.setText(R.string.tabSegment_item_2_content);
+//            }
+//
+//            view = textView;
+//            mPageMap.put(page, view);
+//        }
+//        return view;
+//    }
 
 
     public enum ContentPage {

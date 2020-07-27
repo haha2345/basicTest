@@ -22,35 +22,30 @@ public class MyWenshuRecyclerViewAdapter extends RecyclerView.Adapter<MyWenshuRe
     private int num;
 
 
-    public MyWenshuRecyclerViewAdapter(Context context,List<JiluEntity> datas,int count){
-        this.context=context;
-        this.datas=datas;
-        this.num=count;
+    public MyWenshuRecyclerViewAdapter(Context context, List<JiluEntity> datas, int count) {
+        this.context = context;
+        this.datas = datas;
+        this.num = count;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_wenshuguanli, parent, false);
-        MyWenshuRecyclerViewAdapter.ViewHolder viewHolder=new MyWenshuRecyclerViewAdapter.ViewHolder(view);
+        MyWenshuRecyclerViewAdapter.ViewHolder viewHolder = new MyWenshuRecyclerViewAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        MyWenshuRecyclerViewAdapter.ViewHolder vh=(MyWenshuRecyclerViewAdapter.ViewHolder)holder;
-        if (position==0){
-            //数据为空
+        MyWenshuRecyclerViewAdapter.ViewHolder vh = (MyWenshuRecyclerViewAdapter.ViewHolder) holder;
 
-        }else {
-            JiluEntity jiluEntity=datas.get(position);
-            vh.tv_guanli_bank.setText(jiluEntity.getCoName());
-            vh.tv_guanli_title.setText(jiluEntity.getLoanName());
-            vh.tv_guanli_code.setText(jiluEntity.getCaseCode());
-            vh.tv_guanli_date.setText(jiluEntity.getApplyTime());
 
-        }
-
+        JiluEntity jiluEntity = datas.get(position);
+        vh.tv_guanli_bank.setText(jiluEntity.getCoName());
+        vh.tv_guanli_title.setText(jiluEntity.getLoanName());
+        vh.tv_guanli_code.setText(jiluEntity.getCaseCode());
+        vh.tv_guanli_date.setText(jiluEntity.getApplyTime());
 
 
     }
@@ -70,17 +65,17 @@ public class MyWenshuRecyclerViewAdapter extends RecyclerView.Adapter<MyWenshuRe
 
         public ViewHolder(View view) {
             super(view);
-            tv_guanli_title=view.findViewById(R.id.tv_guanli_title);
-            tv_guanli_code=view.findViewById(R.id.tv_guanli_code);
-            tv_guanli_bank=view.findViewById(R.id.tv_guanli_bank);
-            tv_guanli_date=view.findViewById(R.id.tv_guanli_date);
-            tv_guanli_jump=view.findViewById(R.id.tv_guanli_jump);
+            tv_guanli_title = view.findViewById(R.id.tv_guanli_title);
+            tv_guanli_code = view.findViewById(R.id.tv_guanli_code);
+            tv_guanli_bank = view.findViewById(R.id.tv_guanli_bank);
+            tv_guanli_date = view.findViewById(R.id.tv_guanli_date);
+            tv_guanli_jump = view.findViewById(R.id.tv_guanli_jump);
 
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '"  + "'";
+            return super.toString() + " '" + "'";
         }
     }
 }

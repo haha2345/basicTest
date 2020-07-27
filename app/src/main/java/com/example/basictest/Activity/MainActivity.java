@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -15,6 +16,9 @@ import com.example.basictest.Fragments.JiluFragment;
 import com.example.basictest.Fragments.MainFragment;
 import com.example.basictest.Fragments.MineFragment;
 import com.example.basictest.R;
+import com.kongzue.baseokhttp.listener.ResponseInterceptListener;
+import com.kongzue.baseokhttp.util.BaseOkHttp;
+import com.kongzue.baseokhttp.util.Parameter;
 import com.next.easynavigation.view.EasyNavigationBar;
 
 import java.util.ArrayList;
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity{
                 .fragmentList(fragments)
                 .fragmentManager(getSupportFragmentManager())
                 .build();
+
 
 
     }

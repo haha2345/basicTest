@@ -2,14 +2,14 @@ package com.example.basictest.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.basictest.Adapter.MyJiluRecyclerViewAdapter;
 import com.example.basictest.Class.JiluEntity;
@@ -23,20 +23,13 @@ import com.kongzue.baseokhttp.listener.ResponseListener;
 
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- */
-public class JiluFragment extends Fragment {
-
+public class JiluFragment_all extends Fragment {
     private Context mContext = getActivity();
     private String token;
     private MyJiluRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
     private String type;
 
-    public JiluFragment(String type) {
-        this.type = type;
-    }
 
 
     @Override
@@ -63,7 +56,7 @@ public class JiluFragment extends Fragment {
     private void getJiluList() {
         HttpRequest.build(mContext, netConstant.getPersonalListURL())
                 .addHeaders("Authorization", "Bearer " + token)
-                .addParameter("fStatus", type)
+                //.addParameter("fStatus", type)
                 .setResponseListener(new ResponseListener() {
                     @Override
                     public void onResponse(String response, Exception error) {

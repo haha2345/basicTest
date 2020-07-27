@@ -59,26 +59,7 @@
                 android:textColor="#ffffffff"
                 android:textSize="14sp"
                 android:padding="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="UID:"
-                android:id="@+id/tv_mine_1"
-                android:layout_below="@+id/tv_mine_phone"
-                android:textColor="#ffffffff"
-                android:textSize="12sp"
-                android:padding="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12315464648"
-                android:textColor="#ffffffff"
-                android:textSize="12sp"
-                android:layout_toRightOf="@+id/tv_mine_1"
-                android:layout_below="@+id/tv_mine_phone"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/tv_mine_uid"/>
+
 
         </RelativeLayout>
 

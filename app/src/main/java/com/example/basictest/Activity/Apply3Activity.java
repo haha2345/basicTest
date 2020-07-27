@@ -95,12 +95,12 @@ public class Apply3Activity extends BaseApply3Activity {
 
 
     private Intent intent;
-    private String name="王文哲",
+    private String name=null,
             bank=null,
             videoPath=null,
             imagePath=null,
-            phone="13205401086",
-            idcard="370284199803310014";
+            phone=null,
+            idcard=null;
     private Context mContext=Apply3Activity.this;
     private Bitmap handWritingBitmap=null;
     private String src=null;
@@ -111,20 +111,20 @@ public class Apply3Activity extends BaseApply3Activity {
         setContentView(R.layout.activity_apply3);
         ButterKnife.bind(this);
         initTopBar();
-//        initView();
+        initView();
         initBtn();
         //第一步，检测是否有证
-//        if (!idcard.isEmpty()){
+        if (!idcard.equals(null)){
             showProgressDialog(mContext,"请稍后。。。");
             getNativeUserList(mContext,name,idcard,phone);
-//            //第二步，添加证书
-//        }else {
-//            getTipDialog(3,"请检查上一步是否有问题");
-//            delayCloseTip();
-//            finish();
-//        }
+            //第二步，添加证书
+    }else {
+        getTipDialog(3,"请检查上一步是否有问题");
+        delayCloseTip();
+        finish();
+    }
 
-        initView();
+//        initView();
 
         //从别的页面跳转回来不会调用onCreate，只会调用onRestart、onStart、onResume
     }
@@ -216,6 +216,9 @@ public class Apply3Activity extends BaseApply3Activity {
             public void onClick(View view) {
                 intent=new Intent(mContext,ShipingongzhenActivity.class);
                 intent.putExtra("basestr",src);
+                intent.putExtra("name",name);
+                intent.putExtra("phone",phone);
+                intent.putExtra("idcard",idcard);
                 startActivity(intent);
             }
         });
