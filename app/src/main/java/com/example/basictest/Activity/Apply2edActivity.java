@@ -60,6 +60,8 @@ public class Apply2edActivity extends BaseActivity {
     Button sbtn_apply2_verify;
     @BindView(R.id.topbar_apply2)
     QMUITopBarLayout mTopBar;
+    //判断是否成功
+    private int flag=0;
 
     String caseId, userId, username, vcode, uuid, token, name, idcard;
     String TAG = "Apply2";
@@ -159,6 +161,7 @@ public class Apply2edActivity extends BaseActivity {
                         uuid = main.getString("uuid");
                         utils.showToastInThread(mContext, "已发送验证码，注意查收" + uuid);
                     } else {
+                        myCountDownTimer.onFinish();
                         utils.showToastInThread(mContext, "错误");
                     }
                 } else {
@@ -194,15 +197,22 @@ public class Apply2edActivity extends BaseActivity {
                                 }, 1500);
 
                             } else {
+                                et_apply2_vcode.setText("");
+                                myCountDownTimer.cancel();
+                                myCountDownTimer.onFinish();
                                 dismissProgressDialog();
                                 Log.e(TAG, main.getString("msg"));
                                 Toast.makeText(mContext, main.getString("msg"), Toast.LENGTH_SHORT).show();
                                 getTipDialog(3, main.getString("msg")).show();
+                                myCountDownTimer.onFinish();
                                 delayCloseTip();
                                 sbtn_apply2_verify.setEnabled(true);
 
                             }
                         } else {
+                            et_apply2_vcode.setText("");
+                            myCountDownTimer.cancel();
+                            myCountDownTimer.onFinish();
                             dismissProgressDialog();
                             getTipDialog(3, "连接失败").show();
                             delayCloseTip();
@@ -256,7 +266,9 @@ public class Apply2edActivity extends BaseActivity {
 
 
                                                 } else {
-
+                                                    et_apply2_vcode.setText("");
+                                                    myCountDownTimer.cancel();
+                                                    myCountDownTimer.onFinish();
                                                     getTipDialog(QMUITipDialog.Builder.ICON_TYPE_FAIL, ctidReturnParams.getMessage()).show();
                                                     delayCloseTip();
                                                     sbtn_apply2_verify.setEnabled(true);
@@ -273,6 +285,9 @@ public class Apply2edActivity extends BaseActivity {
                                 //testIdentify(str);
 
                             } else {
+                                et_apply2_vcode.setText("");
+                                myCountDownTimer.cancel();
+                                myCountDownTimer.onFinish();
                                 dismissProgressDialog();
                                 getTipDialog(QMUITipDialog.Builder.ICON_TYPE_FAIL, main.getString("msg"));
                                 delayCloseTip();
@@ -280,6 +295,9 @@ public class Apply2edActivity extends BaseActivity {
                             }
 
                         } else {
+                            et_apply2_vcode.setText("");
+                            myCountDownTimer.cancel();
+                            myCountDownTimer.onFinish();
                             dismissProgressDialog();
                             getTipDialog(QMUITipDialog.Builder.ICON_TYPE_FAIL, "连接失败");
                             delayCloseTip();
@@ -316,7 +334,9 @@ public class Apply2edActivity extends BaseActivity {
                             //传值
 
                         } else {
-
+                            et_apply2_vcode.setText("");
+                            myCountDownTimer.cancel();
+                            myCountDownTimer.onFinish();
                             getTipDialog(QMUITipDialog.Builder.ICON_TYPE_FAIL, ctidReturnParams.getMessage()).show();
                             delayCloseTip();
                             sbtn_apply2_verify.setEnabled(true);
@@ -376,6 +396,9 @@ public class Apply2edActivity extends BaseActivity {
                                 startActivity(intent);
 
                             } else {
+                                et_apply2_vcode.setText("");
+                                myCountDownTimer.cancel();
+                                myCountDownTimer.onFinish();
                                 dismissProgressDialog();
                                 final String msg = main.getString("msg");
                                 getTipDialog(3, msg).show();
@@ -383,6 +406,9 @@ public class Apply2edActivity extends BaseActivity {
                                 sbtn_apply2_verify.setEnabled(true);
                             }
                         } else {
+                            et_apply2_vcode.setText("");
+                            myCountDownTimer.cancel();
+                            myCountDownTimer.onFinish();
                             dismissProgressDialog();
                             getTipDialog(3, "连接失败").show();
                             delayCloseTip();
@@ -414,12 +440,16 @@ public class Apply2edActivity extends BaseActivity {
             super(millisInFuture, countDownInterval);
         }
 
+
         //计时过程
         @Override
         public void onTick(long l) {
             //防止计时过程中重复点击
             tv_apply2_vcode.setClickable(false);
             tv_apply2_vcode.setText(l / 1000 + "秒后可再发送");
+            if(flag==1){
+
+            }
 
         }
 

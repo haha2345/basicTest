@@ -355,17 +355,28 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void afterGetFile(){
-        tv_apply1_name.setText(filename);
-        sbtn_apply1.setClickable(false);
-        Resources resources = Apply1stActivity.this.getResources();
-        Drawable drawable = resources.getDrawable(pdf);
-        sbtn_apply1.setIcon(drawable);
-        sbtn_apply1.setPressed(false);
-        sbtn_apply1.setEnabled(false);
-        flag=1;
-        if (flag1==1){
-            sbtn_apply1_next.setEnabled(true);
+
+
+        //判断后缀是否为pdf
+        String fileName = file.getName().toLowerCase();
+        if (fileName.endsWith(".pdf")) {
+            tv_apply1_name.setText(filename);
+            Resources resources = Apply1stActivity.this.getResources();
+            Drawable drawable = resources.getDrawable(pdf);
+            sbtn_apply1.setIcon(drawable);
+            sbtn_apply1.setPressed(false);
+//        sbtn_apply1.setEnabled(false);
+            flag=1;
+            if (flag1==1){
+                sbtn_apply1_next.setEnabled(true);
+            }
+        }else {
+            getTipDialog(3,"文件格式不对，请重新选择文件").show();
+            delayCloseTip();
         }
+
+//        sbtn_apply1.setClickable(false);
+
     }
     private void jumpToApply2(){
         intent=new Intent(mContext,Apply2edActivity.class);

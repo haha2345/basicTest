@@ -239,7 +239,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         uuid = resultJson.get("uuid").getAsString();
                         //线程中无法直接使用toast
                         //测试用
-                        utils.showToastInThread(LoginActivity.this, "已发送验证码，注意查收" + uuid);
+//                        utils.showToastInThread(LoginActivity.this, "已发送验证码，注意查收" + uuid);
 
                     }
                 } else {
@@ -309,9 +309,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //        editor.putString("pwd",pwd);
 //        editor.putString("token",token);
 //        editor.commit();
-        SpUtils.getInstance(this).setString("username", username, 1800);
-        SpUtils.getInstance(this).setString("pwd", pwd, 1800);
-        SpUtils.getInstance(this).setString("token", token, 1800);
+        SpUtils.getInstance(this).setString("username", username);
+        SpUtils.getInstance(this).setString("pwd", pwd);
+        SpUtils.getInstance(this).setString("token", token);
     }
 
 
