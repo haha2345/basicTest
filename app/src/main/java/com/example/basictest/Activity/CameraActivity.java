@@ -1,6 +1,7 @@
 package com.example.basictest.Activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -23,6 +24,8 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.example.basictest.utils.DataCleanManager.clear;
 
 public class CameraActivity extends BaseCameraActivity {
 
@@ -66,6 +69,15 @@ public class CameraActivity extends BaseCameraActivity {
 
     }
 
+    //拦截器
+    public void breaker(Context mContext){
+        clear(mContext);
+        Intent intent=new Intent(mContext, LoginActivity.class);
+        //调到页面，关闭之前所有页面
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
+
 
     public void uploadVideo(){
         token= SpUtils.getInstance(this).getString("token",null);
@@ -99,6 +111,8 @@ public class CameraActivity extends BaseCameraActivity {
                                     startActivity(intent);
                                     Log.d("上传","成功");
 
+                                } else if (main.getString("code").equals("401")){
+                                    breaker(CameraActivity.this);
                                 }else {
                                     Log.e("上传",main.getString("msg"));
                                     Log.e("上传",main.getString("code"));

@@ -2,16 +2,21 @@ package com.example.basictest.base;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.basictest.Activity.LoginActivity;
 import com.google.gson.internal.$Gson$Types;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.example.basictest.utils.DataCleanManager.clear;
 
 public class BaseActivity extends AppCompatActivity {
     //加载框
@@ -80,6 +85,21 @@ public class BaseActivity extends AppCompatActivity {
         },1500);
     }
 
+    public void breaker(Context mContext){
+        clear(mContext);
+        Intent intent=new Intent(mContext, LoginActivity.class);
+        //调到页面，关闭之前所有页面
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
 
 
+    public void showToast(Context con,String msg){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(con,msg,Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

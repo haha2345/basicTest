@@ -89,7 +89,10 @@ public class WenshuActivity extends BaseApply3Activity {
                             if (list.getCode()==200){
                                 if (list.getTotal()<1){
                                     tv_wenshu.setVisibility(View.VISIBLE);
-                                }else {
+                                }else if (list.getCode()==401){
+                                    breaker(mContext);
+                                }
+                                else {
                                     List<JiluEntity> data=list.getRows();
                                     initAdapter();
                                     adapter=new MyWenshuRecyclerViewAdapter(mContext,data,list.getTotal());

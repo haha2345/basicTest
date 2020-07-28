@@ -160,7 +160,10 @@ public class Apply2edActivity extends BaseActivity {
                     if (main.getString("code").equals("200")) {
                         uuid = main.getString("uuid");
                         utils.showToastInThread(mContext, "已发送验证码，注意查收" + uuid);
-                    } else {
+                    } else if (main.getString("code").equals("401")){
+                    breaker(mContext);
+                }
+                    else {
                         myCountDownTimer.onFinish();
                         utils.showToastInThread(mContext, "错误");
                     }
@@ -196,6 +199,8 @@ public class Apply2edActivity extends BaseActivity {
                                     }
                                 }, 1500);
 
+                            }else if (main.getString("code").equals("401")){
+                                breaker(mContext);
                             } else {
                                 et_apply2_vcode.setText("");
                                 myCountDownTimer.cancel();
@@ -284,6 +289,8 @@ public class Apply2edActivity extends BaseActivity {
                                         });
                                 //testIdentify(str);
 
+                            }else if (main.getString("code").equals("401")){
+                                breaker(mContext);
                             } else {
                                 et_apply2_vcode.setText("");
                                 myCountDownTimer.cancel();
@@ -395,7 +402,9 @@ public class Apply2edActivity extends BaseActivity {
                                 intent.putExtra("phone", username);
                                 startActivity(intent);
 
-                            } else {
+                            } else if (main.getString("code").equals("401")){
+                                breaker(mContext);
+                            }else {
                                 et_apply2_vcode.setText("");
                                 myCountDownTimer.cancel();
                                 myCountDownTimer.onFinish();

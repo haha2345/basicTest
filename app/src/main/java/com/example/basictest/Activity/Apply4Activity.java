@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.basictest.R;
+import com.example.basictest.base.BaseActivity;
 import com.example.basictest.constant.netConstant;
 import com.example.basictest.utils.IntentUtil;
 import com.example.basictest.utils.SpUtils;
@@ -24,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.androidman.SuperButton;
 
-public class Apply4Activity extends AppCompatActivity {
+public class Apply4Activity extends BaseActivity {
 
     @BindView(R.id.tv_apply4_no)
     TextView tv_apply4_no;
@@ -139,7 +140,9 @@ public class Apply4Activity extends AppCompatActivity {
 
 
                                 startActivity(intent);
-                            } else {
+                            }  else if (main.getString("code").equals("401")){
+                                breaker(mContext);
+                            }else {
                                 Log.e("获取路径", main.getString("msg"));
                                 Log.e("获取路径", main.getString("code"));
                             }

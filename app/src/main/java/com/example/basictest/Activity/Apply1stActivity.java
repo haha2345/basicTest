@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.basictest.base.BaseActivity;
 import com.example.basictest.utils.OkManager;
 import com.example.basictest.utils.SpUtils;
 import com.example.basictest.Class.bankEntity;
@@ -74,7 +75,7 @@ import static com.example.basictest.R.drawable.pdf;
 import static com.example.basictest.utils.FileUtils.getPath;
 
 
-public class Apply1stActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Apply1stActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -177,21 +178,28 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                     String res=response.body().string();
                     Log.d("a", "onResponse: " + res);
                     bankListResponse list=new Gson().fromJson(res, bankListResponse.class);
-                    List<bankEntity> data=list.getRows();
-                    List<String> datas=new ArrayList<String>();
-                    for (int i=0;i<data.size();i++){
-                        datas.add(data.get(i).getCoName());
-                        map.put(data.get(i).getCoName(),data.get(i).getId());
-                        Log.d("a",datas.get(i));
-                    }
-                    adapter=new ArrayAdapter<String>(Apply1stActivity.this,R.layout.item_spinner,R.id.tv_spinner,datas);
-                    //分线程
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            spinner.setAdapter(adapter);
+                    if (list.getCode()==200){
+                        List<bankEntity> data=list.getRows();
+                        List<String> datas=new ArrayList<String>();
+                        for (int i=0;i<data.size();i++){
+                            datas.add(data.get(i).getCoName());
+                            map.put(data.get(i).getCoName(),data.get(i).getId());
+                            Log.d("a",datas.get(i));
                         }
-                    });
+                        adapter=new ArrayAdapter<String>(Apply1stActivity.this,R.layout.item_spinner,R.id.tv_spinner,datas);
+                        //分线程
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                spinner.setAdapter(adapter);
+                            }
+                        });
+                    }else if (list.getCode()==401){
+                        breaker(mContext);
+                    }else {
+                        showToast(mContext, list.getMsg());
+                    }
+
                 }
                 catch (IOException e){
 
@@ -327,7 +335,11 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                                 SpUtils.getInstance(mContext).setString("uploadfilename",filename,1800);
                                 Log.d("获取到的上传信息",caseId+"  "+caseCode+"  "+userId);
                                 jumpToApply2();
-                            }else {
+                            }else if (main.getString("code").equals("401")){
+                                dismissProgressDialog();
+                                breaker(mContext);
+                            }
+                            else {
                                 dismissProgressDialog();
                                 getTipDialog(3,main.getString("msg")).show();
                                 delayCloseTip();

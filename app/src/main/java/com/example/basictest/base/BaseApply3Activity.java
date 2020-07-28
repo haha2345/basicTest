@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.basictest.Activity.Apply1stActivity;
 import com.example.basictest.Activity.Apply3Activity;
 import com.example.basictest.Activity.Apply4Activity;
+import com.example.basictest.Activity.LoginActivity;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
 import com.example.basictest.utils.DownloadUtil;
@@ -71,6 +72,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.example.basictest.utils.DataCleanManager.clear;
+
 public class BaseApply3Activity extends AppCompatActivity {
 
     private PdfDocument doc;
@@ -84,6 +87,14 @@ public class BaseApply3Activity extends AppCompatActivity {
     //加载框
     private ProgressDialog progressDialog;
 
+    //拦截器
+    public void breaker(Context mContext){
+        clear(mContext);
+        Intent intent=new Intent(mContext, LoginActivity.class);
+        //调到页面，关闭之前所有页面
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
 
     //生成pdf 内容+签字
     public void setupPdf(LinearLayout lv_apply3, RelativeLayout layout) {
@@ -213,7 +224,9 @@ public class BaseApply3Activity extends AppCompatActivity {
                                 findRegister(con, name, idcard);
 
                             }
-                        } else {
+                        } else if (main.getString("code").equals("401")){
+                            breaker(con);
+                        }else {
                             getTipDialog(con,3,main.getString("msg")).show();
                             delayCloseTip();
                             Log.d("获取用户状态", "失败");
@@ -289,7 +302,10 @@ public class BaseApply3Activity extends AppCompatActivity {
                             newRegister(con, activeCode);
 
                             Log.d("activeCode", activeCode);
-                        } else {
+                        } else if (main.getString("code").equals("401")){
+                            dismissProgressDialog();
+                            breaker(con);
+                        }else {
                             dismissProgressDialog();
                             getTipDialog(con,3,main.getString("msg")).show();
                             delayCloseTip();
@@ -349,6 +365,9 @@ public class BaseApply3Activity extends AppCompatActivity {
                                 dismissProgressDialog();
                                 //签署pdf
                                 signPdf(con);
+                            }else if (main.getString("code").equals("401")){
+                                dismissProgressDialog();
+                                breaker(con);
                             } else {
                                 Log.e("上传", main.getString("msg"));
                                 Log.e("上传", main.getString("code"));
@@ -422,7 +441,10 @@ public class BaseApply3Activity extends AppCompatActivity {
                                     Log.d("请求结果", filePath);
                                     uploadNotifyLetter(con);
 
-                                } else {
+                                } else if (main.getString("code").equals("401")){
+                                    dismissProgressDialog();
+                                    breaker(con);
+                                }else {
                                     dismissProgressDialog();
                                     getTipDialog(con,3,main.getString("msg")).show();
                                     delayCloseTip();
@@ -476,7 +498,10 @@ public class BaseApply3Activity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                                 Log.d("上传告知函", jsonMap.toString());
-                            } else {
+                            } else if (main.getString("code").equals("401")){
+                                dismissProgressDialog();
+                                breaker(con);
+                            }else {
                                 getTipDialog(con,3,main.getString("msg")).show();
                                 delayCloseTip();
                                 Log.e("上传告知函", main.getString("msg"));

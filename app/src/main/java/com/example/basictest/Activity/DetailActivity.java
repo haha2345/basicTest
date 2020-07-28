@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basictest.R;
+import com.example.basictest.base.BaseActivity;
 import com.example.basictest.constant.netConstant;
 import com.example.basictest.utils.SpUtils;
 import com.kongzue.baseokhttp.HttpRequest;
@@ -35,7 +36,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends BaseActivity {
 
     @BindView(R.id.iv_detail)
     ImageView iv_detail;
@@ -204,7 +205,9 @@ public class DetailActivity extends AppCompatActivity {
                                 intent=new Intent(mContext,PdfViewerActivity.class);
                                 intent.putExtra("url",netConstant.getURL()+url);
                                 startActivity(intent);
-                            } else {
+                            }  else if (main.getString("code").equals("401")){
+                                breaker(mContext);
+                            }else {
                                 Log.e("获取路径", main.getString("msg"));
                                 Log.e("获取路径", main.getString("code"));
                             }
@@ -228,7 +231,9 @@ public class DetailActivity extends AppCompatActivity {
                             if (main.getString("code").equals("200")) {
                                 url=main.getString("filePath");
 
-                            } else {
+                            }  else if (main.getString("code").equals("401")){
+                                breaker(mContext);
+                            }else {
                                 Log.e("获取路径", main.getString("msg"));
                                 Log.e("获取路径", main.getString("code"));
                             }
