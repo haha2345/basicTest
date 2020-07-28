@@ -1,6 +1,7 @@
 package com.example.basictest.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.basictest.Activity.LoginActivity;
 import com.example.basictest.Adapter.MyJiluRecyclerViewAdapter;
 import com.example.basictest.Class.JiluEntity;
 import com.example.basictest.Class.JiluListResponse;
@@ -22,6 +25,8 @@ import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.ResponseListener;
 
 import java.util.List;
+
+import static com.example.basictest.utils.DataCleanManager.clear;
 
 /**
  * A fragment representing a list of Items.
@@ -78,13 +83,27 @@ public class JiluFragment extends Fragment {
                                         recyclerView.setAdapter(adapter);
                                     }
                                 });
-
-
-                            } else {
-
+                            } else if (list.getCode() == 401){
+                                clear(mContext);
+                                Intent intent=new Intent(mContext, LoginActivity.class);
+                                //调到页面，关闭之前所有页面
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }else {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mContext,list.getMsg(),Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         } else {
-
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(mContext,"连接失败",Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }
                 })

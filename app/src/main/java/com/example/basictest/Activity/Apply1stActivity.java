@@ -38,7 +38,7 @@ import com.example.basictest.Class.bankListResponse;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
 import com.example.basictest.utils.Utils;
-import com.github.barteksc.pdfviewer.PDFView;
+
 import com.google.gson.Gson;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.JsonResponseListener;

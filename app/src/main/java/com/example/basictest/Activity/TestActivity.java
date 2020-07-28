@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.basictest.R;
-import com.github.barteksc.pdfviewer.PDFView;
+
 
 import java.io.File;
 
@@ -16,8 +16,6 @@ import butterknife.ButterKnife;
 public class TestActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.pdfView)
-    PDFView pdfView;
 
 
     @Override
@@ -27,6 +25,6 @@ public class TestActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         String path=getIntent().getStringExtra("path");
         File file=new File(path);
-        pdfView.fromFile(file);
+
     }
 }

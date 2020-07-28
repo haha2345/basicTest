@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.basictest.Activity.HtmlActivity;
 import com.example.basictest.Activity.JiluActivity;
+import com.example.basictest.Activity.LoginActivity;
 import com.example.basictest.Activity.SettingActivity;
 import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.Class.NoticeEntity;
@@ -35,6 +36,8 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.example.basictest.utils.DataCleanManager.clear;
 
 
 public class MineFragment extends Fragment {
@@ -197,7 +200,18 @@ public class MineFragment extends Fragment {
                         intent.putExtra("title",data.get(0).getNoticeTitle());
                         getActivity().startActivity(intent);
                     }else if (list.getCode()==401){
-
+                        clear(getActivity());
+                        intent=new Intent(getActivity(), LoginActivity.class);
+                        //调到页面，关闭之前所有页面
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }else {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getActivity(),list.getMsg(),Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                 }

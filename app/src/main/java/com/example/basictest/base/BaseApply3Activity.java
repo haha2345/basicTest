@@ -19,6 +19,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -351,8 +352,7 @@ public class BaseApply3Activity extends AppCompatActivity {
                             } else {
                                 Log.e("上传", main.getString("msg"));
                                 Log.e("上传", main.getString("code"));
-                                getTipDialog(con,3,main.getString("msg")).show();
-                                delayCloseTip();
+                                Toast.makeText(con,main.getString("msg"),Toast.LENGTH_SHORT).show();
                                 dismissProgressDialog();
                             }
                         }
@@ -376,8 +376,8 @@ public class BaseApply3Activity extends AppCompatActivity {
                     showProgressDialog(con,"请稍后");
                     getSeal(con);
                 }else {
-                    getTipDialog(con,3,result.getErrMsg()).show();
-                    delayCloseTip();
+                    Toast.makeText(con,"有错误，请重新输入",Toast.LENGTH_SHORT).show();
+                    signPdf(con);
 
                 }
 
