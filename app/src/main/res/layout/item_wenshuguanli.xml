@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@mipmap/pdf_m"
+        android:src="@drawable/pdf1"
         android:id="@+id/iv_guanli_1"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"/>

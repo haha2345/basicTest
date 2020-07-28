@@ -474,6 +474,7 @@ public class BaseApply3Activity extends AppCompatActivity {
                                 intent.putExtra("date", date);
                                 intent.putExtra("bank", bank);
                                 startActivity(intent);
+                                finish();
                                 Log.d("上传告知函", jsonMap.toString());
                             } else {
                                 getTipDialog(con,3,main.getString("msg")).show();

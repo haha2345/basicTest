@@ -53,7 +53,7 @@ public class MyzixunRecyclerViewAdapter extends RecyclerView.Adapter<MyzixunRecy
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "我被点击了"+position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "我被点击了"+position, Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(context, HtmlActivity.class);
                 intent.putExtra("html",noticeEntity.getNoticeContent());
                 context.startActivity(intent);

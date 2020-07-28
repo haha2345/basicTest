@@ -71,7 +71,7 @@ public class JiluFragment extends Fragment {
                             JiluListResponse list = new Gson().fromJson(response, JiluListResponse.class);
                             if (list.getCode() == 200) {
                                 List<JiluEntity> data = list.getRows();
-                                adapter = new MyJiluRecyclerViewAdapter(data, list.getTotal());
+                                adapter = new MyJiluRecyclerViewAdapter(data, getActivity());
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {

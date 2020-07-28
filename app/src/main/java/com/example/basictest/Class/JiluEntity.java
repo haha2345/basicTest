@@ -1,5 +1,7 @@
 package com.example.basictest.Class;
 
+import android.os.Bundle;
+
 public class JiluEntity {
     /**
      * searchValue : null
@@ -46,10 +48,10 @@ public class JiluEntity {
     private Object updateTime;
     private Object remark;
     private ParamsBean params;
-    private int id;
+    private String id;
     private String caseCode;
     private String caseRegCode;
-    private int userId;
+    private String userId;
     private String userIp;
     private String fStatus;
     private String pStatus;
@@ -131,11 +133,11 @@ public class JiluEntity {
         this.params = params;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -155,11 +157,11 @@ public class JiluEntity {
         this.caseRegCode = caseRegCode;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -259,11 +261,11 @@ public class JiluEntity {
         this.auditComment = auditComment;
     }
 
-    public Object getAuditReason() {
-        return auditReason;
+    public String getAuditReason() {
+        return (String) auditReason;
     }
 
-    public void setAuditReason(Object auditReason) {
+    public void setAuditReason(String auditReason) {
         this.auditReason = auditReason;
     }
 

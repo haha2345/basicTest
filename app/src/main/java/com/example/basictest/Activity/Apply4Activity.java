@@ -44,9 +44,6 @@ public class Apply4Activity extends AppCompatActivity {
     TextView tv_apply4_detial2;
     @BindView(R.id.sbtn_apply4)
     SuperButton sbtn_apply4;
-    @BindView(R.id.tv_apply4_jump)
-    TextView tv_apply4_jump;
-
     @BindView(R.id.topbar_apply4)
     QMUITopBarLayout mTopBar;
     private String caseCode,name,date,bank,uploadfilename,signedFileName,url,hetongurl,gaozhishuurl,token,userid,caseid;
@@ -103,12 +100,7 @@ public class Apply4Activity extends AppCompatActivity {
             }
         });
 
-        tv_apply4_jump.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
 
         tv_apply4_detial1.setOnClickListener(new View.OnClickListener() {
             @Override

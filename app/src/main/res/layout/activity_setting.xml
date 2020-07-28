@@ -5,16 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.SettingActivity">
-
-    <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
-        android:id="@+id/groupListView_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+            android:layout_marginTop="45dp"
+            android:id="@+id/groupListView_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_width="301dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonclick"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:id="@+id/btn_setting"/>
+
+
+    </LinearLayout>
+
+
+
+
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

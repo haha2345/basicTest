@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.basictest.R;
@@ -27,7 +28,11 @@ public class SettingActivity extends AppCompatActivity {
     Intent intent;
     @BindView(R.id.topbar_setting)
     QMUITopBarLayout mTopBar;
+    @BindView(R.id.btn_setting)
+    Button btn;
+
     private Context mContext;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +45,6 @@ public class SettingActivity extends AppCompatActivity {
 
     private void initList(){
 
-
-        item_1 = groupListView.createItemView("登录方式设置");
-        item_1.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
         item_2 = groupListView.createItemView("修改登录密码");
         item_2.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
@@ -60,16 +62,10 @@ public class SettingActivity extends AppCompatActivity {
 
         QMUIGroupListView.newSection(this)
                 .setTitle(null)
-                .addItemView(item_1, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(SettingActivity.this,"公正记录" , Toast.LENGTH_SHORT).show();
-
-                    }
-                })
                 .addItemView(item_2, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         Toast.makeText(SettingActivity.this,"文书管理" , Toast.LENGTH_SHORT).show();
 
                     }
@@ -95,22 +91,16 @@ public class SettingActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
         mTopBar.setBackgroundAlpha(255);
-        mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        //设置标题名
-        mTopBar.setTitle("系统设置");
-        mTopBar.addRightImageButton(R.mipmap.icon_topbar_overflow, R.id.topbar_right_change_button)
+        mTopBar.addLeftImageButton(R.drawable.back, R.id.topbar_right_change_button)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-
+                    public void onClick(View view) {
+                        finish();
                     }
                 });
+        //设置标题名
+        mTopBar.setTitle("系统设置");
     }
+
 
 }

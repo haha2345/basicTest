@@ -45,6 +45,7 @@ import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.listener.ResponseListener;
 import com.kongzue.baseokhttp.util.JsonMap;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,6 +53,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindInt;
@@ -82,6 +85,7 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
     public ProgressDialog progressDialog;
     private Context mContext=Apply1stActivity.this;
 
+    QMUITipDialog tipDialog;
     Intent intent;
     @BindView(R.id.topbar_apply1)
     QMUITopBarLayout mTopBar;
@@ -325,7 +329,9 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
                                 jumpToApply2();
                             }else {
                                 dismissProgressDialog();
-                                utils.showToastInThread(mContext,"上传失败");
+                                getTipDialog(3,main.getString("msg")).show();
+                                delayCloseTip();
+                                //utils.showToastInThread(mContext,main.getString("msg"));
                             }
 
                         } else {
@@ -396,6 +402,25 @@ public class Apply1stActivity extends AppCompatActivity implements AdapterView.O
             }
         }
         return false;//已经取消过了，不需要取消
+    }
+    public QMUITipDialog getTipDialog(int type, String str) {
+        tipDialog = new QMUITipDialog.Builder(mContext)
+                .setIconType(type)
+                .setTipWord(str)
+                .create();
+        return tipDialog;
+    }
+
+    //1.5s后关闭tipDIalog
+    public void delayCloseTip() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //要延时的程序
+                tipDialog.dismiss();
+            }
+        }, 1500);
     }
 
 }

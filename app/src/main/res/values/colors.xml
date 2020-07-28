@@ -26,6 +26,7 @@
     <color name="tv_text_success">#FF1DC875</color>
     <color name="tv_fail">#1AEE3535</color>
     <color name="tv_text_fail">#FFEE3535</color>
+    <color name="tv_fail_detail">#FFFF6969</color>
 
     <color name="app_color_blue_2">#31BDF3</color>
     <color name="app_color_blue_2_disabled">#7F31BDF3</color>
