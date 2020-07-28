@@ -10,11 +10,13 @@ import com.google.gson.internal.$Gson$Types;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BaseActivity extends AppCompatActivity {
     //加载框
     private ProgressDialog progressDialog;
-
+    public QMUITipDialog tipDialog;
 
     //获取map中的key
     public String getKey(HashMap<String, String> map, String value) {
@@ -59,6 +61,25 @@ public class BaseActivity extends AppCompatActivity {
         }
         return false;//已经取消过了，不需要取消
     }
+    public QMUITipDialog getTipDialog(Context con,int type, String str) {
+        tipDialog = new QMUITipDialog.Builder(con)
+                .setIconType(type)
+                .setTipWord(str)
+                .create();
+        return tipDialog;
+    }
+    //1.5s后关闭tipDIalog
+    public void delayCloseTip(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //要延时的程序
+                tipDialog.dismiss();
+            }
+        },1500);
+    }
+
 
 
 }

@@ -28,18 +28,20 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 public class HtmlActivity extends AppCompatActivity {
     QMUITopBarLayout mTopBar;
-
+    private String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_html);
 
         mTopBar = findViewById(R.id.topbar_html);
+        title=getIntent().getStringExtra("title");
         initTopBar();
         //TextView htmlTextView = (TextView) findViewById(R.id.html_text);
 
 //        Spanned formattedHtml = HtmlFormatter.formatHtml(new HtmlFormatterBuilder().setHtml(getIntent().getStringExtra("html")).setImageGetter(new HtmlResImageGetter(htmlTextView.getContext())));
 //        htmlTextView.setText(formattedHtml);
+
 
         WebView webView=findViewById(R.id.webview_html);
         webView.loadDataWithBaseURL(null,setWebVIewImage(getIntent().getStringExtra("html")), "text/html", "UTF-8", null);
@@ -69,7 +71,7 @@ public class HtmlActivity extends AppCompatActivity {
                     }
                 });
         //设置标题名
-        mTopBar.setTitle("行业资讯");
+        mTopBar.setTitle(title);
 
     }
 }

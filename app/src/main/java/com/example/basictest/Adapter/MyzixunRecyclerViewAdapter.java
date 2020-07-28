@@ -22,13 +22,15 @@ public class MyzixunRecyclerViewAdapter extends RecyclerView.Adapter<MyzixunRecy
 
     private List<NoticeEntity> datas;
     private Context context;
+    private int count;
 
     public MyzixunRecyclerViewAdapter(Context context) {
         this.context=context;
     }
-    public MyzixunRecyclerViewAdapter(Context context,List<NoticeEntity> datas){
+    public MyzixunRecyclerViewAdapter(Context context,List<NoticeEntity> datas,int count){
         this.context=context;
         this.datas=datas;
+        this.count=count;
     }
 
     public void setDatas(List<NoticeEntity> datas) {
@@ -56,6 +58,7 @@ public class MyzixunRecyclerViewAdapter extends RecyclerView.Adapter<MyzixunRecy
                 //Toast.makeText(context, "我被点击了"+position, Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(context, HtmlActivity.class);
                 intent.putExtra("html",noticeEntity.getNoticeContent());
+                intent.putExtra("title",noticeEntity.getNoticeTitle());
                 context.startActivity(intent);
             }
         });
@@ -64,7 +67,7 @@ public class MyzixunRecyclerViewAdapter extends RecyclerView.Adapter<MyzixunRecy
 
     @Override
     public int getItemCount() {
-        return 4;
+        return count;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

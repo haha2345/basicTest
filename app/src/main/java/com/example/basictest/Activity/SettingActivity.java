@@ -11,15 +11,21 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.basictest.R;
+import com.example.basictest.base.BaseActivity;
 import com.example.basictest.utils.DataCleanManager;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingActivity extends AppCompatActivity {
+import static com.example.basictest.utils.DataCleanManager.cleanFiles;
+import static com.example.basictest.utils.DataCleanManager.cleanSharedPreference;
+import static com.example.basictest.utils.DataCleanManager.clear;
+
+public class SettingActivity extends BaseActivity {
 
 
     @BindView(R.id.groupListView_setting)
@@ -31,7 +37,7 @@ public class SettingActivity extends AppCompatActivity {
     @BindView(R.id.btn_setting)
     Button btn;
 
-    private Context mContext;
+    private Context mContext=SettingActivity.this;
 
 
     @Override
@@ -41,6 +47,20 @@ public class SettingActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initList();
         initTopBar();
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //datacleanManager
+                clear(mContext);
+//                cleanFiles(mContext);
+//                cleanSharedPreference(mContext);
+                intent=new Intent(mContext,LoginActivity.class);
+                //调到页面，关闭之前所有页面
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            }
+        });
     }
 
     private void initList(){
@@ -65,23 +85,24 @@ public class SettingActivity extends AppCompatActivity {
                 .addItemView(item_2, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        Toast.makeText(SettingActivity.this,"文书管理" , Toast.LENGTH_SHORT).show();
+                        intent=new Intent(mContext,ForgetPwdActivity.class);
+                        startActivity(intent);
 
                     }
                 })
                 .addItemView(item_3, new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Toast.makeText(SettingActivity.this,"使用帮助" , Toast.LENGTH_SHORT).show();
+                    public void onClick(View view) {//清除缓存
                         DataCleanManager.clearAllCache(mContext);
+                        getTipDialog(mContext, QMUITipDialog.Builder.ICON_TYPE_SUCCESS,"缓存已清除").show();
+                        delayCloseTip();
 
                     }
                 })
                 .addItemView(item_4, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(SettingActivity.this,"版本号" , Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SettingActivity.this,"版本号" , Toast.LENGTH_SHORT).show();
 
                     }
                 })
