@@ -88,6 +88,8 @@ public class ChangePwdActivity extends AppCompatActivity {
         username=getIntent().getStringExtra("username");
         uuid=getIntent().getStringExtra("uuid");
         vcode=getIntent().getStringExtra("vcode");
+        setOnFocusChangeErrMsg(et_changePwd,"password","密码不少于6位");
+        setOnFocusChangeErrMsg(et_change_verifyPwd,"repwd","两次输入密码不同");
 
         btn_change_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,4 +187,34 @@ public class ChangePwdActivity extends AppCompatActivity {
                 })
                 .create(com.qmuiteam.qmui.R.style.QMUI_Dialog).show();
     }
+    private void setOnFocusChangeErrMsg(final EditText editText, final String inputType, final String errMsg) {
+        editText.setOnFocusChangeListener(
+                new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        pwd=et_changePwd.getText().toString();
+                        rePwd=et_change_verifyPwd.getText().toString();
+                        String inputStr = editText.getText().toString();
+                        if (!hasFocus) {
+                            if (inputType == "password") {
+                                if (isPasswordValid(inputStr)) {
+                                    editText.setError(null);
+                                } else {
+                                    editText.setError(errMsg);
+                                }
+                            }
+                            if (inputType=="repwd"){
+                                if (isPwdCorrect(rePwd,pwd)){
+                                    editText.setError(null);
+                                }else {
+                                    editText.setError(errMsg);
+                                }
+                            }
+                        }
+                    }
+                }
+        );
+    }
+
+
 }

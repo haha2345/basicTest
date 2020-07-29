@@ -28,6 +28,8 @@
     <color name="tv_text_fail">#FFEE3535</color>
     <color name="tv_fail_detail">#FFFF6969</color>
     <color name="light_gray">#FFEFF0F4</color>
+    <color name="shenhe_text">#1a4478ed</color>
+    <color name="shenhe_bg">#4478ED</color>
 
     <color name="app_color_blue_2">#31BDF3</color>
     <color name="app_color_blue_2_disabled">#7F31BDF3</color>

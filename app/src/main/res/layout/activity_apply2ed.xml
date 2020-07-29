@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.Apply2edActivity"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
@@ -171,6 +172,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/et_apply2_phone"
             android:hint="输入申请人联系方式"
+            android:maxLength="11"
             android:textSize="14sp"
             android:inputType="phone"
             android:background="@drawable/transparent"
@@ -214,6 +216,7 @@
             android:id="@+id/et_apply2_vcode"
             android:hint="请输入验证码"
             android:textSize="14sp"
+            android:maxLength="6"
             android:background="@drawable/transparent"
             android:layout_marginTop="10dp"
             android:inputType="phone"

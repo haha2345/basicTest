@@ -45,6 +45,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private Button btn_Register;
     private TextView btn_getVCode;
     private TextView tv_JumpToLogin;
+    private TextView tv_register_rule;
     private User user=null;
     private Utils utils=null;
     Intent intent;
@@ -85,13 +86,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         //失去焦点报错 此处为重复密码检测
         et_RePassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View view, boolean b) {
+            public void onFocusChange(View view, boolean hasFocus) {
                 pwd=et_Password.getText().toString().trim();
                 rePwd=et_RePassword.getText().toString().trim();
-                if (isPwdCorrect(pwd,rePwd))
-                    et_RePassword.setError(null);
-                else
-                    et_RePassword.setError("两次密码输入不同");
+                if (!hasFocus) {
+                    if (isPwdCorrect(pwd,rePwd))
+                        et_RePassword.setError(null);
+                    else
+                        et_RePassword.setError("两次密码输入不同");
+                }
+
             }
         });
         setOnFocusChangeErrMsg(et_RegisterPhone,"phone","手机号输入不正确");
@@ -107,6 +111,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         btn_Register=(Button)findViewById(R.id.btn_register);
         tv_JumpToLogin=(TextView) findViewById(R.id.tv_jumpToLogin);
         btn_getVCode=(TextView)findViewById(R.id.btn_getVcode_from_reg);
+        tv_register_rule=(TextView)findViewById(R.id.tv_register_rule);
         checkBox_register=(CheckBox)findViewById(R.id.checkBox_register);
 
         btn_Register.setOnClickListener(this);
@@ -121,6 +126,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 .setTipWord("请稍后")
                 .create();
 
+        tv_register_rule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext, HtmlActivity.class);
+                intent.putExtra("html","");
+                intent.putExtra("title","用户使用条款");
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -177,7 +191,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     delayCloseTip();
                 }
                 Log.d(TAG,username);
-                getuuid();
+//                getuuid();
                 break;
 
         }
@@ -218,7 +232,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         uuid=resultJson.get("uuid").getAsString();
                         //线程中无法直接使用toast
                         //测试用
-                        utils.showToastInThread(RegisterActivity.this,"已发送验证码，注意查收"+uuid);
+                        //utils.showToastInThread(RegisterActivity.this,"已发送验证码，注意查收"+uuid);
                     }
                 } else {
                     qmuiTipDialog.dismiss();

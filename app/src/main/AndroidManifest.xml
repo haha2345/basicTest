@@ -33,7 +33,8 @@
         android:theme="@style/QMUI.Compat.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activity.DetailActivity"></activity>
+        <activity android:name=".Activity.LoginActivity"></activity>
+        <activity android:name=".Activity.DetailActivity" />
         <activity android:name=".Activity.HtmlActivity" />
         <activity android:name=".Activity.PdfViewerActivity" />
         <activity android:name=".Activity.VideoActivity" />
@@ -71,7 +72,7 @@
         <activity android:name=".Activity.ChangePwdActivity" />
         <activity android:name=".Activity.ForgetPwdActivity" />
         <activity android:name=".Activity.RegisterActivity" />
-        <activity android:name=".Activity.LoginActivity">
+        <activity android:name=".Activity.BeginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

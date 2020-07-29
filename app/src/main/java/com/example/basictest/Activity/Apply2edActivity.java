@@ -117,9 +117,21 @@ public class Apply2edActivity extends BaseActivity {
             public void onClick(View view) {
                 username = et_apply2_phone.getText().toString();
                 vcode = et_apply2_vcode.getText().toString();
-                showProgressDialog(mContext, "请稍后");
-                sbtn_apply2_verify.setEnabled(false);
-                checkVcode();
+
+                if (isTelphoneValid(username)){
+                    if (vcode.length()==6){
+                        showProgressDialog(mContext, "请稍后");
+                        sbtn_apply2_verify.setEnabled(false);
+                        checkVcode();
+                    }else {
+                        getTipDialog(3,"请检查验证码是否输入正确").show();
+                        delayCloseTip();
+                        //Toast.makeText(mContext,"请检查验证码是否输入正确",Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    getTipDialog(3,"请检查手机号是否输入正确").show();
+                    delayCloseTip();
+                }
             }
         });
 
@@ -159,7 +171,8 @@ public class Apply2edActivity extends BaseActivity {
                     //先判断是否正常
                     if (main.getString("code").equals("200")) {
                         uuid = main.getString("uuid");
-                        utils.showToastInThread(mContext, "已发送验证码，注意查收" + uuid);
+                        //
+                        // utils.showToastInThread(mContext, "已发送验证码，注意查收" + uuid);
                     } else if (main.getString("code").equals("401")){
                     breaker(mContext);
                 }
@@ -401,7 +414,7 @@ public class Apply2edActivity extends BaseActivity {
                                 intent.putExtra("name", name);
                                 intent.putExtra("phone", username);
                                 startActivity(intent);
-
+                                finish();
                             } else if (main.getString("code").equals("401")){
                                 breaker(mContext);
                             }else {
@@ -488,7 +501,10 @@ public class Apply2edActivity extends BaseActivity {
             @Override
             public void run() {
                 //要延时的程序
-                tipDialog.dismiss();
+                if (tipDialog.isShowing()){
+                    tipDialog.dismiss();
+
+                }
             }
         }, 1500);
     }

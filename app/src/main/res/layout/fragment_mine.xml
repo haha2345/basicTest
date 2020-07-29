@@ -38,7 +38,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/example_image6"
+            android:src="@drawable/avator"
             app:qmui_border_color="?attr/qmui_config_color_gray_6"
             app:qmui_border_width="1px"
             app:qmui_is_oval="true"

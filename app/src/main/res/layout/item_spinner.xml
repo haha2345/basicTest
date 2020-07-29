@@ -7,10 +7,10 @@
     <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="200dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:text="xx银行"
         android:id="@+id/tv_spinner"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         />

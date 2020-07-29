@@ -127,7 +127,7 @@ public class MainFragment extends Fragment {
         btn_main_fqgz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"赋强公正",Toast.LENGTH_SHORT);
+                //Toast.makeText(getActivity(),"赋强公正",Toast.LENGTH_SHORT);
                 intent=new Intent(getActivity(), Apply1stActivity.class);
                 startActivity(intent);
             }
@@ -135,7 +135,7 @@ public class MainFragment extends Fragment {
         btn_main_gzjl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"公正记录",Toast.LENGTH_SHORT);
+                //Toast.makeText(getActivity(),"公正记录",Toast.LENGTH_SHORT);
                 intent=new Intent(getActivity(), JiluActivity.class);
                 startActivity(intent);
 
@@ -144,7 +144,7 @@ public class MainFragment extends Fragment {
         btn_main_wsgl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"文书管理",Toast.LENGTH_SHORT);
+                //Toast.makeText(getActivity(),"文书管理",Toast.LENGTH_SHORT);
                 intent=new Intent(getActivity(), WenshuActivity.class);
                 startActivity(intent);
             }
@@ -152,10 +152,10 @@ public class MainFragment extends Fragment {
         btn_main_syzn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent=new Intent(getActivity(), TestActivity.class);
-                startActivity(intent);
-                Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
-//                jumpToHowToUse();
+//                intent=new Intent(getActivity(), TestActivity.class);
+//                startActivity(intent);
+//                Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
+                jumpToHowToUse();
             }
         });
     }

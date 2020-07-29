@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.basictest.Activity.Apply1stActivity;
 import com.example.basictest.Activity.Apply3Activity;
 import com.example.basictest.Activity.Apply4Activity;
+import com.example.basictest.Activity.CameraActivity;
 import com.example.basictest.Activity.LoginActivity;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
@@ -52,7 +53,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import baseokhttp3.MediaType;
 import cn.org.bjca.signet.component.core.activity.SignetCoreApi;
 import cn.org.bjca.signet.component.core.activity.SignetToolApi;
 import cn.org.bjca.signet.component.core.bean.results.FindBackUserResult;
@@ -77,6 +80,7 @@ import static com.example.basictest.utils.DataCleanManager.clear;
 
 public class BaseApply3Activity extends AppCompatActivity {
 
+    private static final String TAG = "BaseActivity";
     private PdfDocument doc;
     private PdfDocument.PageInfo pageInfo;
     private PdfDocument.Page page;
@@ -344,6 +348,7 @@ public class BaseApply3Activity extends AppCompatActivity {
     }
 
 
+    //上传完删除文件
     //上传pdf 异步执行会与下一步冲突，所以把签署pdf的方法放在此函数中
     public void uploadPdf(final Context con) {
         token = SpUtils.getInstance(this).getString("token", null);
@@ -360,6 +365,7 @@ public class BaseApply3Activity extends AppCompatActivity {
                             dismissProgressDialog();
                             Log.d("上传", "连接失败", error);
                             getTipDialog(con,3,"连接失败").show();
+                            deletePdf(uploadFile);
                             delayCloseTip();
                         } else {
                             if (main.getString("code").equals("200")) {
@@ -367,17 +373,20 @@ public class BaseApply3Activity extends AppCompatActivity {
                                 JsonMap jsonMap = main.getJsonMap("data");
                                 signId = jsonMap.getString("signId");
                                 Log.d("上传", signId);
+                                deletePdf(uploadFile);
                                 dismissProgressDialog();
                                 //签署pdf
                                 signPdf(con);
                             }else if (main.getString("code").equals("401")){
                                 dismissProgressDialog();
+                                deletePdf(uploadFile);
                                 breaker(con);
                             } else {
                                 Log.e("上传", main.getString("msg"));
                                 Log.e("上传", main.getString("code"));
                                 Toast.makeText(con,main.getString("msg"),Toast.LENGTH_SHORT).show();
                                 dismissProgressDialog();
+                                deletePdf(uploadFile);
                             }
                         }
                     }
@@ -468,6 +477,7 @@ public class BaseApply3Activity extends AppCompatActivity {
     private void uploadNotifyLetter(final Context con) {
         token = SpUtils.getInstance(this).getString("token", null);
         caseId = SpUtils.getInstance(this).getString("caseId", null);
+        File video=new File(SpUtils.getInstance(this).getString("videopath", null));
         String jsonStr = "{\n" +
                 "    \"fileHashSha1\":\"" + fileHashSha1 + "\",\n" +
                 "    \"fileSize\":\"" + fileSize + "\",\n" +
@@ -519,6 +529,71 @@ public class BaseApply3Activity extends AppCompatActivity {
                 .doPost();
 
     }
+
+//    public void uploadVideo(Context con,LinearLayout layout){
+//        token= SpUtils.getInstance(this).getString("token",null);
+//        caseId=SpUtils.getInstance(this).getString("caseId",null);
+//        String filepath=SpUtils.getInstance(this).getString("videopath",null);
+//        File videoFile=new File(filepath);
+//        if (videoFile.exists()){
+//            if (!IsFileInUse(filepath)){
+//                Log.d(TAG, "uploadVideo: 文件未操作");
+//                HttpRequest.build(con, netConstant.getUploadNotarizeVideo())
+//                        .setMediaType(MediaType.parse("video/mpeg4"))
+//                        .addHeaders("Authorization","Bearer "+token)
+//                        .addHeaders("Content-Type","multipart/form-data")
+//                        .addParameter("notarizeVideoFile",videoFile)
+//                        .addParameter("caseId",caseId)
+//                        .setJsonResponseListener(new JsonResponseListener() {
+//                            @Override
+//                            public void onResponse(JsonMap main, Exception error) {
+//                                if (error!=null){
+//                                    Log.e("上传","连接失败",error);
+//                                    dismissProgressDialog();
+//                                    Toast.makeText(con,"连接失败,请重试",Toast.LENGTH_SHORT).show();
+//                                }else {
+//                                    if (main.getString("code").equals("200")){
+//                                        //上传成功
+//                                        Log.d(TAG, "onResponse: 上传成功");
+//                                        setupPdf(layout);
+//                                    } else if (main.getString("code").equals("401")){
+//
+//                                        breaker(con);
+//
+//                                    }else {
+//                                        Log.e("上传",main.getString("msg"));
+//                                        Log.e("上传",main.getString("code"));
+//
+//                                        dismissProgressDialog();
+//                                        Toast.makeText(con,main.getString("msg"),Toast.LENGTH_SHORT).show();
+//
+//                                    }
+//                                }
+//                            }
+//                        })
+//                        .doPost();
+//            }else {
+//                //文件正在被操作
+//                Log.d(TAG, "uploadVideo: 文件正在被操作");
+//                new Handler().postDelayed(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        //do something
+//                        uploadVideo(con,layout);
+//                    }
+//                }, 2000);    //延时1s执行
+//            }
+//
+//        }else {
+//
+//            Toast.makeText(con,"录制失败，请重新录制",Toast.LENGTH_SHORT).show();
+//
+//
+//        }
+//
+//
+//    }
 
     //下载告知函
     private void Download(final Context con) {
@@ -619,7 +694,10 @@ public class BaseApply3Activity extends AppCompatActivity {
             @Override
             public void run() {
                 //要延时的程序
-                tipDialog.dismiss();
+                if (tipDialog.isShowing()){
+                    tipDialog.dismiss();
+                }
+
             }
         },1500);
     }
@@ -642,4 +720,23 @@ public class BaseApply3Activity extends AppCompatActivity {
                 })
                 .create(com.qmuiteam.qmui.R.style.QMUI_Dialog).show();
     }
+    private void deletePdf(File file){
+        if (file.exists()){
+            file.delete();
+        }else{
+            Log.d(TAG, "deletePdf: 删除失败");
+        }
+    }
+    private void deleteVideo(File file){
+        if (file.exists()){
+            file.delete();
+        }else{
+            Log.d("删除", "deletePdf: 删除失败");
+        }
+    }
+
+
 }
+
+
+

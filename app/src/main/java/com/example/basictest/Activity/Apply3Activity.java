@@ -1,7 +1,6 @@
 package com.example.basictest.Activity;
 
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.graphics.Bitmap;
 
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +16,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.basictest.R;
 import com.example.basictest.base.BaseApply3Activity;
+import com.example.basictest.constant.netConstant;
 import com.example.basictest.utils.SpUtils;
+import com.kongzue.baseokhttp.HttpRequest;
+import com.kongzue.baseokhttp.listener.JsonResponseListener;
+import com.kongzue.baseokhttp.util.JsonMap;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
@@ -95,15 +100,15 @@ public class Apply3Activity extends BaseApply3Activity {
 
 
     private Intent intent;
-    private String name=null,
-            bank=null,
-            videoPath=null,
-            imagePath=null,
-            phone=null,
-            idcard=null;
-    private Context mContext=Apply3Activity.this;
-    private Bitmap handWritingBitmap=null;
-    private String src=null;
+    private String name = null,
+            bank = null,
+            videoPath = null,
+            imagePath = null,
+            phone = null,
+            idcard = null;
+    private Context mContext = Apply3Activity.this;
+    private Bitmap handWritingBitmap = null;
+    private String src = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,39 +119,40 @@ public class Apply3Activity extends BaseApply3Activity {
         initView();
         initBtn();
         //第一步，检测是否有证
-        if (!idcard.equals(null)){
-            showProgressDialog(mContext,"请稍后。。。");
-            getNativeUserList(mContext,name,idcard,phone);
+        if (idcard != null) {
+            showProgressDialog(mContext, "请稍后。。。");
+            getNativeUserList(mContext, name, idcard, phone);
             //第二步，添加证书
-    }else {
-        getTipDialog(3,"请检查上一步是否有问题");
-        delayCloseTip();
-        finish();
-    }
+        } else {
+            getTipDialog(3, "请检查上一步是否有问题");
+            delayCloseTip();
+            finish();
+        }
 
 //        initView();
 
         //从别的页面跳转回来不会调用onCreate，只会调用onRestart、onStart、onResume
     }
 
-    private void initView(){
-        name= getIntent().getStringExtra("name");
-        bank=SpUtils.getInstance(this).getString("bank",null);
-        idcard=getIntent().getStringExtra("idcard");
-        phone=getIntent().getStringExtra("phone");
+    private void initView() {
+        name = getIntent().getStringExtra("name");
+        bank = SpUtils.getInstance(this).getString("bank", null);
+        idcard = getIntent().getStringExtra("idcard");
+        phone = getIntent().getStringExtra("phone");
 
         tv_apply3_name.setText(name);
         tv_apply3_name1.setText(name);
         tv_apply3_name2.setText(name);
         tv_apply3_bank.setText(bank);
         //取录像信息
-        src=getIntent().getStringExtra("base64str");
-        imagePath=getIntent().getStringExtra("imagepath");
-        if (imagePath!=null){
+        src = getIntent().getStringExtra("base64str");
+        imagePath = getIntent().getStringExtra("imagepath");
+        videoPath = getIntent().getStringExtra("videopath");
+        if (imagePath != null) {
             getRecord();
         }
-        if (src!=null){
-            handWritingBitmap=base64ToBitmap(src);
+        if (src != null) {
+            handWritingBitmap = base64ToBitmap(src);
             getAuto();
         }
 
@@ -171,9 +177,9 @@ public class Apply3Activity extends BaseApply3Activity {
     protected void onResume() {
         super.onResume();
         //若二者都有即可进行下一步
-        if (imagePath!=null&&src!=null){
+        if (imagePath != null && src != null) {
             sbtn_apply3_next.setEnabled(true);
-        }else {
+        } else {
             sbtn_apply3_next.setEnabled(false);
         }
 
@@ -185,26 +191,23 @@ public class Apply3Activity extends BaseApply3Activity {
 
     }
 
-    private void initBtn(){
+    private void initBtn() {
 
         sbtn_apply3_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showProgressDialog(mContext,"加载中");
+                showProgressDialog(mContext, "加载中");
                 re_sign.setVisibility(View.VISIBLE);
                 setupPdf(lv_apply3);
                 re_sign.setVisibility(View.INVISIBLE);
                 //延时
-                Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //要延时的程序
                         uploadPdf(mContext);
                     }
-                }, 2000);
-
-
+                }, 2000); //8000为毫秒单位
             }
         });
         lv_apply3_auto.setOnClickListener(new View.OnClickListener() {
@@ -217,11 +220,11 @@ public class Apply3Activity extends BaseApply3Activity {
         lv_apply3_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent=new Intent(mContext,ShipingongzhenActivity.class);
-                intent.putExtra("basestr",src);
-                intent.putExtra("name",name);
-                intent.putExtra("phone",phone);
-                intent.putExtra("idcard",idcard);
+                intent = new Intent(mContext, ShipingongzhenActivity.class);
+                intent.putExtra("basestr", src);
+                intent.putExtra("name", name);
+                intent.putExtra("phone", phone);
+                intent.putExtra("idcard", idcard);
                 startActivity(intent);
             }
         });
@@ -243,14 +246,15 @@ public class Apply3Activity extends BaseApply3Activity {
         im_apply_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent=new Intent(mContext,VideoActivity.class);
+                intent = new Intent(mContext, VideoActivity.class);
                 startActivity(intent);
             }
         });
     }
 
+
     //如果正常录像调用此方法
-    private void getRecord(){
+    private void getRecord() {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
 //获取当前时间
@@ -260,14 +264,19 @@ public class Apply3Activity extends BaseApply3Activity {
         rv_apply3_record.setVisibility(View.VISIBLE);
         lv_apply3_record.setVisibility(View.INVISIBLE);
         tv_apply3_record_date.setText(simpleDateFormat.format(date));
-        im_apply_record.setImageURI(getImageContentUri(mContext,new File(imagePath)));
+        im_apply_record.setImageURI(getImageContentUri(mContext, new File(imagePath)));
     }
+
     //重新录像
-    private void reRecord(){
+    private void reRecord() {
         iv_apply3_yes1.setVisibility(View.INVISIBLE);
         rv_apply3_record.setVisibility(View.INVISIBLE);
         lv_apply3_record.setVisibility(View.VISIBLE);
-        intent=new Intent(mContext,ShipingongzhenActivity.class);
+        intent = new Intent(mContext, ShipingongzhenActivity.class);
+        intent.putExtra("basestr", src);
+        intent.putExtra("name", name);
+        intent.putExtra("phone", phone);
+        intent.putExtra("idcard", idcard);
         startActivity(intent);
     }
 
@@ -282,8 +291,8 @@ public class Apply3Activity extends BaseApply3Activity {
 //                        Log.d("shouxie", src);
 //                        Log.d("手写", setSignImageResult.getErrMsg());
 //                        Log.d("手写", setSignImageResult.getErrCode());
-                        handWritingBitmap=base64ToBitmap(src);
-                        if(setSignImageResult.getErrCode()!="0x11000001"){
+                        handWritingBitmap = base64ToBitmap(src);
+                        if (setSignImageResult.getErrCode() != "0x11000001") {
                             getAuto();
                         }
                     }
@@ -291,7 +300,7 @@ public class Apply3Activity extends BaseApply3Activity {
                 });
     }
 
-    private void getAuto(){
+    private void getAuto() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
 //获取当前时间
         Date date = new Date(System.currentTimeMillis());
@@ -306,7 +315,7 @@ public class Apply3Activity extends BaseApply3Activity {
         sign_date.setText(simpleDateFormat.format(date));
     }
 
-    private void reAuto(){
+    private void reAuto() {
         iv_apply3_yes.setVisibility(View.INVISIBLE);
         rv_apply3_auto.setVisibility(View.INVISIBLE);
         lv_apply3_auto.setVisibility(View.VISIBLE);
@@ -320,15 +329,29 @@ public class Apply3Activity extends BaseApply3Activity {
                 .create();
         return tipDialog;
     }
+
     //1.5s后关闭tipDIalog
-    public void delayCloseTip(){
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+    public void delayCloseTip() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 //要延时的程序
-                tipDialog.dismiss();
+                if (tipDialog.isShowing()) {
+                    tipDialog.dismiss();
+                }
             }
-        },1500);
+        }, 1500); //8000为毫秒单位
+//        Timer timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                //要延时的程序
+//                if (tipDialog.isShowing()){
+//                    tipDialog.dismiss();
+//                }
+//
+//            }
+//        },1500);
     }
+
 }

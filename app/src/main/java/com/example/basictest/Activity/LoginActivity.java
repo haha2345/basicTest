@@ -1,11 +1,14 @@
 package com.example.basictest.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -61,7 +64,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private String jsonStr;
 
     private int flag = 0;
-
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
     public String TAG = "LoginActivity";
 
     Intent registerIntent;
@@ -81,6 +88,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
         myCountDownTimer = new MyCountDownTimer(60000, 1000);
         initViews();
+        verifyStoragePermissions(LoginActivity.this);
         setOnFocusChangeErrMsg(et_phone, "phone", "手机号格式不正确");
         setOnFocusChangeErrMsg(et_pwd, "password", "密码不少于6位");
         username = SpUtils.getInstance(this).getString("username", null);
@@ -160,7 +168,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 // 发送URL请求之前,先进行校验
                 if (!(isTelphoneValid(username) && isPasswordValid(pwd)&&(!vcode.isEmpty()))) {
-                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_NOTHING,"账号或密码错误").show();
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_NOTHING,"请检查输入").show();
                     delayCloseTip();
                     break;
                 } else {//初始化user对象，生成json
@@ -208,8 +216,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         jupmToMain();
                         finish();
                     } else {
+                        String msg = utils.getJson(response).get("msg").getAsString();
                         qmuiTipDialog.dismiss();
-                        getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO,"登陆失败，请检查输入是否有误").show();
+                        getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO,msg).show();
                         delayCloseTip();
                     }
 
@@ -358,6 +367,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 tipDialog.dismiss();
             }
         },1500);
+    }
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
+        }
     }
 }
 

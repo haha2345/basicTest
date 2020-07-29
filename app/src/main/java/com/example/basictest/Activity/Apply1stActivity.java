@@ -225,7 +225,7 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                 Log.w(TAG,"getName==="+filename);
                 //取到文件名改textview
                 afterGetFile();
-                Toast.makeText(this,path+"11111",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,path+"11111",Toast.LENGTH_SHORT).show();
                 return;
             }
             //4.4以后
@@ -241,9 +241,9 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                 Log.w(TAG,"getName==="+filename);
                 afterGetFile();
 
-                Toast.makeText(this,path,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,path,Toast.LENGTH_SHORT).show();
             } else {//4.4以下下系统调用方法
-                Toast.makeText(Apply1stActivity.this, path+"222222", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Apply1stActivity.this, path+"222222", Toast.LENGTH_SHORT).show();
             }
         }
 

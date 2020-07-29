@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -102,6 +104,29 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
         utils = new Utils();
         btn_forget_next.setOnClickListener(this);
         btn_forget_getvcode.setOnClickListener(this);
+        et_forgetVcode.addTextChangedListener(new TextWatcher() {
+
+            CharSequence enterword;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                enterword=s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (enterword.length()==6){
+                    btn_forget_next.setEnabled(true);
+                }else {
+                    btn_forget_next.setEnabled(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -117,7 +142,7 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
                 if (isTelphoneValid(username)) {
                     //测试qmui的提示框
                     //获取uuid和用户名
-                    btn_forget_next.setEnabled(true);
+//                    btn_forget_next.setEnabled(true)
                     qmuiTipDialog.show();
                     getuuid();
                     myCountDownTimer.start();
@@ -128,13 +153,25 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.btn_forget_next:
                 vcode = et_forgetVcode.getText().toString();
+                username=et_forgetPhone.getText().toString();
 
-                //checkVcode();
-                intent = new Intent(ForgetPwdActivity.this, ChangePwdActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("uuid", uuid);
-                intent.putExtra("vcode", vcode);
-                startActivity(intent);
+                if (username.isEmpty()) {
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO, "请输入手机号").show();
+                    delayCloseTip();
+                    break;
+                }
+                if (isTelphoneValid(username)&&(et_forgetVcode.getText().length()==6)) {
+                    //checkVcode();
+                    intent = new Intent(ForgetPwdActivity.this, ChangePwdActivity.class);
+                    intent.putExtra("username", username);
+                    intent.putExtra("uuid", uuid);
+                    intent.putExtra("vcode", vcode);
+                    startActivity(intent);
+                }else {
+                    getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO, "请检查输入").show();
+                    delayCloseTip();
+                }
+
                 break;
         }
 

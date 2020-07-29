@@ -51,6 +51,9 @@ public class MyJiluRecyclerViewAdapter extends RecyclerView.Adapter<MyJiluRecycl
         vh.tv_jilu_number.setText(jiluEntity.getCaseCode());
         vh.tv_jilu_date.setText(jiluEntity.getApplyTime());
         if (jiluEntity.getFStatus().equals("1")){
+            vh.tv_jilu_state.setText("审核中");
+            vh.tv_jilu_state.setBackgroundColor(context.getResources().getColor(R.color.shenhe_text));
+            vh.tv_jilu_state.setTextColor(context.getResources().getColor(R.color.shenhe_bg));
         }else if (jiluEntity.getFStatus().equals("21")){
             vh.tv_jilu_state.setText("审核通过");
             vh.tv_jilu_number.setText(jiluEntity.getCaseRegCode());

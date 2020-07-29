@@ -152,7 +152,9 @@ public class DetailActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 intent=new Intent(mContext,Apply1stActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
         btn_detial.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +162,7 @@ public class DetailActivity extends BaseActivity {
             public void onClick(View view) {
                 getOnlyPath("400010");
                 url=netConstant.getURL()+url;
-                Toast.makeText(mContext, url, Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext, url, Toast.LENGTH_LONG).show();
                 HttpRequest.DOWNLOAD(
                         mContext,
                         url,

@@ -429,7 +429,7 @@ public class BaseCameraActivity extends AppCompatActivity {
     }
 
     public static String getVideoFilePath() {
-        return getAndroidMoviesFolder().getAbsolutePath() + "/" + new SimpleDateFormat("yyyyMM_dd-HHmmss").format(new Date()) + "cameraRecorder.mp4";
+        return getAndroidMoviesFolder().getAbsolutePath() + "/" + new SimpleDateFormat("yyyyMM_dd_HHmm").format(new Date()) + "video.mp4";
     }
 
     public static File getAndroidMoviesFolder() {
@@ -502,5 +502,15 @@ public class BaseCameraActivity extends AppCompatActivity {
                 tipDialog.dismiss();
             }
         },1500);
+    }
+    public static boolean IsFileInUse(String fileName) {
+        File file = new File(fileName);
+        if (file.renameTo(file)) {
+            return false;
+//            System.out.println("文件未bai被操作du");
+        } else {
+            return true;
+//            System.out.println("文件正在zhi被dao操作");
+        }
     }
 }
