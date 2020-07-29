@@ -50,16 +50,21 @@ public class PdfViewerActivity extends AppCompatActivity {
                 .setTipWord("成功保存在"+Environment.getExternalStorageDirectory().getAbsolutePath()+"/fuqianggognzheng")
                 .create();
         url = getIntent().getStringExtra("url");
+
         pdf.getSettings().setJavaScriptEnabled(true);
         pdf.getSettings().setSupportZoom(true);
         pdf.getSettings().setAllowUniversalAccessFromFileURLs(true);
         pdf.getSettings().setBuiltInZoomControls(true);
         pdf.getSettings().setDisplayZoomControls(true);
-
+        pdf.getSettings().setAllowFileAccessFromFileURLs(true);
         pdf.getSettings().setAllowUniversalAccessFromFileURLs(true); //设置可以访问URL
 
+
+
+
         //file:///android_asset/pdf.html?+网络路径
-        pdf.loadUrl("file:///android_asset/pdf.html?" + url);
+//        pdf.loadUrl("file:///android_asset/pdf.html?" + url);
+        pdf.loadUrl("file:///android_asset/web/viewer.html?file=" + url);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -52,7 +52,15 @@ public class CameraActivity extends BaseCameraActivity {
             public void onClick(View view) {
                 handler.removeCallbacks(runnable);
                 showProgressDialog(CameraActivity.this,"请稍后");
-                uploadVideo();
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        //要延时的程序
+                        uploadVideo();
+                    }
+                }, 2000);
+
 //                Intent intent=new Intent(getBaseContext(), Apply3Activity.class);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                intent.putExtra("imagepath",imagePath);

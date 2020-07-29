@@ -22,6 +22,7 @@ import com.example.basictest.Activity.HtmlActivity;
 import com.example.basictest.Activity.JiluActivity;
 import com.example.basictest.Activity.LoginActivity;
 import com.example.basictest.Activity.PdfViewerActivity;
+import com.example.basictest.Activity.TestActivity;
 import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
 import com.example.basictest.Activity.CameraActivity;
@@ -151,10 +152,10 @@ public class MainFragment extends Fragment {
         btn_main_syzn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                intent=new Intent(getActivity(), CameraActivity.class);
-//                startActivity(intent);
-//                Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
-                jumpToHowToUse();
+                intent=new Intent(getActivity(), TestActivity.class);
+                startActivity(intent);
+                Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
+//                jumpToHowToUse();
             }
         });
     }

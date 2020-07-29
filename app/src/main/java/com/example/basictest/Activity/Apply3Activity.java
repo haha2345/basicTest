@@ -134,6 +134,7 @@ public class Apply3Activity extends BaseApply3Activity {
         bank=SpUtils.getInstance(this).getString("bank",null);
         idcard=getIntent().getStringExtra("idcard");
         phone=getIntent().getStringExtra("phone");
+
         tv_apply3_name.setText(name);
         tv_apply3_name1.setText(name);
         tv_apply3_name2.setText(name);
@@ -190,7 +191,9 @@ public class Apply3Activity extends BaseApply3Activity {
             @Override
             public void onClick(View view) {
                 showProgressDialog(mContext,"加载中");
-                setupPdf(lv_apply3,re_sign);
+                re_sign.setVisibility(View.VISIBLE);
+                setupPdf(lv_apply3);
+                re_sign.setVisibility(View.INVISIBLE);
                 //延时
                 Timer timer = new Timer();
                 timer.schedule(new TimerTask() {
@@ -297,7 +300,8 @@ public class Apply3Activity extends BaseApply3Activity {
         rv_apply3_auto.setVisibility(View.VISIBLE);
         lv_apply3_auto.setVisibility(View.INVISIBLE);
         im_apply_auto.setImageBitmap(handWritingBitmap);
-        sign_image.setImageBitmap(handWritingBitmap);
+        //设置签名
+//        sign_image.setImageBitmap(handWritingBitmap);
         //暂时这么写
         sign_date.setText(simpleDateFormat.format(date));
     }

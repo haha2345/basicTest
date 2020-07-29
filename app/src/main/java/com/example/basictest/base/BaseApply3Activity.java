@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Environment;
@@ -97,20 +98,24 @@ public class BaseApply3Activity extends AppCompatActivity {
     }
 
     //生成pdf 内容+签字
-    public void setupPdf(LinearLayout lv_apply3, RelativeLayout layout) {
+    public void setupPdf(LinearLayout lv_apply3) {
         doc = new PdfDocument();
-        pageInfo = new PdfDocument.PageInfo.Builder(lv_apply3.getWidth(), lv_apply3.getHeight(), 1)
+        pageInfo = new PdfDocument.PageInfo.Builder((int) (lv_apply3.getWidth()*0.35f), (int) (lv_apply3.getHeight()*0.35f), 1)
                 .create();
         page = doc.startPage(pageInfo);
-        lv_apply3.draw(page.getCanvas());
+        Canvas canvas=page.getCanvas();
+        canvas.scale(0.35f,0.35f);
+        lv_apply3.draw(canvas);
         doc.finishPage(page);
 
-        //签字
-        //往pdf添加组件
-        pageInfo = new PdfDocument.PageInfo.Builder(layout.getWidth(), layout.getHeight(), 1).create();
-        page = doc.startPage(pageInfo);
-        layout.draw(page.getCanvas());
-        doc.finishPage(page);
+//        //签字
+//        //往pdf添加组件
+//        pageInfo = new PdfDocument.PageInfo.Builder(layout.getWidth()/2, layout.getHeight()/2, 1).create();
+//        page = doc.startPage(pageInfo);
+//        canvas=page.getCanvas();
+//        canvas.scale(0.5f,0.5f);
+//        layout.draw(canvas);
+//        doc.finishPage(page);
         //设置路径
         File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         try {
