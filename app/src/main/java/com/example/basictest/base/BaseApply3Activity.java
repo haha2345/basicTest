@@ -123,7 +123,9 @@ public class BaseApply3Activity extends AppCompatActivity {
         //设置路径
         File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         try {
-            uploadFile = new File(file.getAbsolutePath() + "/" + new SimpleDateFormat("yyyyMM_dd-HHmmss").format(new Date()) + "ad.pdf");
+            String pdfPath=file.getAbsolutePath() + "/" + new SimpleDateFormat("yyyyMM_dd-HHmmss").format(new Date()) + "ad.pdf";
+            SpUtils.getInstance(getParent()).setString("pdfpath",pdfPath);
+            uploadFile = new File(pdfPath);
             doc.writeTo(new FileOutputStream(uploadFile));
             //应该弹一个对话框
             Log.d("生成pdf", "成功");
@@ -365,7 +367,8 @@ public class BaseApply3Activity extends AppCompatActivity {
                             dismissProgressDialog();
                             Log.d("上传", "连接失败", error);
                             getTipDialog(con,3,"连接失败").show();
-                            deletePdf(uploadFile);
+
+
                             delayCloseTip();
                         } else {
                             if (main.getString("code").equals("200")) {
@@ -373,20 +376,20 @@ public class BaseApply3Activity extends AppCompatActivity {
                                 JsonMap jsonMap = main.getJsonMap("data");
                                 signId = jsonMap.getString("signId");
                                 Log.d("上传", signId);
-                                deletePdf(uploadFile);
+
                                 dismissProgressDialog();
                                 //签署pdf
                                 signPdf(con);
                             }else if (main.getString("code").equals("401")){
                                 dismissProgressDialog();
-                                deletePdf(uploadFile);
+
                                 breaker(con);
                             } else {
                                 Log.e("上传", main.getString("msg"));
                                 Log.e("上传", main.getString("code"));
                                 Toast.makeText(con,main.getString("msg"),Toast.LENGTH_SHORT).show();
                                 dismissProgressDialog();
-                                deletePdf(uploadFile);
+
                             }
                         }
                     }
@@ -727,7 +730,7 @@ public class BaseApply3Activity extends AppCompatActivity {
             Log.d(TAG, "deletePdf: 删除失败");
         }
     }
-    private void deleteVideo(File file){
+    public void deleteFile(File file){
         if (file.exists()){
             file.delete();
         }else{

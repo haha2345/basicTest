@@ -53,6 +53,7 @@
         <item>uploadfilename</item>
         <item>name</item>
         <item>idcard</item>
+        <item>pdfpath</item>
     </string-array>
 
     <string name="gaozhishu">公证处依据《中华人民共和国公证法》第27条第二款之规定，现将你申办赋予债权文书强制执行效力公证的法律意义、法律后果及相关的一些法律术语告知和解释如下：\n

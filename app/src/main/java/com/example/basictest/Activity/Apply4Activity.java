@@ -21,6 +21,8 @@ import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.util.JsonMap;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.androidman.SuperButton;
@@ -89,6 +91,15 @@ public class Apply4Activity extends BaseActivity {
         tv_apply4_date.setText(date);
         tv_filename1.setText(uploadfilename);
         tv_filename2.setText(signedFileName);
+        String videoPath=SpUtils.getInstance(mContext).getString("videopath",null);
+        String imagePath=SpUtils.getInstance(mContext).getString("imagepath",null);
+        String pdfPath=SpUtils.getInstance(mContext).getString("pdfpath",null);
+        File video=new File(videoPath);
+        File image=new File(imagePath);
+        File pdf=new File(pdfPath);
+        deleteFile(video);
+        deleteFile(image);
+        deleteFile(pdf);
     }
 
     private void initBtn(){

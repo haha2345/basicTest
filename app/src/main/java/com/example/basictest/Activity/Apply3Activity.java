@@ -239,6 +239,12 @@ public class Apply3Activity extends BaseApply3Activity {
         tv_apply3_re_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                videoPath=SpUtils.getInstance(mContext).getString("videopath",null);
+                imagePath=SpUtils.getInstance(mContext).getString("imagepath",null);
+                File video=new File(videoPath);
+                File image=new File(imagePath);
+                deleteFile(video);
+                deleteFile(image);
                 reRecord();
             }
         });

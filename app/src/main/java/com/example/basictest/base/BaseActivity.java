@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.example.basictest.Activity.LoginActivity;
 import com.google.gson.internal.$Gson$Types;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -101,5 +103,12 @@ public class BaseActivity extends AppCompatActivity {
                 Toast.makeText(con,msg,Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public void deleteFile(File file){
+        if (file.exists()){
+            file.delete();
+        }else{
+            Log.d("删除", "deletePdf: 删除失败");
+        }
     }
 }
