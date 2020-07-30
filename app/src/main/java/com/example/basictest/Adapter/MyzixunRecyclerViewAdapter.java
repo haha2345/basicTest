@@ -50,7 +50,12 @@ public class MyzixunRecyclerViewAdapter extends RecyclerView.Adapter<MyzixunRecy
         ViewHolder vh=(ViewHolder)holder;
         final NoticeEntity noticeEntity=datas.get(position);
         vh.tv_zixun_title.setText(noticeEntity.getNoticeTitle());
-        vh.tv_zixun_date.setText(noticeEntity.getUpdateTime());
+
+        if (noticeEntity.getUpdateTime()==null){
+            vh.tv_zixun_date.setText(noticeEntity.getCreateTime());
+        }else {
+            vh.tv_zixun_date.setText(noticeEntity.getUpdateTime());
+        }
 
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -242,27 +242,27 @@
             android:layout_marginLeft="15dp"/>
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="收不到短信？试试"
-            android:textSize="10sp"
-            android:layout_toLeftOf="@+id/tv_apply2_voice"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="语音验证"
-            android:textSize="10sp"
-            android:textColor="@color/blue"
-            android:id="@+id/tv_apply2_voice"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"/>
-    </RelativeLayout>
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp">-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="收不到短信？试试"-->
+<!--            android:textSize="10sp"-->
+<!--            android:layout_toLeftOf="@+id/tv_apply2_voice"-->
+<!--            />-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="语音验证"-->
+<!--            android:textSize="10sp"-->
+<!--            android:textColor="@color/blue"-->
+<!--            android:id="@+id/tv_apply2_voice"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_marginRight="15dp"/>-->
+<!--    </RelativeLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
