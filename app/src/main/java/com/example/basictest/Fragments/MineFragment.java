@@ -153,7 +153,7 @@ public class MineFragment extends Fragment {
                 .addItemView(item_5, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getActivity(),"系统设置" , Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(),"系统设置" , Toast.LENGTH_SHORT).show();
                         intent=new Intent(getActivity(), SettingActivity.class);
                         startActivity(intent);
 

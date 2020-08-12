@@ -1,2 +1,3 @@
+include ':CBNOSDK'
 include ':app'
 rootProject.name='basicTest'

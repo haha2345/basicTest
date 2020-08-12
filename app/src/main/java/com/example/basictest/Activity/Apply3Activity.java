@@ -97,6 +97,7 @@ public class Apply3Activity extends BaseApply3Activity {
 
     @BindView(R.id.topbar_apply3)
     QMUITopBarLayout mTopBar;
+    private String autoDate= null,recordDate= null;
 
 
     private Intent intent;
@@ -139,7 +140,8 @@ public class Apply3Activity extends BaseApply3Activity {
         bank = SpUtils.getInstance(this).getString("bank", null);
         idcard = getIntent().getStringExtra("idcard");
         phone = getIntent().getStringExtra("phone");
-
+        autoDate=SpUtils.getInstance(this).getString("autodate", null);
+        recordDate=SpUtils.getInstance(this).getString("recorddate", null);
         tv_apply3_name.setText(name);
         tv_apply3_name1.setText(name);
         tv_apply3_name2.setText(name);
@@ -213,6 +215,8 @@ public class Apply3Activity extends BaseApply3Activity {
         lv_apply3_auto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                autoDate=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss").format(new Date(System.currentTimeMillis()));
+                SpUtils.getInstance(mContext).setString("autodate",autoDate);
                 handWriting(mContext);
             }
         });
@@ -220,6 +224,8 @@ public class Apply3Activity extends BaseApply3Activity {
         lv_apply3_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                recordDate=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss").format(new Date(System.currentTimeMillis()));
+                SpUtils.getInstance(mContext).setString("recorddate",recordDate);
                 intent = new Intent(mContext, ShipingongzhenActivity.class);
                 intent.putExtra("basestr", src);
                 intent.putExtra("name", name);
@@ -232,6 +238,8 @@ public class Apply3Activity extends BaseApply3Activity {
         tv_apply3_reauto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                autoDate=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss").format(new Date(System.currentTimeMillis()));
+                SpUtils.getInstance(mContext).setString("autodate",autoDate);
                 reAuto();
             }
         });
@@ -245,6 +253,8 @@ public class Apply3Activity extends BaseApply3Activity {
                 File image=new File(imagePath);
                 deleteFile(video);
                 deleteFile(image);
+                recordDate=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss").format(new Date(System.currentTimeMillis()));
+                SpUtils.getInstance(mContext).setString("recorddate",recordDate);
                 reRecord();
             }
         });
@@ -262,15 +272,14 @@ public class Apply3Activity extends BaseApply3Activity {
     //如果正常录像调用此方法
     private void getRecord() {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
-//获取当前时间
-        Date date = new Date(System.currentTimeMillis());
 
         iv_apply3_yes1.setVisibility(View.VISIBLE);
         rv_apply3_record.setVisibility(View.VISIBLE);
         lv_apply3_record.setVisibility(View.INVISIBLE);
-        tv_apply3_record_date.setText(simpleDateFormat.format(date));
+        tv_apply3_record_date.setText(recordDate);
         im_apply_record.setImageURI(getImageContentUri(mContext, new File(imagePath)));
+        sign_date.setText(new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss").format(new Date(System.currentTimeMillis())));
+
     }
 
     //重新录像
@@ -307,10 +316,8 @@ public class Apply3Activity extends BaseApply3Activity {
     }
 
     private void getAuto() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
-//获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        tv_apply3_auto_date.setText(simpleDateFormat.format(date));
+
+        tv_apply3_auto_date.setText(autoDate);
         iv_apply3_yes.setVisibility(View.VISIBLE);
         rv_apply3_auto.setVisibility(View.VISIBLE);
         lv_apply3_auto.setVisibility(View.INVISIBLE);
@@ -318,7 +325,6 @@ public class Apply3Activity extends BaseApply3Activity {
         //设置签名
 //        sign_image.setImageBitmap(handWritingBitmap);
         //暂时这么写
-        sign_date.setText(simpleDateFormat.format(date));
     }
 
     private void reAuto() {

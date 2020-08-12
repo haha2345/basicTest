@@ -24,7 +24,21 @@ public class BaseActivity extends AppCompatActivity {
     //加载框
     private ProgressDialog progressDialog;
     public QMUITipDialog tipDialog;
+    private static final int MIN_DELAY_TIME = 1000;  // 两次点击间隔不能少于1000ms
+    private static long lastClickTime;
 
+    /*
+     *限制按钮多次点击一秒之内不能重复点击
+     * */
+    public static boolean isFastClick() {
+        boolean flag = true;
+        long currentClickTime = System.currentTimeMillis();
+        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
+            flag = false;
+        }
+        lastClickTime = currentClickTime;
+        return flag;
+    }
     //获取map中的key
     public String getKey(HashMap<String, String> map, String value) {
         String key = null;

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -107,6 +109,27 @@ public class Apply2edActivity extends BaseActivity {
     private void initData() {
         caseId = SpUtils.getInstance(this).getString("caseId", null);
         token = SpUtils.getInstance(this).getString("token", null);
+        et_apply2_vcode.addTextChangedListener(new TextWatcher() {
+            CharSequence enterword;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                enterword=s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (enterword.length()==6){
+                    sbtn_apply2_verify.setEnabled(true);
+                }else {
+                    sbtn_apply2_verify.setEnabled(false);
+                }
+            }
+        });
     }
 
     private void initBtns() {
@@ -118,21 +141,27 @@ public class Apply2edActivity extends BaseActivity {
                 username = et_apply2_phone.getText().toString();
                 vcode = et_apply2_vcode.getText().toString();
 
-                if (isTelphoneValid(username)){
-                    if (vcode.length()==6){
-                        showProgressDialog(mContext, "请稍后");
-                        sbtn_apply2_verify.setEnabled(false);
-                        checkVcode();
-                    }else {
-                        getTipDialog(3,"请检查验证码是否输入正确").show();
-                        delayCloseTip();
-                        //Toast.makeText(mContext,"请检查验证码是否输入正确",Toast.LENGTH_SHORT).show();
-                    }
+                if (isFastClick()){
+                    Toast.makeText(mContext, "点击过快请稍后点击~", Toast.LENGTH_SHORT).show();
+                    return;
                 }else {
-                    getTipDialog(3,"请检查手机号是否输入正确").show();
-                    delayCloseTip();
+                    if (isTelphoneValid(username)){
+                        if (vcode.length()==6){
+                            showProgressDialog(mContext, "请稍后");
+                            sbtn_apply2_verify.setEnabled(false);
+                            checkVcode();
+                        }else {
+                            getTipDialog(3,"请检查验证码是否输入正确").show();
+                            delayCloseTip();
+                            //Toast.makeText(mContext,"请检查验证码是否输入正确",Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        getTipDialog(3,"请检查手机号是否输入正确").show();
+                        delayCloseTip();
+                    }
                 }
-            }
+                }
+
         });
 
 
@@ -147,11 +176,10 @@ public class Apply2edActivity extends BaseActivity {
                     if (isTelphoneValid(username)) {
                         //测试qmui的提示框
                         //获取uuid和用户名
-                        sbtn_apply2_verify.setEnabled(true);
                         qmuiTipDialog.show();
                         getUuid();
                         myCountDownTimer.start();
-                        sbtn_apply2_verify.setEnabled(true);
+
                     } else {
                         getTipDialog(QMUITipDialog.Builder.ICON_TYPE_INFO, "请输入正确的手机号").show();
                         delayCloseTip();
@@ -172,7 +200,7 @@ public class Apply2edActivity extends BaseActivity {
                     if (main.getString("code").equals("200")) {
                         uuid = main.getString("uuid");
                         //
-                        // utils.showToastInThread(mContext, "已发送验证码，注意查收" + uuid);
+                         utils.showToastInThread(mContext, "已发送验证码，注意查收");
                     } else if (main.getString("code").equals("401")){
                     breaker(mContext);
                 }
@@ -208,7 +236,7 @@ public class Apply2edActivity extends BaseActivity {
                                     @Override
                                     public void run() {
                                         //要延时的程序
-                                        postAuthinfo(test2nd());
+                                        test2nd();
                                     }
                                 }, 1500);
 
@@ -248,6 +276,7 @@ public class Apply2edActivity extends BaseActivity {
         Log.d("status", ctidReturnParams.getStatus());
         Log.d("msg", ctidReturnParams.getMessage());
         Log.d("auth", authinfo);
+        postAuthinfo(authinfo);
         return authinfo;
     }
 
@@ -330,7 +359,7 @@ public class Apply2edActivity extends BaseActivity {
     }
 
     //测试识人接口
-    private void testIdentify(final String value) {
+/*    private void testIdentify(final String value) {
         BJCAIdentifyAPI.actionCtidIdentify(mContext, value, CtidModelEnum.MODEL_0X12, CtidActionType.AUTH_ACTION
                 , new BJCAAuthModel(), true, new IdentifyCallBack(mContext) {
                     @Override
@@ -369,7 +398,7 @@ public class Apply2edActivity extends BaseActivity {
 
                     }
                 });
-    }
+    }*/
 
     //四项实人接口
     private void model0x12(String value) {
@@ -394,7 +423,7 @@ public class Apply2edActivity extends BaseActivity {
                 .setJsonResponseListener(new JsonResponseListener() {
                     @Override
                     public void onResponse(JsonMap main, Exception error) {
-                        if (error == null) {
+//                        if (error == null) {
 
                             Log.d("没错", main.toString());
                             if (main.getString("code").equals("200")) {
@@ -427,7 +456,7 @@ public class Apply2edActivity extends BaseActivity {
                                 delayCloseTip();
                                 sbtn_apply2_verify.setEnabled(true);
                             }
-                        } else {
+/*                        } else {
                             et_apply2_vcode.setText("");
                             myCountDownTimer.cancel();
                             myCountDownTimer.onFinish();
@@ -435,7 +464,7 @@ public class Apply2edActivity extends BaseActivity {
                             getTipDialog(3, "连接失败").show();
                             delayCloseTip();
                             sbtn_apply2_verify.setEnabled(true);
-                        }
+                        }*/
                     }
 
                 })

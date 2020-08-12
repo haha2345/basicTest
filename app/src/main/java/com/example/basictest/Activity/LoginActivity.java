@@ -248,7 +248,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         uuid = resultJson.get("uuid").getAsString();
                         //线程中无法直接使用toast
                         //测试用
-//                        utils.showToastInThread(LoginActivity.this, "已发送验证码，注意查收" + uuid);
+                        utils.showToastInThread(LoginActivity.this, "已发送验证码，注意查收");
 
                     }
                 } else {

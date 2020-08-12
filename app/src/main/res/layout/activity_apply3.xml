@@ -442,7 +442,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="3dp"
                     android:layout_toLeftOf="@+id/sign_date"
-                    android:text="申请时间" />
+                    android:text="申请时间：" />
 
                 <TextView
                     android:id="@+id/sign_date"

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.basictest.Class.User;
+import com.example.basictest.base.BaseActivity;
 import com.example.basictest.utils.Utils;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
@@ -32,7 +33,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChangePwdActivity extends AppCompatActivity {
+public class ChangePwdActivity extends BaseActivity {
 
     private EditText et_changePwd;
     private EditText et_change_verifyPwd;
@@ -179,6 +180,7 @@ public class ChangePwdActivity extends AppCompatActivity {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
+                        breaker(ChangePwdActivity.this);
 //成功跳转
                         intent=new Intent(mContext,LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -232,7 +232,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         uuid=resultJson.get("uuid").getAsString();
                         //线程中无法直接使用toast
                         //测试用
-                        //utils.showToastInThread(RegisterActivity.this,"已发送验证码，注意查收"+uuid);
+                        utils.showToastInThread(RegisterActivity.this,"已发送验证码，注意查收");
                     }
                 } else {
                     qmuiTipDialog.dismiss();

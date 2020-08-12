@@ -193,7 +193,7 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
 
                         //线程中无法直接使用toast
                         //测试用
-                        utils.showToastInThread(ForgetPwdActivity.this, "已发送验证码，注意查收" + uuid);
+                        utils.showToastInThread(ForgetPwdActivity.this, "已发送验证码，注意查收");
                     }
                 } else {
                     Toast.makeText(ForgetPwdActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
