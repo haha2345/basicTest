@@ -69,7 +69,7 @@ public class PdfViewerActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(PdfViewerActivity.this, url, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PdfViewerActivity.this, url, Toast.LENGTH_SHORT).show();
                 Download();
             }
         });

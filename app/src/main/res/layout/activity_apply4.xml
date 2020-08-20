@@ -366,7 +366,7 @@
                     android:ellipsize="end"
                     android:ems="13"
                     android:maxLines="2"
-                    android:text="XXXXXX无抵押贷款合同电子版.PDF"
+                    android:text="无抵押贷款合同电子版.PDF"
                     android:textColor="#333333"
                     android:textSize="14sp" />
 

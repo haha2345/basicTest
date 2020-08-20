@@ -119,6 +119,7 @@ public class CameraActivity extends BaseCameraActivity {
                                     intent.putExtra("imagepath", imagePath);
                                     intent.putExtra("base64str", src);
                                     startActivity(intent);
+                                    isJump=1;
                                     dismissProgressDialog();
                                 } else if (main.getString("code").equals("401")) {
                                     dismissProgressDialog();
@@ -160,11 +161,5 @@ public class CameraActivity extends BaseCameraActivity {
 
     }
 
-    private void deleteVideo(File file) {
-        if (file.exists()) {
-            file.delete();
-        } else {
-            Log.d("删除", "deletePdf: 删除失败");
-        }
-    }
+
 }

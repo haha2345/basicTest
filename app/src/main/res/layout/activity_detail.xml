@@ -94,7 +94,7 @@
                 android:layout_marginLeft="62dp"
                 android:layout_marginTop="20dp"
                 android:ems="13"
-                android:text="《XXXXX无抵押贷款合同》赋予强制执行公证书20200524"
+                android:text="《无抵押贷款合同》赋予强制执行公证书"
                 android:textSize="14sp" />
 
             <TextView

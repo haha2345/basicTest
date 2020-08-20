@@ -89,8 +89,10 @@ public class Apply4Activity extends BaseActivity {
         tv_apply4_name.setText(name);
         tv_apply4_bank.setText(bank);
         tv_apply4_date.setText(date);
-        tv_filename1.setText(uploadfilename);
-        tv_filename2.setText(signedFileName);
+
+//        tv_filename1.setText(uploadfilename);
+//        tv_filename2.setText(signedFileName);
+
         String videoPath=SpUtils.getInstance(mContext).getString("videopath",null);
         String imagePath=SpUtils.getInstance(mContext).getString("imagepath",null);
         String pdfPath=SpUtils.getInstance(mContext).getString("pdfpath",null);

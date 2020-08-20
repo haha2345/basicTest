@@ -80,6 +80,9 @@ public class BaseCameraActivity extends AppCompatActivity {
         }
     };
 
+    //判断是否是跳转 如果不是跳转就删除文件，是跳转不删除
+    protected int isJump=0;
+
     private SampleGLView sampleGLView;
     public static CameraRecorder cameraRecorder=null;
     public String filepath;
@@ -249,6 +252,20 @@ public class BaseCameraActivity extends AppCompatActivity {
 
     }
 
+    //切换应用时执行
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+        cameraRecorder.stop();
+
+        //暂停计时
+        timer.stopTimer();
+        if (filepath != null&&isJump==0){
+            deleteFile(new File(filepath));
+            deleteFile(new File(imagePath));
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -280,6 +297,13 @@ public class BaseCameraActivity extends AppCompatActivity {
         }
     }
 
+    protected void deleteFile(File file) {
+        if (file.exists()) {
+            file.delete();
+        } else {
+            Log.d("删除", "deletePdf: 删除失败");
+        }
+    }
 
     private void setUpCameraView() {
         runOnUiThread(new Runnable() {

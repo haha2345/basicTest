@@ -200,13 +200,12 @@ public class Apply2edActivity extends BaseActivity {
                     if (main.getString("code").equals("200")) {
                         uuid = main.getString("uuid");
                         //
-                         utils.showToastInThread(mContext, "已发送验证码，注意查收");
-                    } else if (main.getString("code").equals("401")){
-                    breaker(mContext);
-                }
-                    else {
+                        utils.showToastInThread(mContext, "已发送验证码，注意查收");
+                    } else if (main.getString("code").equals("401")) {
+                        breaker(mContext);
+                    } else {
                         myCountDownTimer.onFinish();
-                        utils.showToastInThread(mContext, "错误");
+                        utils.showToastInThread(mContext, main.getString("msg"));
                     }
                 } else {
                     qmuiTipDialog.dismiss();

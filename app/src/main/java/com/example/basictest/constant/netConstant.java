@@ -5,7 +5,7 @@ public class netConstant {
         return URL;
     }
 
-    private static String URL="http://172.16.10.11:8080/notarize";
+    private static String URL="http://39.100.12.99:13337/notarize";
 
     private static String getVcodeURL=URL+"/getSMSCode";
     private static String loginURL=URL+"/mobile/login";

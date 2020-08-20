@@ -371,7 +371,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
-                        Toast.makeText(mContext, "发送成功", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "发送成功", Toast.LENGTH_SHORT).show();
 //成功跳转
                         intent=new Intent(RegisterActivity.this,LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

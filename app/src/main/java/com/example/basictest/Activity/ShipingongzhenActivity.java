@@ -80,9 +80,9 @@ public class ShipingongzhenActivity extends AppCompatActivity {
         switch (requestCode) {
             case CAMERA_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(ShipingongzhenActivity.this, "camera permission has been grunted.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ShipingongzhenActivity.this, "camera permission has been grunted.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(ShipingongzhenActivity.this, "[WARN] camera permission is not grunted.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ShipingongzhenActivity.this, "[WARN] camera permission is not grunted.", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

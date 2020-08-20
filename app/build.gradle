@@ -68,6 +68,7 @@ dependencies {
     implementation 'top.androidman:superfamily:2.2.0'
     compile 'com.alibaba:fastjson:1.1.26'
     implementation 'com.github.MasayukiSuda:CameraRecorder-android:v0.1.5'
+    compile 'org.apache.pdfbox:pdfbox:2.0.11'
 
 
 
