@@ -85,7 +85,7 @@ public class BaseApply3Activity extends AppCompatActivity {
     private PdfDocument doc;
     private PdfDocument.PageInfo pageInfo;
     private PdfDocument.Page page;
-    public String msspId, activeCode, signId, fileName, fileSize, filePath, fileHashSha1, statusInfo;
+    protected String msspId, activeCode, signId, fileName, fileSize, filePath, fileHashSha1, statusInfo;
     private String token, caseId, userId;
     private File uploadFile;
     private String caseCode, date, bank;

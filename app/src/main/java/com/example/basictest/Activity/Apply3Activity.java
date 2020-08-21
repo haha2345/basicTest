@@ -99,6 +99,7 @@ public class Apply3Activity extends BaseApply3Activity {
     QMUITopBarLayout mTopBar;
     private String autoDate= null,recordDate= null;
 
+    private Bundle bundle;
 
     private Intent intent;
     private String name = null,
@@ -116,9 +117,11 @@ public class Apply3Activity extends BaseApply3Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply3);
         ButterKnife.bind(this);
+        bundle=getIntent().getExtras();
         initTopBar();
         initView();
         initBtn();
+
         //第一步，检测是否有证
         if (idcard != null) {
             showProgressDialog(mContext, "请稍后。。。");
@@ -136,10 +139,14 @@ public class Apply3Activity extends BaseApply3Activity {
     }
 
     private void initView() {
-        name = getIntent().getStringExtra("name");
+        name = bundle.getString("name");
+        bank = SpUtils.getInstance(this).getString("bank", null);
+        idcard = bundle.getString("idcard");
+        phone = bundle.getString("phone");
+/*        name = getIntent().getStringExtra("name");
         bank = SpUtils.getInstance(this).getString("bank", null);
         idcard = getIntent().getStringExtra("idcard");
-        phone = getIntent().getStringExtra("phone");
+        phone = getIntent().getStringExtra("phone");*/
         autoDate=SpUtils.getInstance(this).getString("autodate", null);
         recordDate=SpUtils.getInstance(this).getString("recorddate", null);
         tv_apply3_name.setText(name);
@@ -147,9 +154,12 @@ public class Apply3Activity extends BaseApply3Activity {
         tv_apply3_name2.setText(name);
         tv_apply3_bank.setText(bank);
         //取录像信息
-        src = getIntent().getStringExtra("base64str");
+        src = bundle.getString("base64str");
+        imagePath = bundle.getString("imagepath");
+        videoPath = bundle.getString("videopath");
+/*        src = getIntent().getStringExtra("base64str");
         imagePath = getIntent().getStringExtra("imagepath");
-        videoPath = getIntent().getStringExtra("videopath");
+        videoPath = getIntent().getStringExtra("videopath");*/
         if (imagePath != null) {
             getRecord();
         }
@@ -227,10 +237,12 @@ public class Apply3Activity extends BaseApply3Activity {
                 recordDate=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss").format(new Date(System.currentTimeMillis()));
                 SpUtils.getInstance(mContext).setString("recorddate",recordDate);
                 intent = new Intent(mContext, ShipingongzhenActivity.class);
-                intent.putExtra("basestr", src);
+/*                intent.putExtra("basestr", src);
                 intent.putExtra("name", name);
                 intent.putExtra("phone", phone);
-                intent.putExtra("idcard", idcard);
+                intent.putExtra("idcard", idcard); */
+                bundle.putString("basestr", src);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -288,10 +300,12 @@ public class Apply3Activity extends BaseApply3Activity {
         rv_apply3_record.setVisibility(View.INVISIBLE);
         lv_apply3_record.setVisibility(View.VISIBLE);
         intent = new Intent(mContext, ShipingongzhenActivity.class);
-        intent.putExtra("basestr", src);
+/*        intent.putExtra("basestr", src);
         intent.putExtra("name", name);
         intent.putExtra("phone", phone);
-        intent.putExtra("idcard", idcard);
+        intent.putExtra("idcard", idcard); */
+        bundle.putString("basestr", src);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

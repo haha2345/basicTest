@@ -22,24 +22,27 @@ public class ShipingongzhenActivity extends AppCompatActivity {
     Button btn;
     String src,name,phone,idcard;
     ImageView iv;
+    Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipingongzhen);
-        src=getIntent().getStringExtra("basestr");
+        bundle=getIntent().getExtras();
+/*        src=getIntent().getStringExtra("basestr");
         name=getIntent().getStringExtra("name");
         idcard=getIntent().getStringExtra("idcard");
-        phone=getIntent().getStringExtra("phone");
+        phone=getIntent().getStringExtra("phone");*/
         btn=findViewById(R.id.btn_shipingongzheng);
         iv=findViewById(R.id.iv_aa);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(ShipingongzhenActivity.this,CameraActivity.class);
-                intent.putExtra("basesrc",src);
+/*                intent.putExtra("basesrc",src);
                 intent.putExtra("name",name);
                 intent.putExtra("idcard",idcard);
-                intent.putExtra("phone",phone);
+                intent.putExtra("phone",phone);*/
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

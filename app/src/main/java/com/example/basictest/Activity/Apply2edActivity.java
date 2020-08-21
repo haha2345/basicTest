@@ -64,6 +64,7 @@ public class Apply2edActivity extends BaseActivity {
     QMUITopBarLayout mTopBar;
     //判断是否成功
     private int flag=0;
+    private Bundle bundle;
 
     String caseId, userId, username, vcode, uuid, token, name, idcard;
     String TAG = "Apply2";
@@ -82,6 +83,9 @@ public class Apply2edActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply2ed);
         ButterKnife.bind(this);
+        //初始化bundle
+        bundle=getIntent().getExtras();
+
         myCountDownTimer = new MyCountDownTimer2(60000, 1000);
         qmuiTipDialog = new QMUITipDialog.Builder(mContext)
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
@@ -107,7 +111,9 @@ public class Apply2edActivity extends BaseActivity {
     }
 
     private void initData() {
-        caseId = SpUtils.getInstance(this).getString("caseId", null);
+        caseId=bundle.getString("caseid");
+
+        //caseId = SpUtils.getInstance(this).getString("caseId", null);
         token = SpUtils.getInstance(this).getString("token", null);
         et_apply2_vcode.addTextChangedListener(new TextWatcher() {
             CharSequence enterword;
@@ -401,8 +407,9 @@ public class Apply2edActivity extends BaseActivity {
 
     //四项实人接口
     private void model0x12(String value) {
-        caseId = SpUtils.getInstance(this).getString("caseId", null);
+//        caseId = SpUtils.getInstance(this).getString("caseId", null);
 
+        caseId=bundle.getString("caseid");
         username=et_apply2_phone.getText().toString();
 //        String jsonStr="{\n" +
 //                "    \"caseId\":\""+caseId+"\",\n" +
@@ -437,11 +444,7 @@ public class Apply2edActivity extends BaseActivity {
 
                                 dismissProgressDialog();
                                 //认证成功直接跳转
-                                intent = new Intent(mContext, Apply3Activity.class);
-                                intent.putExtra("idcard", idcard);
-                                intent.putExtra("name", name);
-                                intent.putExtra("phone", username);
-                                startActivity(intent);
+                                jump2next();
                                 finish();
                             } else if (main.getString("code").equals("401")){
                                 breaker(mContext);
@@ -469,6 +472,19 @@ public class Apply2edActivity extends BaseActivity {
                 })
                 .doPost();
 
+    }
+
+    private void jump2next(){
+        intent = new Intent(mContext, Apply3Activity.class);
+
+        bundle.putString("idcard", idcard);
+        bundle.putString("name", name);
+        bundle.putString("phone", username);
+        intent.putExtras(bundle);
+                              /*  intent.putExtra("idcard", idcard);
+                                intent.putExtra("name", name);
+                                intent.putExtra("phone", username);*/
+        startActivity(intent);
     }
 
     // 校验账号不能为空且必须是中国大陆手机号（宽松模式匹配）

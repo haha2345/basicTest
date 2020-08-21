@@ -33,13 +33,15 @@ public class CameraActivity extends BaseCameraActivity {
 
     String name, phone, idcard;
 
+    Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        name = getIntent().getStringExtra("name");
+        bundle=getIntent().getExtras();
+/*        name = getIntent().getStringExtra("name");
         idcard = getIntent().getStringExtra("idcard");
-        phone = getIntent().getStringExtra("phone");
+        phone = getIntent().getStringExtra("phone");*/
         tipDialog = new QMUITipDialog.Builder(CameraActivity.this)
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
                 .setTipWord("录制失败，请重新录制")
@@ -88,7 +90,8 @@ public class CameraActivity extends BaseCameraActivity {
 
     public void uploadVideo() {
         token = SpUtils.getInstance(this).getString("token", null);
-        caseId = SpUtils.getInstance(this).getString("caseId", null);
+//        caseId = SpUtils.getInstance(this).getString("caseId", null);
+        caseId=bundle.getString("caseid");
         filepath = SpUtils.getInstance(this).getString("videopath", null);
         videoFile = new File(filepath);
 
@@ -112,12 +115,15 @@ public class CameraActivity extends BaseCameraActivity {
                                     //上传成功
                                     Intent intent = new Intent(getBaseContext(), Apply3Activity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    intent.putExtra("name", name);
-                                    intent.putExtra("idcard", idcard);
-                                    intent.putExtra("phone", phone);
-                                    intent.putExtra("videopath", filepath);
-                                    intent.putExtra("imagepath", imagePath);
-                                    intent.putExtra("base64str", src);
+//                                    intent.putExtra("name", name);
+//                                    intent.putExtra("idcard", idcard);
+//                                    intent.putExtra("phone", phone);
+//                                    intent.putExtra("videopath", filepath);
+//                                    intent.putExtra("imagepath", imagePath);
+                                    bundle.putString("videopath", filepath);
+                                    bundle.putString("imagepath", imagePath);
+//                                    intent.putExtra("base64str", src);
+                                    intent.putExtras(bundle);
                                     startActivity(intent);
                                     isJump=1;
                                     dismissProgressDialog();

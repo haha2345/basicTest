@@ -80,7 +80,7 @@ import static com.example.basictest.utils.FileUtils.getPath;
 
 public class Apply1stActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
-
+    private Bundle bundle = new Bundle();
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -390,6 +390,7 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
             sbtn_apply1.setIcon(drawable);
             sbtn_apply1.setPressed(false);
             pdfStr=PdfToTxt.readPdf(path);
+            //测试pdf提取功能
             Log.d(TAG, "afterGetFile: "+pdfStr);
             String rmb=extraAttr(pdfStr,"人民币（大写）","元。");
             Log.d(TAG, "afterGetFile: "+extraAttr(pdfStr,"放款利率：日利率","，"));
@@ -410,7 +411,16 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
     }
     private void jumpToApply2(){
         intent=new Intent(mContext,Apply2edActivity.class);
+        bundle.putString("userid", userId);
+        bundle.putString("casecode", caseCode);
+        bundle.putString("uploadfilename", filename);
+        bundle.putString("caseid", caseId);
+        intent.putExtras(bundle);
         startActivity(intent);
+
+    }
+    //获得需要的变量
+    private void getAttr(){
 
     }
     //显示加载框
