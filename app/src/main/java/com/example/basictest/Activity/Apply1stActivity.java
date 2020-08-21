@@ -33,6 +33,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.basictest.base.BaseActivity;
 import com.example.basictest.utils.OkManager;
+import com.example.basictest.utils.PdfToTxt;
 import com.example.basictest.utils.SpUtils;
 import com.example.basictest.Class.bankEntity;
 import com.example.basictest.Class.bankListResponse;
@@ -40,6 +41,7 @@ import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
 import com.example.basictest.utils.Utils;
 
+import com.example.basictest.utils.ValueConvertUtil;
 import com.google.gson.Gson;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.JsonResponseListener;
@@ -47,6 +49,7 @@ import com.kongzue.baseokhttp.listener.ResponseListener;
 import com.kongzue.baseokhttp.util.JsonMap;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -106,6 +109,7 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
     Utils utils=new Utils();
 
     private String token;
+    private String pdfStr;
 
     private ArrayAdapter<String> adapter;
 
@@ -138,7 +142,7 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
         spinner.setOnItemSelectedListener(this);
         initBtn();
         initCheckBox();
-
+        PDFBoxResourceLoader.init(getApplicationContext());
     }
 
 
@@ -224,7 +228,11 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                 filename = file.getName();
                 Log.w(TAG,"getName==="+filename);
                 //取到文件名改textview
-                afterGetFile();
+                try {
+                    afterGetFile();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 //Toast.makeText(this,path+"11111",Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -239,7 +247,11 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                 // 这里是为了选中文件后，编辑框内容变成我选中的文件名
                 // 直接 mc_annex.setText(file.getName()); 也行
                 Log.w(TAG,"getName==="+filename);
-                afterGetFile();
+                try {
+                    afterGetFile();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 //Toast.makeText(this,path,Toast.LENGTH_SHORT).show();
             } else {//4.4以下下系统调用方法
@@ -366,7 +378,7 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
         }
     }
 
-    private void afterGetFile(){
+    private void afterGetFile() throws Exception {
 
 
         //判断后缀是否为pdf
@@ -377,6 +389,12 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
             Drawable drawable = resources.getDrawable(pdf);
             sbtn_apply1.setIcon(drawable);
             sbtn_apply1.setPressed(false);
+            pdfStr=PdfToTxt.readPdf(path);
+            Log.d(TAG, "afterGetFile: "+pdfStr);
+            String rmb=extraAttr(pdfStr,"人民币（大写）","元。");
+            Log.d(TAG, "afterGetFile: "+extraAttr(pdfStr,"放款利率：日利率","，"));
+            Log.d(TAG, "afterGetFile: "+ rmb);
+            Log.d(TAG, "afterGetFile: "+ ValueConvertUtil.formatAmount(rmb));
 //        sbtn_apply1.setEnabled(false);
             flag=1;
             if (flag1==1){
@@ -444,6 +462,20 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                 tipDialog.dismiss();
             }
         }, 1500);
+    }
+
+    //提取String中需要的字符串
+    private String extraAttr(String str,String pre,String end){
+        int prePos,endPos;
+        prePos=str.indexOf(pre);
+        str=str.substring(prePos);
+        endPos=str.indexOf(end);
+        String value=str.substring(pre.length(),endPos).trim();
+        value=value.replace(" ","");
+        value=value.replace("，","");
+        value=value.replace("元","圆");
+        value=value.replace("。","");
+        return value;
     }
 
 }
