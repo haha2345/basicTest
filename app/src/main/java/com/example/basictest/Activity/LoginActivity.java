@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -18,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.example.basictest.base.BaseActivity;
 import com.example.basictest.base.BaseApply3Activity;
 import com.example.basictest.utils.SpUtils;
@@ -88,7 +91,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
         myCountDownTimer = new MyCountDownTimer(60000, 1000);
         initViews();
-        verifyStoragePermissions(LoginActivity.this);
+//        verifyStoragePermissions(LoginActivity.this);
+        initPermission();
         setOnFocusChangeErrMsg(et_phone, "phone", "手机号格式不正确");
         setOnFocusChangeErrMsg(et_pwd, "password", "密码不少于6位");
         username = SpUtils.getInstance(this).getString("username", null);
@@ -367,6 +371,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 tipDialog.dismiss();
             }
         },1500);
+    }
+
+    private void initPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PermissionUtils.permission(PermissionConstants.STORAGE, PermissionConstants.MICROPHONE, PermissionConstants.CAMERA)
+                    .request();
+        }
     }
     public static void verifyStoragePermissions(Activity activity) {
         // Check if we have write permission

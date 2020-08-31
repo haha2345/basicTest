@@ -11,6 +11,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,7 +49,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -74,12 +76,20 @@ dependencies {
     implementation 'com.github.MasayukiSuda:CameraRecorder-android:v0.1.5'
     implementation 'com.tom_roush:pdfbox-android:1.8.10.1'
 
+    compile 'com.android.support.constraint:constraint-layout:1.1.3'
 
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
 
+    implementation "com.tencent.liteav:LiteAVSDK_TRTC:latest.release"
+    implementation 'com.tencent.imsdk:imsdk:latest.release'
 
     implementation(name: 'framework-release', ext: 'aar')
     implementation(name: 'IDSPSDK', ext: 'aar')
     implementation(name: 'livecheckcomponent-release', ext: 'aar')
     implementation(name: 'ocrcomponentV1.0.2', ext: 'aar')
 
+
+    compile 'com.blankj:utilcode:1.25.9'
+    compile'com.squareup.picasso:picasso:2.71828'
 }

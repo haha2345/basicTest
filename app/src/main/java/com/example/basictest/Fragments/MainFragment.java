@@ -26,8 +26,10 @@ import com.example.basictest.Activity.TestActivity;
 import com.example.basictest.Activity.WenshuActivity;
 import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
 import com.example.basictest.Activity.CameraActivity;
+import com.example.basictest.CallService;
 import com.example.basictest.Class.NoticeEntity;
 import com.example.basictest.Class.NoticeListResponse;
+import com.example.basictest.model.ProfileManager;
 import com.example.basictest.utils.SpUtils;
 import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
@@ -161,6 +163,7 @@ public class MainFragment extends Fragment {
     }
 
     private void getNoticeList(){
+        String username=SpUtils.getInstance(getActivity()).getString("username",null);
         String header="Bearer "+token;
         OkHttpClient okHttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
@@ -178,6 +181,19 @@ public class MainFragment extends Fragment {
                     Log.d("a", "onResponse: " + res);
                     NoticeListResponse list=new Gson().fromJson(res,NoticeListResponse.class);
                     if (list.getCode()==200){
+                        ProfileManager.getInstance().login(username, "", new ProfileManager.ActionCallback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onFailed(int code, String msg) {
+
+                            }
+                        });
+                        //启动服务
+                        CallService.start(getActivity());
                         List<NoticeEntity> data=list.getRows();
                         adapter=new MyzixunRecyclerViewAdapter(getActivity(),data,4);
                         //分线程

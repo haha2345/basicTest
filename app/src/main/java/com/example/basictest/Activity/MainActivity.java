@@ -4,25 +4,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 
-
+import com.blankj.utilcode.util.SPUtils;
 import com.example.basictest.Fragments.MainFragment;
 import com.example.basictest.Fragments.MineFragment;
 import com.example.basictest.R;
 
+import com.example.basictest.model.ProfileManager;
+import com.example.basictest.model.TRTCCalling;
+import com.example.basictest.model.TRTCCallingDelegate;
+import com.example.basictest.model.impl.TRTCCallingImpl;
+import com.example.basictest.ui.videocall.TRTCVideoCallActivity;
+import com.example.basictest.utils.GenerateTestUserSig;
+import com.example.basictest.utils.SpUtils;
 import com.next.easynavigation.view.EasyNavigationBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity{
 
 
     private MainFragment mainFragment;
     private MineFragment mineFragment;
+
+
 
 
     private EasyNavigationBar navigationBar;
@@ -40,6 +51,8 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        username= SpUtils.getInstance(this).getString("username",null);
 
         mainFragment=new MainFragment();
         mineFragment=new MineFragment();
@@ -67,9 +80,6 @@ public class MainActivity extends AppCompatActivity{
         Bundle bundle=new Bundle();
         bundle.putString("username",username);
         mineFragment.setArguments(bundle);
-
-
-
     }
 
     public EasyNavigationBar getNavigationBar() {

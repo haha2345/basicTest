@@ -10,13 +10,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.basictest.CallService;
 import com.example.basictest.R;
 import com.example.basictest.base.BaseActivity;
+import com.example.basictest.model.ProfileManager;
+import com.example.basictest.model.TRTCCalling;
+import com.example.basictest.model.TRTCCallingDelegate;
+import com.example.basictest.model.impl.TRTCCallingImpl;
+import com.example.basictest.ui.videocall.TRTCVideoCallActivity;
 import com.example.basictest.utils.DataCleanManager;
+import com.example.basictest.utils.GenerateTestUserSig;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,8 +47,14 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.btn_setting)
     Button btn;
 
+
     private Context mContext=SettingActivity.this;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        CallService.start(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +77,106 @@ public class SettingActivity extends BaseActivity {
 
             }
         });
+
     }
 
+
+    /*private void startListen(){
+        sCall.addDelegate(new TRTCCallingDelegate() {
+            @Override
+            public void onError(int code, String msg) {
+
+            }
+
+            @Override
+            public void onInvited(String sponsor, List<String> userIdList, boolean isFromGroup, int callType) {
+                TRTCVideoCallActivity.UserInfo selfInfo = new TRTCVideoCallActivity.UserInfo();
+                selfInfo.userId = ProfileManager.getInstance().getUserModel().userId;
+                selfInfo.userAvatar = ProfileManager.getInstance().getUserModel().userAvatar;
+                selfInfo.userName = ProfileManager.getInstance().getUserModel().userName;
+                TRTCVideoCallActivity.UserInfo callUserInfo = new TRTCVideoCallActivity.UserInfo();
+                callUserInfo.userId = "1";
+                callUserInfo.userAvatar = "";
+                callUserInfo.userName = "saf";
+                TRTCVideoCallActivity.startBeingCall(SettingActivity.this, selfInfo, callUserInfo, null);
+            }
+
+            @Override
+            public void onGroupCallInviteeListUpdate(List<String> userIdList) {
+
+            }
+
+            @Override
+            public void onUserEnter(String userId) {
+
+            }
+
+            @Override
+            public void onUserLeave(String userId) {
+
+            }
+
+            @Override
+            public void onReject(String userId) {
+
+            }
+
+            @Override
+            public void onNoResp(String userId) {
+
+            }
+
+            @Override
+            public void onLineBusy(String userId) {
+
+            }
+
+            @Override
+            public void onCallingCancel() {
+
+            }
+
+            @Override
+            public void onCallingTimeout() {
+
+            }
+
+            @Override
+            public void onCallEnd() {
+
+            }
+
+            @Override
+            public void onUserVideoAvailable(String userId, boolean isVideoAvailable) {
+
+            }
+
+            @Override
+            public void onUserAudioAvailable(String userId, boolean isVideoAvailable) {
+
+            }
+
+            @Override
+            public void onUserVoiceVolume(Map<String, Integer> volumeMap) {
+
+            }
+        });
+
+    }
+
+    private void login(){
+        sCall.login(1400416273, "13205401086", GenerateTestUserSig.genTestUserSig("13205401086"), new TRTCCalling.ActionCallBack() {
+            @Override
+            public void onError(int code, String msg) {
+
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+        });
+    }*/
     private void initList(){
 
 
