@@ -300,7 +300,7 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
         sbtn_apply1_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showProgressDialog(mContext,"请稍后");
+//                showProgressDialog(mContext,"请稍后");
                 //upload();
                 jumpToConfirm();
             }
@@ -417,11 +417,8 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
     }
     private void jumpToConfirm(){
         intent=new Intent(mContext,ApplyConfirmActivity.class);
-        bundle.putString("userid", userId);
-        bundle.putString("casecode", caseCode);
-        bundle.putString("uploadfilename", filename);
-        bundle.putString("caseid", caseId);
         bundle.putLong("coid", coId);
+        bundle.putString("uploadfilename", filename);
         bundle.putString("pdfstr", pdfStr);
         bundle.putString("firstuploadfilepath",path);
         intent.putExtras(bundle);

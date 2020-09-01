@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/apply_confirm"
-            android:text="1-贷款金额与利率"
+            android:text="贷款信息"
             android:textSize="15sp"
             android:textColor="@color/blue"/>
         <RelativeLayout
@@ -141,7 +141,7 @@
                 android:layout_width="200dp"
                 android:layout_height="25dp"
                 android:id="@+id/et_confirm_name_bank"
-                android:background="@null"
+                android:background="@drawable/editbox_bg"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:text="赵大宝"
@@ -246,6 +246,19 @@
             android:layout_height="1dp"
             android:background="#EFF0F4"
             android:layout_marginTop="@dimen/apply_confirm"/>
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -430,8 +443,6 @@
             android:layout_height="1dp"
             android:background="#EFF0F4"
             android:layout_marginTop="@dimen/apply_confirm"/>
-
-
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -453,6 +464,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn_confirm_next"
             android:layout_marginTop="@dimen/apply_confirm"
+            android:enabled="false"
             android:layout_marginBottom="30dp"
             android:background="@drawable/buttonclick"
             android:text="下一步"

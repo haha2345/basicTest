@@ -154,7 +154,7 @@ public class Apply3Activity extends BaseApply3Activity {
         tv_apply3_name2.setText(name);
         tv_apply3_bank.setText(bank);
         //取录像信息
-        src = bundle.getString("base64str");
+        src = bundle.getString("basestr");
         imagePath = bundle.getString("imagepath");
         videoPath = bundle.getString("videopath");
 /*        src = getIntent().getStringExtra("base64str");

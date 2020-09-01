@@ -222,7 +222,7 @@ public class BaseApply3Activity extends AppCompatActivity {
                 .setJsonResponseListener(new JsonResponseListener() {
                     @Override
                     public void onResponse(JsonMap main, Exception error) {
-                        Log.d("aa", main.toString());
+//                        Log.d("aa", main.toString());
                         if (main.getString("code").equals("200")) {
                             JsonMap data = main.getJsonMap("data");
                             if (data.getString("keyID").equals("null")) {

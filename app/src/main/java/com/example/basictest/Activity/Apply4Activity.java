@@ -84,7 +84,7 @@ public class Apply4Activity extends BaseActivity {
         caseCode= SpUtils.getInstance(this).getString("caseCode",null);
         name= SpUtils.getInstance(this).getString("name",null);
         bank= SpUtils.getInstance(this).getString("bank",null);
-        uploadfilename= SpUtils.getInstance(this).getString("uploadfilename",null);
+
         tv_apply4_no.setText(caseCode);
         tv_apply4_name.setText(name);
         tv_apply4_bank.setText(bank);

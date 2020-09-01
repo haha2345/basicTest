@@ -291,6 +291,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                     editText.setError(errMsg);
                                 }
                             }
+                            if (inputType==""){
+                                if (editText.getText().toString()==""){
+                                    editText.setError(errMsg);
+                                }
+                            }
                         }
                     }
                 }
