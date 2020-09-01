@@ -109,7 +109,7 @@ public class JiluActivity extends AppCompatActivity {
                     }
                 });
         //设置标题名
-        mTopBar.setTitle("公正记录");
+        mTopBar.setTitle("公证记录");
     }
 
     private void initTabAndPager() {

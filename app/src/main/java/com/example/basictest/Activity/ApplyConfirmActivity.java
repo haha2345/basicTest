@@ -326,7 +326,6 @@ public class ApplyConfirmActivity extends BaseActivity {
     private void jumpToApply2() {
         Intent intent=new Intent(mContext,Apply2edActivity.class);
         bundle.putString("caseid", caseId);
-
         bundle.putString("userid", userId);
         bundle.putString("casecode", caseCode);
         intent.putExtras(bundle);
