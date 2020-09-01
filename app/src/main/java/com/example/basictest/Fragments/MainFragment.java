@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.basictest.Activity.Apply1stActivity;
 import com.example.basictest.Activity.Apply3Activity;
+import com.example.basictest.Activity.ApplyConfirmActivity;
 import com.example.basictest.Activity.HtmlActivity;
 import com.example.basictest.Activity.JiluActivity;
 import com.example.basictest.Activity.LoginActivity;
@@ -154,10 +155,10 @@ public class MainFragment extends Fragment {
         btn_main_syzn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                intent=new Intent(getActivity(), TestActivity.class);
-//                startActivity(intent);
+                intent=new Intent(getActivity(), ApplyConfirmActivity.class);
+                startActivity(intent);
 //                Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
-                jumpToHowToUse();
+//                jumpToHowToUse();
             }
         });
     }

@@ -301,7 +301,8 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
             @Override
             public void onClick(View view) {
                 showProgressDialog(mContext,"请稍后");
-                upload();
+                //upload();
+                jumpToConfirm();
             }
         });
     }
@@ -346,7 +347,9 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                                 SpUtils.getInstance(mContext).setString("caseCode",caseCode,1800);
                                 SpUtils.getInstance(mContext).setString("uploadfilename",filename,1800);
                                 Log.d("获取到的上传信息",caseId+"  "+caseCode+"  "+userId);
-                                jumpToApply2();
+                                /**
+                                 * 跳转*/
+                                //jumpToApply2();
                             }else if (main.getString("code").equals("401")){
                                 dismissProgressDialog();
                                 breaker(mContext);
@@ -390,14 +393,17 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
             sbtn_apply1.setIcon(drawable);
             sbtn_apply1.setPressed(false);
             pdfStr=PdfToTxt.readPdf(path);
-            //测试pdf提取功能
-            Log.d(TAG, "afterGetFile: "+pdfStr);
-            String rmb=extraAttr(pdfStr,"人民币（大写）","元。");
-            Log.d(TAG, "afterGetFile: "+extraAttr(pdfStr,"放款利率：日利率","，"));
-            Log.d(TAG, "afterGetFile: "+ rmb);
-            Log.d(TAG, "afterGetFile: "+ ValueConvertUtil.formatAmount(rmb));
+            if (isNeedPdf(pdfStr)){
+                //测试pdf提取功能
+                Log.d(TAG, "afterGetFile: "+pdfStr);
+                flag=1;
+            }else {
+                flag=0;
+                getTipDialog(3,"贷款合同错误，请选择正确贷款合同").show();
+                delayCloseTip();
+            }
 //        sbtn_apply1.setEnabled(false);
-            flag=1;
+
             if (flag1==1){
                 sbtn_apply1_next.setEnabled(true);
             }
@@ -409,19 +415,27 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
 //        sbtn_apply1.setClickable(false);
 
     }
-    private void jumpToApply2(){
-        intent=new Intent(mContext,Apply2edActivity.class);
+    private void jumpToConfirm(){
+        intent=new Intent(mContext,ApplyConfirmActivity.class);
         bundle.putString("userid", userId);
         bundle.putString("casecode", caseCode);
         bundle.putString("uploadfilename", filename);
         bundle.putString("caseid", caseId);
+        bundle.putLong("coid", coId);
+        bundle.putString("pdfstr", pdfStr);
+        bundle.putString("firstuploadfilepath",path);
         intent.putExtras(bundle);
         startActivity(intent);
-
     }
     //获得需要的变量
     private void getAttr(){
 
+    }
+
+
+    private boolean isNeedPdf(String content){
+        boolean flag=content.startsWith("贷款合同号");
+        return flag;
     }
     //显示加载框
     public void showProgressDialog(Context mContext, String text) {
@@ -471,7 +485,7 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                 //要延时的程序
                 tipDialog.dismiss();
             }
-        }, 1500);
+        }, 2500);
     }
 
     //提取String中需要的字符串

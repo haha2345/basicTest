@@ -232,7 +232,7 @@
                     android:layout_marginTop="102dp"
                     android:gravity="center"
                     android:text="确定电子合同属于申请人本人"
-                    android:theme="@style/My_CheckBox"
+                    android:theme="@style/CheckBox_Mine"
                     android:layout_marginLeft="80dp"
                     android:layout_marginRight="80dp"
                     />

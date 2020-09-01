@@ -64,7 +64,7 @@ public class ValueConvertUtil {
             fen = cnNumToArabicNumMap.get(cnTraditionalNum.substring(cnTraditionalNum.indexOf("分") - 1, cnTraditionalNum.indexOf("分"))).toString();
         }
 
-        resultStr += "." + jiao + fen;
+        //resultStr += "." + jiao + fen;
         return resultStr;
     }
 
