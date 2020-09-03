@@ -19,7 +19,10 @@ import com.example.basictest.utils.SpUtils;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.util.JsonMap;
+import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import java.io.File;
 
@@ -62,6 +65,7 @@ public class Apply4Activity extends BaseActivity {
         initTopBar();
         initView();
         initBtn();
+        showMessagePositiveDialog();
     }
 
     @SuppressLint("ResourceAsColor")
@@ -136,34 +140,76 @@ public class Apply4Activity extends BaseActivity {
         token = SpUtils.getInstance(this).getString("token", null);
         caseid = SpUtils.getInstance(this).getString("caseId", null);
         userid = SpUtils.getInstance(this).getString("userId", null);
+        if (fileType=="400010"){
+            HttpRequest.build(mContext, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType+"&arriveFlag=1")
+                    .addHeaders("Authorization", "Bearer " + token)
+                    .setJsonResponseListener(new JsonResponseListener() {
+                        @Override
+                        public void onResponse(JsonMap main, Exception error) {
+                            if (error != null) {
+                                Log.d("获取路径", "连接失败", error);
+                            } else {
+                                if (main.getString("code").equals("200")) {
+                                    url=main.getString("filePath");
+                                    //直接跳转
+                                    intent=new Intent(mContext,PdfViewerActivity.class);
+                                    intent.putExtra("url",netConstant.getURL()+url);
 
-        HttpRequest.build(mContext, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType)
-                .addHeaders("Authorization", "Bearer " + token)
-                .setJsonResponseListener(new JsonResponseListener() {
-                    @Override
-                    public void onResponse(JsonMap main, Exception error) {
-                        if (error != null) {
-                            Log.d("获取路径", "连接失败", error);
-                        } else {
-                            if (main.getString("code").equals("200")) {
-                                url=main.getString("filePath");
-                                //直接跳转
-                                intent=new Intent(mContext,PdfViewerActivity.class);
-                                intent.putExtra("url",netConstant.getURL()+url);
 
-
-                                startActivity(intent);
-                            }  else if (main.getString("code").equals("401")){
-                                breaker(mContext);
-                            }else {
-                                Log.e("获取路径", main.getString("msg"));
-                                Log.e("获取路径", main.getString("code"));
+                                    startActivity(intent);
+                                }  else if (main.getString("code").equals("401")){
+                                    breaker(mContext);
+                                }else {
+                                    Log.e("获取路径", main.getString("msg"));
+                                    Log.e("获取路径", main.getString("code"));
+                                }
                             }
                         }
-                    }
-                })
-                .doGet();
+                    })
+                    .doGet();
+        }else {
+            HttpRequest.build(mContext, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType)
+                    .addHeaders("Authorization", "Bearer " + token)
+                    .setJsonResponseListener(new JsonResponseListener() {
+                        @Override
+                        public void onResponse(JsonMap main, Exception error) {
+                            if (error != null) {
+                                Log.d("获取路径", "连接失败", error);
+                            } else {
+                                if (main.getString("code").equals("200")) {
+                                    url=main.getString("filePath");
+                                    //直接跳转
+                                    intent=new Intent(mContext,PdfViewerActivity.class);
+                                    intent.putExtra("url",netConstant.getURL()+url);
+
+
+                                    startActivity(intent);
+                                }  else if (main.getString("code").equals("401")){
+                                    breaker(mContext);
+                                }else {
+                                    Log.e("获取路径", main.getString("msg"));
+                                    Log.e("获取路径", main.getString("code"));
+                                }
+                            }
+                        }
+                    })
+                    .doGet();
+        }
+
 
     }
-
+    private void showMessagePositiveDialog() {
+        new QMUIDialog.MessageDialogBuilder(mContext)
+                .setMessage("审核人员会在稍后电话联系您")
+                .setSkinManager(QMUISkinManager.defaultInstance(mContext))
+                .addAction(0, "确定", QMUIDialogAction.ACTION_PROP_POSITIVE, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                        //Toast.makeText(mContext, "发送成功", Toast.LENGTH_SHORT).show();
+//成功跳转
+                    }
+                })
+                .create(com.qmuiteam.qmui.R.style.QMUI_Dialog).show();
+    }
 }

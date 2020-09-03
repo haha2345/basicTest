@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.basictest.Activity.Apply1stActivity;
 import com.example.basictest.Activity.Apply3Activity;
 import com.example.basictest.Activity.Apply4Activity;
@@ -34,6 +36,7 @@ import com.example.basictest.R;
 import com.example.basictest.constant.netConstant;
 import com.example.basictest.utils.DownloadUtil;
 import com.example.basictest.utils.SpUtils;
+import com.google.gson.JsonObject;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.listener.ResponseListener;
@@ -52,6 +55,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -90,6 +94,7 @@ public class BaseApply3Activity extends AppCompatActivity {
     private File uploadFile;
     private String caseCode, date, bank;
     public QMUITipDialog tipDialog;
+
     //加载框
     private ProgressDialog progressDialog;
 
@@ -201,6 +206,7 @@ public class BaseApply3Activity extends AppCompatActivity {
             msspId = getKey(listResult.getUserListMap(), name);
             Log.d("获得mssid", msspId);
             dismissProgressDialog();
+
             //如果有证，直接签名
         } else {
             //本地没证，api获取状态
@@ -212,9 +218,13 @@ public class BaseApply3Activity extends AppCompatActivity {
     //api获取用户状态
     public void getUserState(final Context con, final String name, final String idcard, final String phone) {
         token = SpUtils.getInstance(this).getString("token", null);
-        String jsonStr = "{\n" +
+        Map<String,String> map=new HashMap<>();
+        map.put("idCardType","SF");
+        map.put("idCard",idcard);
+        String jsonStr= JSON.toJSONString(map);
+/*        String jsonStr = "{\n" +
                 "    \"idCardType\":\"SF\",\n" +
-                "    \"idCard\":\"" + idcard + "\"}";
+                "    \"idCard\":\"" + idcard + "\"}";*/
         HttpRequest.build(getBaseContext(), netConstant.getUserInfoandStateURL())
                 .addHeaders("Content-Type", "application/json")
                 .addHeaders("Authorization", "Bearer " + token)
@@ -289,13 +299,18 @@ public class BaseApply3Activity extends AppCompatActivity {
 
     //调用ca添加用户接口 api 并且调用注册
     private void getNewRegiterInfo(final Context con, String name, String idcard, String phone) {
-
-        String jsonStr = "{\n" +
+        Map<String,String> map=new HashMap<>();
+        map.put("name",name);
+        map.put("idType","SF");
+        map.put("idCardNum",idcard);
+        map.put("mobile",phone);
+        String jsonStr= JSON.toJSONString(map);
+/*        String jsonStr = "{\n" +
                 "    \"name\":\"" + name + "\",\n" +
                 "    \"idType\":\"SF\",\n" +
                 "    \"idCardNum\":\"" + idcard + "\",\n" +
                 "    \"mobile\":\"" + phone + "\"\n" +
-                "}";
+                "}";*/
         HttpRequest.build(getBaseContext(), netConstant.getAddTrustUserV2URL())
                 .addHeaders("Content-Type", "application/json")
                 .addHeaders("Authorization", "Bearer " + token)
@@ -353,7 +368,7 @@ public class BaseApply3Activity extends AppCompatActivity {
 
     //上传完删除文件
     //上传pdf 异步执行会与下一步冲突，所以把签署pdf的方法放在此函数中
-    public void uploadPdf(final Context con) {
+    public void uploadPdf(final Context con,String jsonStr) {
         token = SpUtils.getInstance(this).getString("token", null);
         HttpRequest.build(con, netConstant.getCloudSealUploadDocWithKeyIDURL())
                 .setMediaType(baseokhttp3.MediaType.parse("application/pdf"))
@@ -368,8 +383,6 @@ public class BaseApply3Activity extends AppCompatActivity {
                             dismissProgressDialog();
                             Log.d("上传", "连接失败", error);
                             getTipDialog(con,3,"连接失败").show();
-
-
                             delayCloseTip();
                         } else {
                             if (main.getString("code").equals("200")) {
@@ -380,7 +393,7 @@ public class BaseApply3Activity extends AppCompatActivity {
 
                                 dismissProgressDialog();
                                 //签署pdf
-                                signPdf(con);
+                                signPdf(con,jsonStr);
                             }else if (main.getString("code").equals("401")){
                                 dismissProgressDialog();
 
@@ -400,7 +413,7 @@ public class BaseApply3Activity extends AppCompatActivity {
     }
 
     //电子签章
-    public void signPdf(final Context con) {
+    public void signPdf(final Context con,String jsonStr) {
         SignetCoreApi.useCoreFunc(new SignDataCallBack(con, msspId, signId) {
             @Override
             public void onSignDataResult(SignDataResult result) {
@@ -411,10 +424,10 @@ public class BaseApply3Activity extends AppCompatActivity {
 
                     //Log.d("sign",result.getSignDataInfos().toString());
                     showProgressDialog(con,"请稍后");
-                    getSeal(con);
+                    getSeal(con,jsonStr);
                 }else {
                     Toast.makeText(con,"有错误，请重新输入",Toast.LENGTH_SHORT).show();
-                    signPdf(con);
+                    signPdf(con,jsonStr);
 
                 }
 
@@ -424,11 +437,14 @@ public class BaseApply3Activity extends AppCompatActivity {
     }
 
     //获取数字签名结果
-    public void getSeal(final Context con) {
+    public void getSeal(final Context con,String jsonStr) {
 
-        String json = "{\n" +
+        Map<String,String> map=new HashMap<>();
+        map.put("signId",signId);
+        String json= JSON.toJSONString(map);
+/*        String json = "{\n" +
                 "    \"signId\":\"" + signId + "\"\n" +
-                "}";
+                "}";*/
         if (signId != null) {
             token = SpUtils.getInstance(this).getString("token", null);
             HttpRequest.build(con, netConstant.getCloudSealCommitSignURL())
@@ -440,8 +456,7 @@ public class BaseApply3Activity extends AppCompatActivity {
                         public void onResponse(JsonMap main, Exception error) {
                             if (error != null) {
                                 dismissProgressDialog();
-                                getTipDialog(con,3,"连接失败").show();
-                                delayCloseTip();
+                                Toast.makeText(con,error.toString(),Toast.LENGTH_SHORT).show();
                                 Log.d("请求结果", "连接失败", error);
                             } else {
                                 if (main.getString("code").equals("200")) {
@@ -457,15 +472,14 @@ public class BaseApply3Activity extends AppCompatActivity {
                                     Log.d("请求结果", statusInfo);
                                     Log.d("请求结果", fileSize);
                                     Log.d("请求结果", filePath);
-                                    uploadNotifyLetter(con);
+                                    uploadNotifyLetter(con,jsonStr);
 
                                 } else if (main.getString("code").equals("401")){
                                     dismissProgressDialog();
                                     breaker(con);
                                 }else {
                                     dismissProgressDialog();
-                                    getTipDialog(con,3,main.getString("msg")).show();
-                                    delayCloseTip();
+                                    Toast.makeText(con,main.getString("msg")+ main.getString("code"),Toast.LENGTH_SHORT).show();
                                     Log.e("请求结果", main.getString("msg"));
                                     Log.e("请求结果", main.getString("code"));
 
@@ -478,16 +492,24 @@ public class BaseApply3Activity extends AppCompatActivity {
     }
 
     //上传告知函
-    private void uploadNotifyLetter(final Context con) {
+    private void uploadNotifyLetter(final Context con,String json) {
         token = SpUtils.getInstance(this).getString("token", null);
         caseId = SpUtils.getInstance(this).getString("caseId", null);
         File video=new File(SpUtils.getInstance(this).getString("videopath", null));
-        String jsonStr = "{\n" +
+//        合并json串
+        JSONObject jsonObject=JSONObject.parseObject(json);
+        jsonObject.put("fileHashSha1", fileHashSha1);
+        jsonObject.put("fileSize", fileSize);
+        jsonObject.put("filePath", filePath);
+        jsonObject.put("caseId", caseId);
+        String jsonStr=jsonObject.toJSONString();
+/*        String jsonStr = "{\n" +
                 "    \"fileHashSha1\":\"" + fileHashSha1 + "\",\n" +
                 "    \"fileSize\":\"" + fileSize + "\",\n" +
                 "    \"filePath\":\"" + filePath + "\",\n" +
-                "    \"caseId\":\"" + caseId + "\"\n" +
-                "}";
+                "    \"caseId\":\"" + caseId + "\",\n" +json
+                ;*/
+        Log.w(TAG, "uploadNotifyLetter: "+jsonStr);
         HttpRequest.build(con, netConstant.getUploadNotifyLetterURL())
                 .addHeaders("Authorization", "Bearer " + token)
                 .addHeaders("Content-Type", "application/json")
@@ -497,8 +519,7 @@ public class BaseApply3Activity extends AppCompatActivity {
                     public void onResponse(JsonMap main, Exception error) {
                         if (error != null) {
                             Log.d("上传告知函", "连接失败", error);
-                            getTipDialog(con,3,"连接失败").show();
-                            delayCloseTip();
+                            Toast.makeText(con,"连接失败",Toast.LENGTH_SHORT).show();
                             dismissProgressDialog();
 
                         } else {
@@ -521,8 +542,7 @@ public class BaseApply3Activity extends AppCompatActivity {
                                 dismissProgressDialog();
                                 breaker(con);
                             }else {
-                                getTipDialog(con,3,main.getString("msg")).show();
-                                delayCloseTip();
+                                Toast.makeText(con,main.getString("msg")+ main.getString("code"),Toast.LENGTH_SHORT).show();
                                 Log.e("上传告知函", main.getString("msg"));
                                 Log.e("上传告知函", main.getString("code"));
                                 dismissProgressDialog();

@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/trtccalling_ic_avatar" />
+                android:src="@mipmap/logo" />
 
             <TextView
                 android:id="@+id/tv_user_name"

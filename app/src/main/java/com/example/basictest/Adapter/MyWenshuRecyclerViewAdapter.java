@@ -99,7 +99,7 @@ public class MyWenshuRecyclerViewAdapter extends RecyclerView.Adapter<MyWenshuRe
     private void getPath(String fileType){
         token = SpUtils.getInstance(context).getString("token", null);
 
-        HttpRequest.build(context, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType)
+        HttpRequest.build(context, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType+"&arriveFlag=1")
                 .addHeaders("Authorization", "Bearer " + token)
                 .setJsonResponseListener(new JsonResponseListener() {
                     @Override

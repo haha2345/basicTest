@@ -566,9 +566,11 @@ public class TRTCVideoCallActivity extends AppCompatActivity {
         if (layout == null) {
             return null;
         }
-        layout.getUserNameTv().setText(userInfo.userName);
+//        layout.getUserNameTv().setText(userInfo.userName);
+        layout.getUserNameTv().setText("公证处");
         if (!TextUtils.isEmpty(userInfo.userAvatar)) {
-            Picasso.get().load(userInfo.userAvatar).into(layout.getHeadImg());
+//            Picasso.get().load(userInfo.userAvatar).into(layout.getHeadImg());
+            Picasso.get().load(R.mipmap.logo).into(layout.getHeadImg());
         }
         return layout;
     }

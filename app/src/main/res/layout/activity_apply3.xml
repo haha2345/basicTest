@@ -430,7 +430,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="王小利"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_apply3_file_name2"
@@ -438,7 +438,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:text="XXXXXX无抵押贷款合"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -454,7 +454,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:text="借款人愿意接受法院强制执行的承诺书"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -511,7 +511,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="姓名         " />
+                        android:text="姓名       " />
 
                     <EditText
                         android:id="@+id/et_apply3_name"
@@ -519,7 +519,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/transparent"
                         android:hint="请输入姓名"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -539,7 +538,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/transparent"
                         android:hint="请输入联系地址"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -559,8 +557,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/transparent"
                         android:hint="请输入手机号码"
+                        android:inputType="phone"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -579,7 +577,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/transparent"
                         android:hint="请输入电子信箱"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -599,8 +596,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/transparent"
-                        android:hint="请输入传真号码"
+                        android:hint="请输入传真号码,若没有请填无"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -619,8 +615,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/transparent"
-                        android:hint="请输入固定电话"
+                        android:hint="请输入固定电话,若没有请填无"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -661,8 +656,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/checkbox_apply3"
                     android:text="我理解富强公证的含义，我申请办理赋予强制执行效力债券文书公证"
-                    style="@style/CheckBox_Mine"
+                    android:theme="@style/CheckBox_Mine"
                     android:layout_marginTop="20dp"/>
+
             </LinearLayout>
 
 
@@ -709,10 +705,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="50dp" />
+
             </RelativeLayout>
 
 
         </LinearLayout>
+
 
 
         <RelativeLayout
@@ -721,6 +719,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginTop="-300dp">
+
             <!--            <RelativeLayout-->
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="match_parent"-->

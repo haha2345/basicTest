@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.example.basictest.R;
@@ -29,7 +30,9 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -70,13 +73,17 @@ public class ApplyConfirmActivity extends BaseActivity {
     EditText et_confirm_phone;
     @BindView(R.id.et_confirm_mail)
     EditText et_confirm_mail;
+    @BindView(R.id.et_confirm_huanqian)
+    EditText et_confirm_huanqian;
+    @BindView(R.id.et_confirm_yongtu)
+    EditText et_confirm_yongtu;
     @BindView(R.id.confirm_check)
     CheckBox confirm_check;
     @BindView(R.id.btn_confirm_next)
     Button btn_confirm_next;
     private File uploadFile;
     private String path,pdfStr;
-    private String loanCode,loanName,loanUserName,loanUserMobile,loanUserIdnum,loanFromTo,loanTime,contentInfo,money,lilv;
+    private String loanCode,loanName,loanUserName,loanUserMobile,loanUserIdnum,loanFromTo,loanTime,contentInfo,money,lilv,daikuanren,yongtu,huanqian;
     private String name_bank,bank_no,get_function,id_type,locate,mail,caseId,caseCode,userId;
     private Long coId,loanMoney;
     private Double loanRatio;
@@ -85,7 +92,8 @@ public class ApplyConfirmActivity extends BaseActivity {
     private Context mContext=ApplyConfirmActivity.this;
     Utils utils=new Utils();
     QMUITipDialog tipDialog;
-
+    private List<EditText> editTextList;
+    int flag=0;
 
 
     @Override
@@ -112,6 +120,26 @@ public class ApplyConfirmActivity extends BaseActivity {
         et_confirm_loacte.setText(locate);
         et_confirm_phone.setText(loanUserMobile);
         et_confirm_mail.setText(mail);
+        et_confirm_huanqian.setText(huanqian);
+        et_confirm_yongtu.setText(yongtu);
+
+        editTextList=new ArrayList<>();
+        editTextList.add(et_confirm_no);
+        editTextList.add(et_confirm_money);
+        editTextList.add(et_confirm_lilv);
+        editTextList.add(et_confirm_name_bank);
+        editTextList.add(et_confirm_bank_no);
+        editTextList.add(et_confirm_function);
+        editTextList.add(et_confirm_during);
+        editTextList.add(et_confirm_name);
+        editTextList.add(et_confirm_idcard_type);
+        editTextList.add(et_confirm_idcard);
+        editTextList.add(et_confirm_loacte);
+        editTextList.add(et_confirm_phone);
+        editTextList.add(et_confirm_mail);
+        editTextList.add(et_confirm_yongtu);
+        editTextList.add(et_confirm_huanqian);
+
 
         initCheckBox();
 
@@ -136,6 +164,8 @@ public class ApplyConfirmActivity extends BaseActivity {
         setOnFocusChangeErrMsg(et_confirm_loacte,"confirm","不能为空");
         setOnFocusChangeErrMsg(et_confirm_phone,"phone","格式不正确");
         setOnFocusChangeErrMsg(et_confirm_mail,"confirm","不能为空");
+        setOnFocusChangeErrMsg(et_confirm_yongtu,"confirm","不能为空");
+        setOnFocusChangeErrMsg(et_confirm_huanqian,"confirm","不能为空");
 
     }
 
@@ -144,24 +174,40 @@ public class ApplyConfirmActivity extends BaseActivity {
         loanUserName=et_confirm_name.getText().toString().trim();
         loanUserMobile=et_confirm_phone.getText().toString().trim();
         loanUserIdnum=et_confirm_idcard.getText().toString().trim();
-        loanMoney= Long.valueOf(extraAttr(et_confirm_money.getText().toString().trim(),"¥","（"));
+        loanMoney= Long.parseLong(extraAttr(et_confirm_money.getText().toString().trim(),"¥","（"));
         String temp=et_confirm_lilv.getText().toString().trim();
         loanRatio= Double.valueOf(extraAttr(temp,"日利率","%"));
         loanFromTo=et_confirm_during.getText().toString().trim();
         Map<String,String> map=new HashMap<>();
-        map.put("loanCode",loanCode);
+        map.put("贷款合同号",loanCode);
         map.put("coId", String.valueOf(coId));
-        map.put("loanName",loanName);
-        map.put("loanUserName",loanUserName);
-        map.put("loanUserMobile",loanUserMobile);
-        map.put("loanUserIdnum",loanUserIdnum);
-        map.put("loanMoney", String.valueOf(loanMoney));
-        map.put("loanRatio", String.valueOf(loanRatio));
-        map.put("loanFromTo",loanFromTo);
+        map.put("合同名",loanName);
+        map.put("借款人",loanUserName);
+        map.put("手机号码",loanUserMobile);
+        map.put("证件号码",loanUserIdnum);
+        map.put("贷款金额", String.valueOf(loanMoney*100));
+        map.put("最终利率", String.valueOf(loanRatio));
+        map.put("贷款期限",loanFromTo);
+        map.put("放/还款账户户名",name_bank);
+        map.put("放/还款账户账号获卡号",bank_no);
+        map.put("提款方式",get_function);
+        map.put("证件种类",id_type);
+        map.put("家庭住址",locate);
+        map.put("电子邮件地址",mail);
+        map.put("还款方式",huanqian);
+        map.put("贷款用途",yongtu);
         map.put("loanTime",loanTime);
         contentInfo= JSON.toJSONString(map);
     }
 
+    private boolean checkNull(EditText editText){
+        if (editText.getText().toString().trim().isEmpty()){
+            editText.requestFocus();
+            Toast.makeText(mContext,"请填写好您的信息",Toast.LENGTH_SHORT).show();
+            return true;
+        }else
+            return false;
+    }
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
         mTopBar.setBackgroundAlpha(255);
@@ -203,6 +249,10 @@ public class ApplyConfirmActivity extends BaseActivity {
             loanMoney=Long.parseLong(ValueConvertUtil.formatAmount(money));
             loanRatio=Double.parseDouble(extraAttr(pdfStr,"放款利率：日利率","%"));
             lilv=extraAttr(pdfStr,"放款利率：","第二条");
+            daikuanren=extraAttr(pdfStr,"贷款人： ","通讯地址");
+            yongtu=extraAttr(pdfStr,"贷款用途：","第三条");
+            huanqian=extraAttr(pdfStr,"还款方式：","3.2贷款期限");
+
             //Log.d(TAG, "initData: "+loanCode);
 
         }
@@ -215,8 +265,18 @@ public class ApplyConfirmActivity extends BaseActivity {
         confirm_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (EditText editText : editTextList) {
+                    if (checkNull(editText)){
+                        flag=0;
+                        break;
+                    }else
+                        flag=1;
+                }
                 if(isChecked){
-                    btn_confirm_next.setEnabled(true);
+                    if (flag==1){
+                        btn_confirm_next.setEnabled(true);
+                    }else
+                        btn_confirm_next.setEnabled(false);
                 }else{
                     btn_confirm_next.setEnabled(false);
                 }
@@ -238,7 +298,7 @@ public class ApplyConfirmActivity extends BaseActivity {
                 .addParameter("loanUserName",loanUserName)
                 .addParameter("loanUserMobile",loanUserMobile)
                 .addParameter("loanUserIdnum",loanUserIdnum)
-                .addParameter("loanMoney",loanMoney)
+                .addParameter("loanMoney",loanMoney*100)
                 .addParameter("loanRatio",loanRatio)
                 .addParameter("loanFromTo",loanFromTo)
                 .addParameter("loanTime",loanTime)
@@ -328,8 +388,14 @@ public class ApplyConfirmActivity extends BaseActivity {
         bundle.putString("caseid", caseId);
         bundle.putString("userid", userId);
         bundle.putString("casecode", caseCode);
+        bundle.putString("contractmoney", String.valueOf("¥"+loanMoney+".00"));
+        bundle.putString("contractname", loanName);
+        bundle.putString("contractno", loanCode);
+        bundle.putString("contracttime", loanTime);
+        bundle.putString("daikuanren", daikuanren);
         intent.putExtras(bundle);
         startActivity(intent);
+        finish();
     }
 
     //提取String中需要的字符串
@@ -347,7 +413,9 @@ public class ApplyConfirmActivity extends BaseActivity {
     private String extraAttr(String str, String pre) {
         int prePos;
         prePos = str.indexOf(pre);
-        String value = str.substring(prePos);
+        String value = str.substring(prePos+pre.length());
+        value = value.replace(" ", "");
+        value = value.replace("\n", "");
         return value;
     }
 

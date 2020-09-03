@@ -193,30 +193,57 @@ public class DetailActivity extends BaseActivity {
     private void getPath(String fileType){
         token = SpUtils.getInstance(this).getString("token", null);
 
-        HttpRequest.build(mContext, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType)
-                .addHeaders("Authorization", "Bearer " + token)
-                .setJsonResponseListener(new JsonResponseListener() {
-                    @Override
-                    public void onResponse(JsonMap main, Exception error) {
-                        if (error != null) {
-                            Log.d("获取路径", "连接失败", error);
-                        } else {
-                            if (main.getString("code").equals("200")) {
-                                url=main.getString("filePath");
-                                //直接跳转
-                                intent=new Intent(mContext,PdfViewerActivity.class);
-                                intent.putExtra("url",netConstant.getURL()+url);
-                                startActivity(intent);
-                            }  else if (main.getString("code").equals("401")){
-                                breaker(mContext);
-                            }else {
-                                Log.e("获取路径", main.getString("msg"));
-                                Log.e("获取路径", main.getString("code"));
+        if (fileType=="400010"){
+            HttpRequest.build(mContext, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType+"&arriveFlag=1")
+                    .addHeaders("Authorization", "Bearer " + token)
+                    .setJsonResponseListener(new JsonResponseListener() {
+                        @Override
+                        public void onResponse(JsonMap main, Exception error) {
+                            if (error != null) {
+                                Log.d("获取路径", "连接失败", error);
+                            } else {
+                                if (main.getString("code").equals("200")) {
+                                    url=main.getString("filePath");
+                                    //直接跳转
+                                    intent=new Intent(mContext,PdfViewerActivity.class);
+                                    intent.putExtra("url",netConstant.getURL()+url);
+                                    startActivity(intent);
+                                }  else if (main.getString("code").equals("401")){
+                                    breaker(mContext);
+                                }else {
+                                    Log.e("获取路径", main.getString("msg"));
+                                    Log.e("获取路径", main.getString("code"));
+                                }
                             }
                         }
-                    }
-                })
-                .doGet();
+                    })
+                    .doGet();
+        }else {
+            HttpRequest.build(mContext, netConstant.getGetCaseFilePathURL()+"?userId="+userid+"&caseId="+caseid+"&fileType="+fileType)
+                    .addHeaders("Authorization", "Bearer " + token)
+                    .setJsonResponseListener(new JsonResponseListener() {
+                        @Override
+                        public void onResponse(JsonMap main, Exception error) {
+                            if (error != null) {
+                                Log.d("获取路径", "连接失败", error);
+                            } else {
+                                if (main.getString("code").equals("200")) {
+                                    url=main.getString("filePath");
+                                    //直接跳转
+                                    intent=new Intent(mContext,PdfViewerActivity.class);
+                                    intent.putExtra("url",netConstant.getURL()+url);
+                                    startActivity(intent);
+                                }  else if (main.getString("code").equals("401")){
+                                    breaker(mContext);
+                                }else {
+                                    Log.e("获取路径", main.getString("msg"));
+                                    Log.e("获取路径", main.getString("code"));
+                                }
+                            }
+                        }
+                    })
+                    .doGet();
+        }
 
     }
     private void getOnlyPath(String fileType){
