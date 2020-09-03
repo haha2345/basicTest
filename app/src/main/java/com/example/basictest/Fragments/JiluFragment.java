@@ -58,6 +58,8 @@ public class JiluFragment extends Fragment {
         // Set the adapter
         recyclerView = view.findViewById(R.id.rv_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         getJiluList();
 

@@ -60,6 +60,8 @@ public class WenshuActivity extends BaseApply3Activity {
     private void initAdapter(){
         recyclerView=findViewById(R.id.reView_wenshu);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
 
