@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 
 import com.blankj.utilcode.util.SPUtils;
+import com.example.basictest.CallService;
 import com.example.basictest.Fragments.MainFragment;
 import com.example.basictest.Fragments.MineFragment;
 import com.example.basictest.R;
@@ -73,7 +74,13 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    //传参 先传activity，再通过activity传给fragment
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CallService.stop(this);
+    }
+//传参 先传activity，再通过activity传给fragment
+    /**测试用*/
     private void initViews(){
         intent=getIntent();
         username=intent.getStringExtra("username");

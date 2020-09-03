@@ -249,6 +249,20 @@ public class CallService extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (mTRTCCalling != null) {
+            mTRTCCalling.logout(new TRTCCalling.ActionCallBack() {
+                @Override
+                public void onError(int code, String msg) {
+
+                    Log.d(TAG,"注销失败");
+
+                }
+
+                @Override
+                public void onSuccess() {
+
+                    Log.d(TAG,"用户已注销");
+                }
+            });
             mTRTCCalling.removeDelegate(mTRTCCallingDelegate);
         }
     }
