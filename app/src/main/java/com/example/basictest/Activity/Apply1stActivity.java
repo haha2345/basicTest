@@ -79,7 +79,7 @@ import static com.example.basictest.utils.FileUtils.getPath;
 
 
 public class Apply1stActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
-
+//测试
     private Bundle bundle = new Bundle();
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
