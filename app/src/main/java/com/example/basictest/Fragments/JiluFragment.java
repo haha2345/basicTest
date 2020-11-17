@@ -70,7 +70,8 @@ public class JiluFragment extends Fragment {
     private void getJiluList() {
         HttpRequest.build(mContext, netConstant.getPersonalListURL())
                 .addHeaders("Authorization", "Bearer " + token)
-                .addParameter("fStatus", type)
+//                .addParameter("fStatus", type)
+                .addParameter("fStatusStrs", type)
                 .setResponseListener(new ResponseListener() {
                     @Override
                     public void onResponse(String response, Exception error) {

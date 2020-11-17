@@ -93,7 +93,7 @@ public class JiluActivity extends AppCompatActivity {
 
         fragments=new ArrayList<>();
         fragments.add(new JiluFragment_all());
-        fragments.add(new JiluFragment("1"));
+        fragments.add(new JiluFragment("1,20"));
         fragments.add(new JiluFragment("21"));
         fragments.add(new JiluFragment("22"));
     }
