@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.basictest.R;
@@ -20,20 +21,25 @@ import com.example.basictest.R;
 public class ShipingongzhenActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 88888;
     Button btn;
-    String src,name,phone,idcard;
+    String shiyan;
     ImageView iv;
     Bundle bundle;
+    TextView shiYan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipingongzhen);
         bundle=getIntent().getExtras();
+        shiyan=bundle.getString("shiyan");
 /*        src=getIntent().getStringExtra("basestr");
         name=getIntent().getStringExtra("name");
         idcard=getIntent().getStringExtra("idcard");
         phone=getIntent().getStringExtra("phone");*/
+
+        shiYan=findViewById(R.id.tv_shipin);
         btn=findViewById(R.id.btn_shipingongzheng);
         iv=findViewById(R.id.iv_aa);
+        shiYan.setText(shiyan);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +75,7 @@ public class ShipingongzhenActivity extends AppCompatActivity {
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
                 checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||
                 checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-        ) {
+                ) {
 
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_PERMISSION_REQUEST_CODE);
             return false;

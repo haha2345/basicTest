@@ -18,8 +18,7 @@
     <TextView
         android:layout_width="68dp"
         android:layout_height="22dp"
-
-        android:text="行业资讯"
+        android:text="申办流程"
         android:textSize="12sp"
         android:textColor="#245FFF"
         android:gravity="center"

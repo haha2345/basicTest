@@ -1,5 +1,6 @@
 package com.example.basictest.base;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -23,10 +24,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.ToastUtils;
 import com.example.basictest.Activity.Apply1stActivity;
 import com.example.basictest.Activity.Apply3Activity;
 import com.example.basictest.Activity.Apply4Activity;
@@ -40,6 +44,7 @@ import com.google.gson.JsonObject;
 import com.kongzue.baseokhttp.HttpRequest;
 import com.kongzue.baseokhttp.listener.JsonResponseListener;
 import com.kongzue.baseokhttp.listener.ResponseListener;
+import com.kongzue.baseokhttp.util.BaseOkHttp;
 import com.kongzue.baseokhttp.util.JsonMap;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -59,6 +64,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 
 import baseokhttp3.MediaType;
 import cn.org.bjca.signet.component.core.activity.SignetCoreApi;
@@ -107,16 +113,29 @@ public class BaseApply3Activity extends AppCompatActivity {
         mContext.startActivity(intent);
     }
 
-    //生成pdf 内容+签字
+    //生成pdf 内容
     public void setupPdf(LinearLayout lv_apply3) {
-        doc = new PdfDocument();
-        pageInfo = new PdfDocument.PageInfo.Builder((int) (lv_apply3.getWidth()*0.35f), (int) (lv_apply3.getHeight()*0.35f), 1)
-                .create();
-        page = doc.startPage(pageInfo);
-        Canvas canvas=page.getCanvas();
-        canvas.scale(0.35f,0.35f);
-        lv_apply3.draw(canvas);
-        doc.finishPage(page);
+//        doc = new PdfDocument();
+//        //控制页面大小
+//        int width=lv_apply3.getWidth();
+//        int heigth=lv_apply3.getHeight();
+//        Log.d("原始长宽", "setupPdf: "+width+":"+heigth);
+//        float resize= 378f /width;
+//        width*=resize;
+//        heigth*=resize;
+//        Log.d("长宽", "setupPdf: "+width+":"+heigth);
+//
+////        pageInfo = new PdfDocument.PageInfo.Builder((int) (lv_apply3.getWidth()*0.35f), (int) (lv_apply3.getHeight()*0.35f), 1)
+////                .create();
+//        pageInfo = new PdfDocument.PageInfo.Builder((int) (lv_apply3.getWidth()*resize), (int) (lv_apply3.getHeight()*resize), 1)
+//                .create();
+//        page = doc.startPage(pageInfo);
+//        Canvas canvas=page.getCanvas();
+////        控制页面大小 需要跟上面大小一致
+////        canvas.scale(0.35f,0.35f);
+//        canvas.scale(resize,resize);
+//        lv_apply3.draw(canvas);
+//        doc.finishPage(page);
 
 //        //签字
 //        //往pdf添加组件
@@ -128,20 +147,25 @@ public class BaseApply3Activity extends AppCompatActivity {
 //        doc.finishPage(page);
         //设置路径
         File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        try {
-            String pdfPath=file.getAbsolutePath() + "/" + new SimpleDateFormat("yyyyMM_dd-HHmmss").format(new Date()) + "ad.pdf";
-            SpUtils.getInstance(getParent()).setString("pdfpath",pdfPath);
-            uploadFile = new File(pdfPath);
-            doc.writeTo(new FileOutputStream(uploadFile));
-            //应该弹一个对话框
-            Log.d("生成pdf", "成功");
-
-        } catch (IOException e) {
-            Log.d("生成pdf", "失败");
-            e.printStackTrace();
-        }
-        doc.close();
+//        try {
+        String pdfPath=file.getAbsolutePath() + "/" + new SimpleDateFormat("yyyyMM_dd-HHmmss").format(new Date()) + "ad.pdf";
+        SpUtils.getInstance(getParent()).setString("pdfpath",pdfPath);
+//            uploadFile = new File(pdfPath);
+//            doc.writeTo(new FileOutputStream(uploadFile));
+//            //应该弹一个对话框
+//            Log.d("生成pdf", "成功");
+//
+//        } catch (IOException e) {
+//            Log.d("生成pdf", "失败");
+//            e.printStackTrace();
+//        }
+//        doc.close();
     }
+//    void s(){
+//        com.spire.pdf.PdfDocument document=new com.spire.pdf.PdfDocument()
+//    }
+
+
 
     //路径转uri
     public static Uri getImageContentUri(Context context, java.io.File imageFile) {
@@ -183,7 +207,7 @@ public class BaseApply3Activity extends AppCompatActivity {
 
                 }
             }
-        }, 60000);//超时时间60秒
+        }, 150000);//超时时间60秒
     }
 
     //取消加载框
@@ -249,8 +273,9 @@ public class BaseApply3Activity extends AppCompatActivity {
                         } else if (main.getString("code").equals("401")){
                             breaker(con);
                         }else {
-                            getTipDialog(con,3,main.getString("msg")).show();
-                            delayCloseTip();
+                            ToastUtils.showShort(main.getString("msg"));
+//                            getTipDialog(con,3,).show();
+//                            delayCloseTip();
                             Log.d("获取用户状态", "失败");
 
                         }
@@ -270,8 +295,9 @@ public class BaseApply3Activity extends AppCompatActivity {
                     msspId=registerResult.getMsspID();
                     Log.d("msspID", registerResult.getMsspID());
                 }else {
-                    getTipDialog(con,3,registerResult.getErrCode()+registerResult.getErrMsg()).show();
-                    delayCloseTip();
+                    ToastUtils.showShort(registerResult.getErrCode()+registerResult.getErrMsg());
+//                    getTipDialog(con,3,registerResult.getErrCode()+registerResult.getErrMsg()).show();
+//                    delayCloseTip();
                     newRegister(con,code);
                 }
 
@@ -289,8 +315,9 @@ public class BaseApply3Activity extends AppCompatActivity {
                     msspId=findBackUserResult.getMsspID();
                     Log.d("msspID", findBackUserResult.toString());
                 }else {
-                    getTipDialog(con,3,findBackUserResult.getErrCode()+findBackUserResult.getErrMsg()).show();
-                    delayCloseTip();
+                    ToastUtils.showShort(findBackUserResult.getErrCode()+findBackUserResult.getErrMsg());
+//                    getTipDialog(con,3,findBackUserResult.getErrCode()+findBackUserResult.getErrMsg()).show();
+//                    delayCloseTip();
                     findRegister(con,name,idCard);
                 }
             }
@@ -334,8 +361,9 @@ public class BaseApply3Activity extends AppCompatActivity {
                             breaker(con);
                         }else {
                             dismissProgressDialog();
-                            getTipDialog(con,3,main.getString("msg")).show();
-                            delayCloseTip();
+                            ToastUtils.showShort(main.getString("msg"));
+//                            getTipDialog(con,3,main.getString("msg")).show();
+//                            delayCloseTip();
                             Log.d("添加用户接口调用", "失败");
                         }
                     }
@@ -366,12 +394,52 @@ public class BaseApply3Activity extends AppCompatActivity {
     }
 
 
+    protected void generateNotifyAndUploadDoc(final Context con,String jsonStr,String jsonStrThisNeed){
+        JSONObject jsonObject=JSONObject.parseObject(jsonStrThisNeed);
+        jsonObject.put("msspId",msspId);
+        String thisJson=JSONObject.toJSONString(jsonObject);
+        token = SpUtils.getInstance(this).getString("token", null);
+        HttpRequest.build(getBaseContext(), netConstant.getGenerateNotifyAndUploadDoc())
+                .addHeaders("Content-Type", "application/json")
+                .addHeaders("Authorization", "Bearer " + token)
+                .setJsonParameter(thisJson)
+                .setJsonResponseListener(new JsonResponseListener() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onResponse(JsonMap main, Exception error) {
+                        if (main.getString("code").equals("200")) {
+                            JsonMap jsonMap = main.getJsonMap("data");
+                            signId = jsonMap.getString("signId");
+                            Log.d("新接口", signId);
+                            dismissProgressDialog();
+                            //签署pdf
+                            signPdf(con, jsonStr);
+
+                            Log.d("新接口","成功生成pdf");
+
+                        } else if (main.getString("code").equals("401")){
+                            dismissProgressDialog();
+                            breaker(con);
+                        }else {
+                            dismissProgressDialog();
+                            ToastUtils.showShort(main.getString("msg"));
+//                            getTipDialog(con,3,main.getString("msg")).show();
+//                            delayCloseTip();
+                            Log.d("新接口", "失败");
+                        }
+                    }
+                }).doPost();
+    }
+
     //上传完删除文件
     //上传pdf 异步执行会与下一步冲突，所以把签署pdf的方法放在此函数中
     public void uploadPdf(final Context con,String jsonStr) {
+//        BaseOkHttp.TIME_OUT_DURATION=120;
+//        BaseOkHttp.websocketReconnectInterval=120;
+//        BaseOkHttp.websocketReconnectTime=120;
         token = SpUtils.getInstance(this).getString("token", null);
         HttpRequest.build(con, netConstant.getCloudSealUploadDocWithKeyIDURL())
-                .setMediaType(baseokhttp3.MediaType.parse("application/pdf"))
+                .setMediaType(MediaType.parse("application/pdf"))
                 .addHeaders("Authorization", "Bearer " + token)
                 .addHeaders("Content-Type", "multipart/form-data")
                 .addParameter("notifyLetterFile", uploadFile)
@@ -379,34 +447,40 @@ public class BaseApply3Activity extends AppCompatActivity {
                 .setJsonResponseListener(new JsonResponseListener() {
                     @Override
                     public void onResponse(JsonMap main, Exception error) {
-                        if (error != null) {
+//                        if (error != null) {
+//                            dismissProgressDialog();
+//                            Log.d("上传", "连接失败", error);
+//                            ToastUtils.showShort("连接失败");
+////                            getTipDialog(con,3,"连接失败").show();
+////                            delayCloseTip();
+//                        } else {
+                        if (error!=null){
+                            Log.i(TAG, "onResponse: "+error);
+                            ToastUtils.showShort(error.toString());
+                        }
+                        if (main.getString("code").equals("200")) {
+                            //上传成功
+                            JsonMap jsonMap = main.getJsonMap("data");
+                            signId = jsonMap.getString("signId");
+                            Log.d("上传", signId);
+
                             dismissProgressDialog();
-                            Log.d("上传", "连接失败", error);
-                            getTipDialog(con,3,"连接失败").show();
-                            delayCloseTip();
+                            //签署pdf
+                            signPdf(con, jsonStr);
+                        } else if (main.getString("code").equals("401")) {
+                            dismissProgressDialog();
+
+                            breaker(con);
                         } else {
-                            if (main.getString("code").equals("200")) {
-                                //上传成功
-                                JsonMap jsonMap = main.getJsonMap("data");
-                                signId = jsonMap.getString("signId");
-                                Log.d("上传", signId);
+                            Log.e("上传", main.getString("msg"));
+                            Log.e("上传", main.getString("code"));
+                            ToastUtils.showShort(main.getString("msg"));
+//                            Toast.makeText(con, main.getString("msg"), Toast.LENGTH_SHORT).show();
+                            dismissProgressDialog();
 
-                                dismissProgressDialog();
-                                //签署pdf
-                                signPdf(con,jsonStr);
-                            }else if (main.getString("code").equals("401")){
-                                dismissProgressDialog();
-
-                                breaker(con);
-                            } else {
-                                Log.e("上传", main.getString("msg"));
-                                Log.e("上传", main.getString("code"));
-                                Toast.makeText(con,main.getString("msg"),Toast.LENGTH_SHORT).show();
-                                dismissProgressDialog();
-
-                            }
                         }
                     }
+//                    }
                 })
                 .doPost();
 
@@ -426,7 +500,8 @@ public class BaseApply3Activity extends AppCompatActivity {
                     showProgressDialog(con,"请稍后");
                     getSeal(con,jsonStr);
                 }else {
-                    Toast.makeText(con,"有错误，请重新输入",Toast.LENGTH_SHORT).show();
+                    ToastUtils.showShort("有错误，请重新输入");
+//                    Toast.makeText(con,"有错误，请重新输入",Toast.LENGTH_SHORT).show();
                     signPdf(con,jsonStr);
 
                 }
@@ -456,7 +531,8 @@ public class BaseApply3Activity extends AppCompatActivity {
                         public void onResponse(JsonMap main, Exception error) {
                             if (error != null) {
                                 dismissProgressDialog();
-                                Toast.makeText(con,error.toString(),Toast.LENGTH_SHORT).show();
+                                ToastUtils.showShort(error.toString());
+//                                Toast.makeText(con,error.toString(),Toast.LENGTH_SHORT).show();
                                 Log.d("请求结果", "连接失败", error);
                             } else {
                                 if (main.getString("code").equals("200")) {
@@ -479,7 +555,8 @@ public class BaseApply3Activity extends AppCompatActivity {
                                     breaker(con);
                                 }else {
                                     dismissProgressDialog();
-                                    Toast.makeText(con,main.getString("msg")+ main.getString("code"),Toast.LENGTH_SHORT).show();
+                                    ToastUtils.showShort(main.getString("msg")+ main.getString("code"));
+//                                    Toast.makeText(con,main.getString("msg")+ main.getString("code"),Toast.LENGTH_SHORT).show();
                                     Log.e("请求结果", main.getString("msg"));
                                     Log.e("请求结果", main.getString("code"));
 
@@ -519,7 +596,8 @@ public class BaseApply3Activity extends AppCompatActivity {
                     public void onResponse(JsonMap main, Exception error) {
                         if (error != null) {
                             Log.d("上传告知函", "连接失败", error);
-                            Toast.makeText(con,"连接失败",Toast.LENGTH_SHORT).show();
+                            ToastUtils.showShort("连接失败");
+//                            Toast.makeText(con,"连接失败",Toast.LENGTH_SHORT).show();
                             dismissProgressDialog();
 
                         } else {
@@ -542,7 +620,8 @@ public class BaseApply3Activity extends AppCompatActivity {
                                 dismissProgressDialog();
                                 breaker(con);
                             }else {
-                                Toast.makeText(con,main.getString("msg")+ main.getString("code"),Toast.LENGTH_SHORT).show();
+                                ToastUtils.showShort(main.getString("msg")+ main.getString("code"));
+//                                Toast.makeText(con,main.getString("msg")+ main.getString("code"),Toast.LENGTH_SHORT).show();
                                 Log.e("上传告知函", main.getString("msg"));
                                 Log.e("上传告知函", main.getString("code"));
                                 dismissProgressDialog();

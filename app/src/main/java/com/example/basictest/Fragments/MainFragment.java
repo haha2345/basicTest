@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.example.basictest.Activity.Apply1stActivity;
 import com.example.basictest.Activity.Apply3Activity;
 import com.example.basictest.Activity.ApplyConfirmActivity;
@@ -25,6 +26,7 @@ import com.example.basictest.Activity.LoginActivity;
 import com.example.basictest.Activity.PdfViewerActivity;
 import com.example.basictest.Activity.TestActivity;
 import com.example.basictest.Activity.WenshuActivity;
+import com.example.basictest.Adapter.MyShenbanRecyclerViewAdapter;
 import com.example.basictest.Adapter.MyzixunRecyclerViewAdapter;
 import com.example.basictest.Activity.CameraActivity;
 import com.example.basictest.CallService;
@@ -70,7 +72,8 @@ public class MainFragment extends Fragment {
     SuperButton btn_main_syzn;
 
     private List<NoticeEntity> datas=new ArrayList<>();
-    private MyzixunRecyclerViewAdapter adapter,adapter1;
+    private MyzixunRecyclerViewAdapter adapter;
+    private MyShenbanRecyclerViewAdapter adapter1;
 
     private RecyclerView recyclerView,recyclerView1;
     //线程通信
@@ -155,10 +158,10 @@ public class MainFragment extends Fragment {
         btn_main_syzn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent=new Intent(getActivity(), ApplyConfirmActivity.class);
-                startActivity(intent);
+//                intent=new Intent(getActivity(), TestActivity.class);
+//                startActivity(intent);
 //                Toast.makeText(getActivity(),"使用指南",Toast.LENGTH_SHORT);
-//                jumpToHowToUse();
+                jumpToHowToUse();
             }
         });
     }
@@ -212,12 +215,14 @@ public class MainFragment extends Fragment {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }else {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(),list.getMsg(),Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        ToastUtils.showShort(list.getMsg());
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                ToastUtils.showShort(list.getMsg());
+////                                Toast.makeText(getActivity(),list.getMsg(),Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
                     }
 
                 }
@@ -246,7 +251,7 @@ public class MainFragment extends Fragment {
                     NoticeListResponse list=new Gson().fromJson(res,NoticeListResponse.class);
                     if (list.getCode()==200){
                         List<NoticeEntity> data=list.getRows();
-                        adapter1=new MyzixunRecyclerViewAdapter(getActivity(),data,1);
+                        adapter1=new MyShenbanRecyclerViewAdapter(getActivity(),data,1);
                         //分线程
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -265,7 +270,8 @@ public class MainFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getActivity(),list.getMsg(),Toast.LENGTH_SHORT).show();
+                                ToastUtils.showShort(list.getMsg());
+//                                Toast.makeText(getActivity(),list.getMsg(),Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -310,7 +316,8 @@ public class MainFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getActivity(),list.getMsg(),Toast.LENGTH_SHORT).show();
+                                ToastUtils.showShort(list.getMsg());
+//                                Toast.makeText(getActivity(),list.getMsg(),Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

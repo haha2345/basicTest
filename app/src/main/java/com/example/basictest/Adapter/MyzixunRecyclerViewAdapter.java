@@ -78,13 +78,13 @@ public class MyzixunRecyclerViewAdapter extends RecyclerView.Adapter<MyzixunRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_zixun_title;
         private TextView tv_zixun_date;
-
+        private TextView tv_zixun_subtitle;
 
         public ViewHolder(View view) {
             super(view);
             tv_zixun_date=view.findViewById(R.id.tv_zixun_date);
             tv_zixun_title=view.findViewById(R.id.tv_zixun_title);
-
+            tv_zixun_subtitle=view.findViewById(R.id.tv_zixun_subtitle);
         }
 
         @Override

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.example.basictest.Activity.HtmlActivity;
 import com.example.basictest.Activity.JiluActivity;
 import com.example.basictest.Activity.LoginActivity;
@@ -82,7 +83,7 @@ public class MineFragment extends Fragment {
         groupListView=getActivity().findViewById(R.id.groupListView);
 
         item_1 = groupListView.createItemView(ContextCompat.getDrawable(getContext(), R.drawable.gognzhengjilu),
-                "公正记录",
+                "公证记录",
                 null,
                 QMUICommonListItemView.HORIZONTAL,
                 QMUICommonListItemView.ACCESSORY_TYPE_NONE);
@@ -206,12 +207,13 @@ public class MineFragment extends Fragment {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }else {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(),list.getMsg(),Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+                        ToastUtils.showShort(list.getMsg());
+//                                Toast.makeText(getActivity(),list.getMsg(),Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
                     }
 
                 }

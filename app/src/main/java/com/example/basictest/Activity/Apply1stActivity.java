@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.ToastUtils;
 import com.example.basictest.base.BaseActivity;
 import com.example.basictest.utils.OkManager;
 import com.example.basictest.utils.PdfToTxt;
@@ -79,7 +80,7 @@ import static com.example.basictest.utils.FileUtils.getPath;
 
 
 public class Apply1stActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
-//测试
+    //测试
     private Bundle bundle = new Bundle();
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -152,12 +153,12 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
     private void initTopBar() {
         mTopBar.setBackgroundAlpha(255);
         mTopBar.addLeftImageButton(R.drawable.back,R.id.topbar_right_change_button)
-        .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
         //设置标题名
         mTopBar.setTitle("赋强公证申请");
 
@@ -201,7 +202,8 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                     }else if (list.getCode()==401){
                         breaker(mContext);
                     }else {
-                        showToast(mContext, list.getMsg());
+                        ToastUtils.showShort(list.getMsg());
+//                        showToast(mContext, list.getMsg());
                     }
 
                 }
@@ -356,14 +358,16 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                             }
                             else {
                                 dismissProgressDialog();
-                                getTipDialog(3,main.getString("msg")).show();
-                                delayCloseTip();
+                                ToastUtils.showShort(main.getString("msg"));
+//                                getTipDialog(3,main.getString("msg")).show();
+//                                delayCloseTip();
                                 //utils.showToastInThread(mContext,main.getString("msg"));
                             }
 
                         } else {
                             dismissProgressDialog();
-                            utils.showToastInThread(mContext,"连接错误");
+                            ToastUtils.showShort("连接错误");
+//                            utils.showToastInThread(mContext,"连接错误");
                             Log.e(TAG,"错误",error);
                         }
                     }
@@ -392,15 +396,25 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
             Drawable drawable = resources.getDrawable(pdf);
             sbtn_apply1.setIcon(drawable);
             sbtn_apply1.setPressed(false);
-            pdfStr=PdfToTxt.readPdf(path);
-            if (isNeedPdf(pdfStr)){
-                //测试pdf提取功能
-                Log.d(TAG, "afterGetFile: "+pdfStr);
-                flag=1;
+            if (file.length()<2097152){
+                pdfStr=PdfToTxt.readPdf(path);
+                if (pdfStr!=null){
+                    if (isNeedPdf(pdfStr)){
+                        //测试pdf提取功能
+                        Log.d(TAG, "afterGetFile: "+pdfStr);
+                        flag=1;
+                    }else {
+                        flag=0;
+                        ToastUtils.showLong("贷款合同错误，请选择正确贷款合同");
+//                getTipDialog(3,"贷款合同错误，请选择正确贷款合同").show();
+//                delayCloseTip();
+                    }
+                }else {
+                    ToastUtils.showLong("请选择正确的pdf");
+                }
+
             }else {
-                flag=0;
-                getTipDialog(3,"贷款合同错误，请选择正确贷款合同").show();
-                delayCloseTip();
+                ToastUtils.showLong("文件过大，请重新选择文件");
             }
 //        sbtn_apply1.setEnabled(false);
 
@@ -408,8 +422,9 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
                 sbtn_apply1_next.setEnabled(true);
             }
         }else {
-            getTipDialog(3,"文件格式不对，请重新选择文件").show();
-            delayCloseTip();
+            ToastUtils.showLong("文件格式不对，请重新选择文件");
+//            getTipDialog(3,"文件格式不对，请重新选择文件").show();
+//            delayCloseTip();
         }
 
 //        sbtn_apply1.setClickable(false);
@@ -423,6 +438,7 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
         bundle.putString("firstuploadfilepath",path);
         intent.putExtras(bundle);
         startActivity(intent);
+        finish();
     }
     //获得需要的变量
     private void getAttr(){
@@ -430,7 +446,9 @@ public class Apply1stActivity extends BaseActivity implements AdapterView.OnItem
     }
 
 
+    //判断pdf的前面几个字符，如果是返回正确
     private boolean isNeedPdf(String content){
+        content=content.trim();
         boolean flag=content.startsWith("贷款合同号");
         return flag;
     }

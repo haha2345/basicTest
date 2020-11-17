@@ -5,7 +5,7 @@ public class netConstant {
         return URL;
     }
 
-//    private static String URL="http://172.16.10.128:8080/notarize";
+    //    private static String URL="http://172.16.10.128:8080/notarize";
     private static String URL="http://39.100.12.99:13337/notarize";
 //    private static String URL="http://i305k85088.qicp.vip:36422/notarize";
 
@@ -28,6 +28,13 @@ public class netConstant {
     private static String uploadNotarizeVideo=URL+"/fqgz/userFile/uploadNotarizeVideo";
     private static String getCaseFilePathURL=URL+"/fqgz/userFile/getCaseFilePath";
     private static String downloadCaseFile=URL+"/fqgz/userFile/downloadCaseFile";
+
+
+    private static String generateNotifyAndUploadDoc=URL+"/fqgz/ca/generateNotifyAndUploadDoc";
+
+    public static String getGenerateNotifyAndUploadDoc() {
+        return generateNotifyAndUploadDoc;
+    }
 
 
     public static String getUploadNotarizeVideo() {

@@ -11,8 +11,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.example.basictest.R;
 import com.example.basictest.base.BaseCameraActivity;
 import com.example.basictest.constant.netConstant;
@@ -31,7 +33,8 @@ import static com.example.basictest.utils.DataCleanManager.clear;
 public class CameraActivity extends BaseCameraActivity {
 
 
-    String name, phone, idcard;
+    String shiyan;
+    TextView shiYan;
 
     Bundle bundle;
     @Override
@@ -39,6 +42,8 @@ public class CameraActivity extends BaseCameraActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         bundle=getIntent().getExtras();
+        shiyan=bundle.getString("shiyan");
+        shiYan=findViewById(R.id.tv_camera);
 /*        name = getIntent().getStringExtra("name");
         idcard = getIntent().getStringExtra("idcard");
         phone = getIntent().getStringExtra("phone");*/
@@ -51,6 +56,7 @@ public class CameraActivity extends BaseCameraActivity {
         videoHeight = 1280;
         cameraWidth = 1280;
         cameraHeight = 720;
+        shiYan.setText(shiyan);
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,7 +140,8 @@ public class CameraActivity extends BaseCameraActivity {
                                     Log.e("上传", main.getString("msg"));
                                     Log.e("上传", main.getString("code"));
                                     dismissProgressDialog();
-                                    Toast.makeText(CameraActivity.this, main.getString("msg"), Toast.LENGTH_SHORT).show();
+                                    ToastUtils.showShort(main.getString("msg"));
+//                                    Toast.makeText(CameraActivity.this, main.getString("msg"), Toast.LENGTH_SHORT).show();
 
                                 }
                             }
@@ -156,7 +163,8 @@ public class CameraActivity extends BaseCameraActivity {
 
         } else {
 
-            Toast.makeText(CameraActivity.this, "录制失败，请重新录制", Toast.LENGTH_SHORT).show();
+            ToastUtils.showShort("录制失败，请重新录制");
+//            Toast.makeText(CameraActivity.this, "录制失败，请重新录制", Toast.LENGTH_SHORT).show();
 
             tv_camera_timer.setText("00:00");
             uploadBtn.setVisibility(View.INVISIBLE);
